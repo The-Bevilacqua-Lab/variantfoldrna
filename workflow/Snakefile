@@ -10,6 +10,7 @@
 
 # Import the python modules:
 import os
+import subprocess
 
 # Get the location of this file:
 location = os.getcwd()
@@ -34,15 +35,17 @@ configfile: srcdir("config.yaml")
 include: "rules/chunk.smk"
 include: "rules/snpeff.smk"
 include: "rules/extract_seqs.smk"
-include: "rules/ribosnitch_prediction.smk"
 include: "rules/plot.smk"
 include: "rules/vcf_header.smk"
 include: "rules/download.smk"
 
+# Load the rules for the appropriate prediction tool
+if config['ribosnitch_prediction_tool'] == "SNPfold":
+    include: "rules/snpfold.smk"
 
-# Load modules
-import subprocess
-import os
+elif config['ribosnitch_prediction_tool'] == "Riprap":
+    include: "rules/riprap.smk"
+
 
 def prCyan(skk):
     """
