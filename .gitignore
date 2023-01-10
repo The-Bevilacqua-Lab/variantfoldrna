@@ -1,1 +1,3 @@
 .DS_*
+tests/__pycache__/*
+tests/.snakemake/*
