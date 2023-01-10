@@ -25,13 +25,13 @@ for ele in location.split("/"):
 # Convert the path to a string:
 path = "/".join(path)
 
-link = "https://github.com/ouyang-lab/Riprap/raw/master/script.zip"
+link = "http://rna.urmc.rochester.edu/Releases/current/RNAstructureSource.tgz"
 
-rule download_riprap:
-    # Download the riprap riboSNitch prediction tool
+rule download_rnastructure_datatables:
     output:
-        f"{path}/workflow/scripts/riprap.py"
+        f"{path}/scripts/data_tables/autodetect.txt"
     conda:
         "../envs/general.yaml"
     shell:
-        f"wget {link} -O {path}/workflow/scripts/riprap.zip && unzip {path}/workflow/scripts/riprap.zip -d {path}/workflow/scripts/ && rm {path}/workflow/scripts/riprap.zip && mv {path}/workflow/scripts/Riprap_software_1.0.py {path}/workflow/scripts/riprap.py"
+        f"(wget {link} -O {path}/scripts/rnastructure.tgz > /dev/null 2>&1) && (tar -xvzf {path}/scripts/rnastructure.tgz -C {path}/scripts/ > /dev/null 2>&1) && rm {path}/scripts/rnastructure.tgz && mv {path}/scripts/RNAstructure/data_tables/autodetect.txt {path}/scripts/data_tables/ && rm -rf {path}/scripts/RNAstructure/"
+
