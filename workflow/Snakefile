@@ -8,6 +8,23 @@
 # The Pennsylvania State University
 ################################################################################
 
+# Import the python modules:
+import os
+
+# Get the location of this file:
+location = os.getcwd()
+
+# Get the path up to the SPARCS directory:
+path = []
+for ele in location.split("/"):
+    if ele == "SPARCS":
+        path.append(ele)
+        break
+    else:
+        path.append(ele)
+
+# Convert the path to a string:
+path = "/".join(path)
 
 # Config File
 configfile: srcdir("config.yaml")
@@ -20,6 +37,7 @@ include: "rules/extract_seqs.smk"
 include: "rules/ribosnitch_prediction.smk"
 include: "rules/plot.smk"
 include: "rules/vcf_header.smk"
+include: "rules/download.smk"
 
 
 # Load modules
@@ -35,6 +53,9 @@ def prCyan(skk):
 # Get the final output files
 final_input = [f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/combined_ribosnitch_prediction_{config['temperature']}.txt",
 f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/snpfold_scores_hist_t{config['temperature']}.jpg"]
+
+if config['structure_prediction_tool'] == "RNAstructure":
+    final_input = [f"{path}/scripts/data_tables/autodetect.txt"]
 
 # Let the user know what files we are creating
 prCyan("Creating the following files:")
