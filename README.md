@@ -6,6 +6,3 @@
 ## Snakemake Pipeline for Ribosnitch prediCtion 
 
 SPARCS is a [Snakemake](https://snakemake.readthedocs.io/en/stable/) pipeline for predicting riboSNitches transcriptome-wide
-
-
-<img src="static/sparcs_workflow.png" width="75%">
