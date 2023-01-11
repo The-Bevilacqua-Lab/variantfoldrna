@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Examples &mdash; SPARCS 0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="File Types" href="file_types.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> SPARCS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_types.html">File Types</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#analyze-a-subset-variants-in-the-yeast-genome">Analyze a subset variants in the yeast genome</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#download-the-yeast-genome-and-variants">1. Download the yeast genome and variants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-the-sparcs-pipeline">2. Run the SPARCS pipeline</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SPARCS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Examples</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/examples.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h1>
+<section id="analyze-a-subset-variants-in-the-yeast-genome">
+<h2>Analyze a subset variants in the yeast genome<a class="headerlink" href="#analyze-a-subset-variants-in-the-yeast-genome" title="Permalink to this heading"></a></h2>
+<section id="download-the-yeast-genome-and-variants">
+<h3>1. Download the yeast genome and variants<a class="headerlink" href="#download-the-yeast-genome-and-variants" title="Permalink to this heading"></a></h3>
+<p>First, change directories to where you would like your test files to be located. Then
+create a folder titled “yeast_data”</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir yeast_data
+</pre></div>
+</div>
+<p>Next, download the yeast genome and gene file from Ensembl.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget http://ftp.ensemblgenomes.org/pub/fungi/release-55/fasta/saccharomyces_cerevisiae/dna/Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa.gz
+wget ftp://ftp.ensemblgenomes.org/pub/fungi/release-55/gtf/saccharomyces_cerevisiae/Saccharomyces_cerevisiae.R64-1-1.55.gtf.gz
+</pre></div>
+</div>
+<p>Unzip the files and move them to the yeast_data folder</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gunzip Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa.gz <span class="o">&amp;&amp;</span> mv Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa yeast_data/
+gunzip Saccharomyces_cerevisiae.R64-1-1.55.gtf.gz <span class="o">&amp;&amp;</span> mv Saccharomyces_cerevisiae.R64-1-1.55.gtf yeast_data/
+</pre></div>
+</div>
+<p>Next, download the variants from Ensembl. We will just use a small subset of the variants for this example.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget http://ftp.ensemblgenomes.org/pub/fungi/release-55/variation/vcf/saccharomyces_cerevisiae/saccharomyces_cerevisiae.vcf.gz
+gunzip saccharomyces_cerevisiae.vcf.gz <span class="o">&amp;&amp;</span> mv saccharomyces_cerevisiae.vcf yeast_data/
+head -n <span class="m">1000</span> yeast_data/saccharomyces_cerevisiae.vcf &gt; yeast_data/saccharomyces_cerevisiae.1000.vcf
+</pre></div>
+</div>
+</section>
+<section id="run-the-sparcs-pipeline">
+<h3>2. Run the SPARCS pipeline<a class="headerlink" href="#run-the-sparcs-pipeline" title="Permalink to this heading"></a></h3>
+<p>We will use the config file located in the <code class="docutils literal notranslate"><span class="pre">`SPARCS/test_files`</span></code> directory.
+First, change directories to the SPARCS folder. Then, copy the config file to the workflow folder using the following commands:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rm workflow/config.yaml
+cp test_files/yeast_tutorial/config.yaml workflow/
+</pre></div>
+</div>
+<p>At this point, you will need to edit the config file located at <code class="docutils literal notranslate"><span class="pre">`SPARCS/workflow/config.yaml`</span></code> to so the paths point to the correct files for the yeast genome and variants.
+Next, we will run the pipeline using the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>snakemake -c all --use-conda --conda-frontend conda
+</pre></div>
+</div>
+<p>You should see a folder in your working directory called <cite>yeast_test</cite> with the following files:
+- logs
+- results
+- temp</p>
+<dl class="simple">
+<dt>The results folder contains the following files:</dt><dd><ul class="simple">
+<li><p>‘combined_ribosnitch_predictions.txt’</p></li>
+<li><p>‘scores_hist.jpg’</p></li>
+</ul>
+</dd>
+</dl>
+<a class="reference internal image-reference" href="_images/scores_hist.jpg"><img alt="_images/scores_hist.jpg" class="align-center" src="_images/scores_hist.jpg" style="width: 50%;" /></a>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="file_types.html" class="btn btn-neutral float-left" title="File Types" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Kobie Kirven.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
