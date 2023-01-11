@@ -1,0 +1,100 @@
+##fileformat=VCFv4.1
+##fileDate=20220825
+##source=ensembl;version=108;url=https://e108.ensembl.org/danio_rerio
+##reference=ftp://ftp.ensembl.org/pub/release-108/fasta/danio_rerio/dna/
+##INFO=<ID=EVA_20220707,Number=0,Type=Flag,Description="Short variant data imported from EVA">
+##INFO=<ID=dbSNP_150,Number=0,Type=Flag,Description="Variants (including SNPs and indels) imported from dbSNP (mapped to GRCz11)">
+##INFO=<ID=TSA,Number=1,Type=String,Description="Type of sequence alteration. Child of term sequence_alteration as defined by the sequence ontology project.">
+##INFO=<ID=E_Cited,Number=0,Type=Flag,Description="Cited.https://www.ensembl.org/info/genome/variation/prediction/variant_quality.html#evidence_status">
+##INFO=<ID=E_Multiple_observations,Number=0,Type=Flag,Description="Multiple_observations.https://www.ensembl.org/info/genome/variation/prediction/variant_quality.html#evidence_status">
+##INFO=<ID=E_Freq,Number=0,Type=Flag,Description="Frequency.https://www.ensembl.org/info/genome/variation/prediction/variant_quality.html#evidence_status">
+##INFO=<ID=E_TOPMed,Number=0,Type=Flag,Description="TOPMed.https://www.ensembl.org/info/genome/variation/prediction/variant_quality.html#evidence_status">
+##INFO=<ID=E_Hapmap,Number=0,Type=Flag,Description="HapMap.https://www.ensembl.org/info/genome/variation/prediction/variant_quality.html#evidence_status">
+##INFO=<ID=E_Phenotype_or_Disease,Number=0,Type=Flag,Description="Phenotype_or_Disease.https://www.ensembl.org/info/genome/variation/prediction/variant_quality.html#evidence_status">
+##INFO=<ID=E_ESP,Number=0,Type=Flag,Description="ESP.https://www.ensembl.org/info/genome/variation/prediction/variant_quality.html#evidence_status">
+##INFO=<ID=E_gnomAD,Number=0,Type=Flag,Description="gnomAD.https://www.ensembl.org/info/genome/variation/prediction/variant_quality.html#evidence_status">
+##INFO=<ID=E_1000G,Number=0,Type=Flag,Description="1000Genomes.https://www.ensembl.org/info/genome/variation/prediction/variant_quality.html#evidence_status">
+##INFO=<ID=E_ExAC,Number=0,Type=Flag,Description="ExAC.https://www.ensembl.org/info/genome/variation/prediction/variant_quality.html#evidence_status">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO
+1	119	rs501657548	TG	T,G	.	.	EVA_20220707;TSA=deletion
+1	531	rs512805172	C	A,CCGG	.	.	EVA_20220707;TSA=SNV
+1	553	rs507917037	A	C	.	.	EVA_20220707;TSA=SNV
+1	737	rs502734264	G	A	.	.	EVA_20220707;TSA=SNV
+1	765	rs511940867	T	TA,A,C	.	.	EVA_20220707;TSA=insertion
+1	813	rs507029748	T	A	.	.	EVA_20220707;TSA=SNV
+1	829	rs499833520	C	T	.	.	EVA_20220707;TSA=SNV
+1	872	rs512211934	G	A	.	.	EVA_20220707;TSA=SNV
+1	878	rs507031350	C	A,CGG	.	.	EVA_20220707;TSA=SNV
+1	901	rs500132023	G	T	.	.	EVA_20220707;TSA=SNV
+1	907	rs511277610	T	C	.	.	EVA_20220707;TSA=SNV
+1	908	rs504182977	A	T,G	.	.	EVA_20220707;TSA=SNV
+1	1193	rs501282537	T	G,TAA	.	.	EVA_20220707;TSA=SNV
+1	1198	rs510429843	C	T	.	.	EVA_20220707;TSA=SNV
+1	1282	rs505541220	G	T,C	.	.	EVA_20220707;TSA=SNV
+1	1396	rs514596344	A	ATT	.	.	EVA_20220707;TSA=insertion
+1	1546	rs180048214	G	A	.	.	EVA_20220707;TSA=SNV
+1	1598	rs503533338	A	C	.	.	EVA_20220707;TSA=SNV
+1	1695	rs514924585	A	G	.	.	EVA_20220707;TSA=SNV
+1	1696	rs507784572	T	TTC	.	.	EVA_20220707;TSA=insertion
+1	1708	rs502656134	T	G	.	.	EVA_20220707;TSA=SNV
+1	1726	rs512010555	C	A	.	.	EVA_20220707;TSA=SNV
+1	1801	rs508834172	T	G	.	.	EVA_20220707;TSA=SNV
+1	1827	rs501881472	G	GGGG	.	.	EVA_20220707;TSA=insertion
+1	1831	rs513052762	A	G	.	.	EVA_20220707;TSA=SNV
+1	1833	rs507114390	A	G	.	.	EVA_20220707;TSA=SNV
+1	1849	rs513210863	A	AG	.	.	EVA_20220707;TSA=insertion
+1	1850	rs500016324	A	G	.	.	EVA_20220707;TSA=SNV
+1	1867	rs506268655	A	ATG	.	.	EVA_20220707;TSA=insertion
+1	2036	rs501106728	A	T	.	.	EVA_20220707;TSA=SNV
+1	2039	rs510436620	A	G	.	.	EVA_20220707;TSA=SNV
+1	2188	rs505293944	GT	G	.	.	EVA_20220707;TSA=deletion
+1	2229	rs500408580	T	A	.	.	EVA_20220707;TSA=SNV
+1	2230	rs511563328	A	G	.	.	EVA_20220707;TSA=SNV
+1	2291	rs504437689	A	C	.	.	EVA_20220707;TSA=SNV
+1	2300	rs514820762	T	A	.	.	EVA_20220707;TSA=SNV
+1	2407	rs509650328	A	T	.	.	EVA_20220707;TSA=SNV
+1	2437	rs504699325	G	T	.	.	EVA_20220707;TSA=SNV
+1	2493	rs513800523	T	G	.	.	EVA_20220707;TSA=SNV
+1	2587	rs508904088	G	A	.	.	EVA_20220707;TSA=SNV
+1	2713	rs501709662	T	G	.	.	EVA_20220707;TSA=SNV
+1	2716	rs515010924	C	T	.	.	EVA_20220707;TSA=SNV
+1	2775	rs508018949	C	T	.	.	EVA_20220707;TSA=SNV
+1	2888	rs502890365	C	T	.	.	EVA_20220707;TSA=SNV
+1	2901	rs513304099	G	A	.	.	EVA_20220707;TSA=SNV
+1	2960	rs506059733	A	T	.	.	EVA_20220707;TSA=SNV
+1	2961	rs503159536	A	G	.	.	EVA_20220707;TSA=SNV
+1	2980	rs512310066	A	T	.	.	EVA_20220707;TSA=SNV
+1	2990	rs507432011	C	T	.	.	EVA_20220707;TSA=SNV
+1	2994	rs500292416	T	C	.	.	EVA_20220707;TSA=SNV
+1	3056	rs511451324	C	T	.	.	EVA_20220707;TSA=SNV
+1	3112	rs506565537	G	A	.	.	EVA_20220707;TSA=SNV
+1	3120	rs501322906	C	T	.	.	EVA_20220707;TSA=SNV
+1	3168	rs509657249	C	G	.	.	EVA_20220707;TSA=SNV
+1	3212	rs504556365	A	G	.	.	EVA_20220707;TSA=SNV
+1	3238	rs513899305	A	G	.	.	EVA_20220707;TSA=SNV
+1	3334	rs510838894	T	A	.	.	EVA_20220707;TSA=SNV
+1	3526	rs503624659	G	C	.	.	EVA_20220707;TSA=SNV
+1	3571	rs515088883	C	T	.	.	EVA_20220707;TSA=SNV
+1	3629	rs507846417	A	T	.	.	EVA_20220707;TSA=SNV
+1	3631	rs502916314	T	C	.	.	EVA_20220707;TSA=SNV
+1	3632	rs514055270	G	T	.	.	EVA_20220707;TSA=SNV
+1	3642	rs508148843	C	T	.	.	EVA_20220707;TSA=SNV
+1	3687	rs503008426	T	A	.	.	EVA_20220707;TSA=SNV
+1	3736	rs512201218	C	T	.	.	EVA_20220707;TSA=SNV
+1	3838	rs507320519	T	G	.	.	EVA_20220707;TSA=SNV
+1	3999	rs502152359	G	T	.	.	EVA_20220707;TSA=SNV
+1	4035	rs513514734	A	G	.	.	EVA_20220707;TSA=SNV
+1	4069	rs506323770	T	G	.	.	EVA_20220707;TSA=SNV
+1	4207	rs501399082	C	T	.	.	EVA_20220707;TSA=SNV
+1	4258	rs512555400	T	G	.	.	EVA_20220707;TSA=SNV
+1	4259	rs507463965	C	T	.	.	EVA_20220707;TSA=SNV
+1	4260	rs499501290	C	T	.	.	EVA_20220707;TSA=SNV
+1	4417	rs510660378	A	T	.	.	EVA_20220707;TSA=SNV
+1	4495	rs503706090	A	C	.	.	EVA_20220707;TSA=SNV
+1	4563	rs500570988	T	TAA	.	.	EVA_20220707;TSA=insertion
+1	4601	rs509904645	C	G	.	.	EVA_20220707;TSA=SNV
+1	4617	rs504813040	C	T	.	.	EVA_20220707;TSA=SNV
+1	4686	rs514162242	A	G	.	.	EVA_20220707;TSA=SNV
+1	4736	rs509066403	G	A	.	.	EVA_20220707;TSA=SNV
+1	4741	rs503887613	T	A	.	.	EVA_20220707;TSA=SNV
+1	4744	rs514332262	C	T	.	.	EVA_20220707;TSA=SNV
