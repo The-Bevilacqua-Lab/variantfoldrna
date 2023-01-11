@@ -1,0 +1,30 @@
+##fileformat=VCFv4.1
+##FILTER=<ID=PASS,Description="All filters passed">
+##fileDate=20220513
+##source=ensembl;version=108;url=https://fungi.ensembl.org/saccharomyces_cerevisiae_s288c
+##reference=ftp://ftp.ensembl.org/pub/release-107/fasta/saccharomyces_cerevisiae_s288c/dna/
+##INFO=<ID=SGRP,Number=0,Type=Flag,Description="Variation features from SGRP, with Ensembl identifiers">
+##INFO=<ID=TSA,Number=1,Type=String,Description="Type of sequence alteration. Child of term sequence_alteration as defined by the sequence ontology project.">
+##INFO=<ID=E_Cited,Number=0,Type=Flag,Description="Cited.https://www.ensembl.org/info/genome/variation/prediction/variant_quality.html#evidence_status">
+##INFO=<ID=E_Multiple_observations,Number=0,Type=Flag,Description="Multiple_observations.https://www.ensembl.org/info/genome/variation/prediction/variant_quality.html#evidence_status">
+##INFO=<ID=E_Freq,Number=0,Type=Flag,Description="Frequency.https://www.ensembl.org/info/genome/variation/prediction/variant_quality.html#evidence_status">
+##INFO=<ID=E_TOPMed,Number=0,Type=Flag,Description="TOPMed.https://www.ensembl.org/info/genome/variation/prediction/variant_quality.html#evidence_status">
+##INFO=<ID=E_Hapmap,Number=0,Type=Flag,Description="HapMap.https://www.ensembl.org/info/genome/variation/prediction/variant_quality.html#evidence_status">
+##INFO=<ID=E_Phenotype_or_Disease,Number=0,Type=Flag,Description="Phenotype_or_Disease.https://www.ensembl.org/info/genome/variation/prediction/variant_quality.html#evidence_status">
+##INFO=<ID=E_ESP,Number=0,Type=Flag,Description="ESP.https://www.ensembl.org/info/genome/variation/prediction/variant_quality.html#evidence_status">
+##INFO=<ID=E_gnomAD,Number=0,Type=Flag,Description="gnomAD.https://www.ensembl.org/info/genome/variation/prediction/variant_quality.html#evidence_status">
+##INFO=<ID=E_1000G,Number=0,Type=Flag,Description="1000Genomes.https://www.ensembl.org/info/genome/variation/prediction/variant_quality.html#evidence_status">
+##INFO=<ID=E_ExAC,Number=0,Type=Flag,Description="ExAC.https://www.ensembl.org/info/genome/variation/prediction/variant_quality.html#evidence_status">
+##INFO=<ID=OLD_MULTIALLELIC,Number=1,Type=String,Description="Original chr:pos:ref:alt encoding">
+##INFO=<ID=OLD_VARIANT,Number=.,Type=String,Description="Original chr:pos:ref:alt encoding">
+##SnpEffVersion="5.1d (build 2022-04-19 15:49), by Pablo Cingolani"
+##SnpEffCmd="SnpEff  -noStats -no-upstream -no-downstream -no-intergenic yeast /Users/lab/Desktop/yeast_test_1/temp/vcf_chunks/vcf_no_header_4_normalized.vcf "
+##INFO=<ID=ANN,Number=.,Type=String,Description="Functional annotations: 'Allele | Annotation | Annotation_Impact | Gene_Name | Gene_ID | Feature_Type | Feature_ID | Transcript_BioType | Rank | HGVS.c | HGVS.p | cDNA.pos / cDNA.length | CDS.pos / CDS.length | AA.pos / AA.length | Distance | ERRORS / WARNINGS / INFO' ">
+##INFO=<ID=LOF,Number=.,Type=String,Description="Predicted loss of function effects for this variant. Format: 'Gene_Name | Gene_ID | Number_of_transcripts_in_gene | Percent_of_transcripts_affected'">
+##INFO=<ID=NMD,Number=.,Type=String,Description="Predicted nonsense mediated decay effects for this variant. Format: 'Gene_Name | Gene_ID | Number_of_transcripts_in_gene | Percent_of_transcripts_affected'">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO
+I	2485	s01-2485	A	T	.	.	SGRP;TSA=SNV;ANN=T|synonymous_variant|LOW|YAL067W-A|YAL067W-A|transcript|YAL067W-A_mRNA|protein_coding|1/1|c.6A>T|p.Pro2Pro|6/228|6/228|2/75||,T|synonymous_variant|LOW|YAL067W-A|YAL067W-A|transcript|YAL067W-A_mRNA|protein_coding|1/1|c.6A>T|p.Pro2Pro|6/228|6/228|2/75||
+I	2488	s01-2488	T	A	.	.	SGRP;TSA=SNV;ANN=A|synonymous_variant|LOW|YAL067W-A|YAL067W-A|transcript|YAL067W-A_mRNA|protein_coding|1/1|c.9T>A|p.Ile3Ile|9/228|9/228|3/75||,A|synonymous_variant|LOW|YAL067W-A|YAL067W-A|transcript|YAL067W-A_mRNA|protein_coding|1/1|c.9T>A|p.Ile3Ile|9/228|9/228|3/75||
+I	2500	s01-2500	G	A	.	.	SGRP;TSA=SNV;ANN=A|synonymous_variant|LOW|YAL067W-A|YAL067W-A|transcript|YAL067W-A_mRNA|protein_coding|1/1|c.21G>A|p.Pro7Pro|21/228|21/228|7/75||,A|synonymous_variant|LOW|YAL067W-A|YAL067W-A|transcript|YAL067W-A_mRNA|protein_coding|1/1|c.21G>A|p.Pro7Pro|21/228|21/228|7/75||
+I	2501	s01-2501	A	G	.	.	SGRP;TSA=SNV;ANN=G|missense_variant|MODERATE|YAL067W-A|YAL067W-A|transcript|YAL067W-A_mRNA|protein_coding|1/1|c.22A>G|p.Arg8Gly|22/228|22/228|8/75||,G|missense_variant|MODERATE|YAL067W-A|YAL067W-A|transcript|YAL067W-A_mRNA|protein_coding|1/1|c.22A>G|p.Arg8Gly|22/228|22/228|8/75||
+I	2512	s01-2512	A	G	.	.	SGRP;TSA=SNV;ANN=G|missense_variant|MODERATE|YAL067W-A|YAL067W-A|transcript|YAL067W-A_mRNA|protein_coding|1/1|c.33A>G|p.Ile11Met|33/228|33/228|11/75||,G|missense_variant|MODERATE|YAL067W-A|YAL067W-A|transcript|YAL067W-A_mRNA|protein_coding|1/1|c.33A>G|p.Ile11Met|33/228|33/228|11/75||,G|missense_variant|MODERATE|YAL067W-A|YAL067W-A|transcript|YAL067W-A_mRNA|protein_coding|1/1|c.33A>G|p.Ile11Met|33/228|33/228|11/75||
