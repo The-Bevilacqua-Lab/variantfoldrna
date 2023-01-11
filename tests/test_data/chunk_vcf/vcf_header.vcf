@@ -1,0 +1,24 @@
+##fileformat=VCFv4.2
+##FILTER=<ID=PASS,Description="All filters passed">
+##fileDate=20220527
+##source=PLINKv1.90
+##contig=<ID=1,length=43269907>
+##contig=<ID=2,length=35936220>
+##contig=<ID=3,length=36413793>
+##contig=<ID=4,length=35502686>
+##contig=<ID=5,length=29957429>
+##contig=<ID=6,length=31247783>
+##contig=<ID=7,length=29697605>
+##contig=<ID=8,length=28442007>
+##contig=<ID=9,length=23009500>
+##contig=<ID=10,length=23206234>
+##contig=<ID=11,length=29020102>
+##contig=<ID=12,length=27530849>
+##INFO=<ID=PR,Number=0,Type=Flag,Description="Provisional reference allele, may not be based on real reference genome">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##INFO=<ID=AC,Number=A,Type=Integer,Description="Allele count in genotypes">
+##INFO=<ID=AN,Number=1,Type=Integer,Description="Total number of alleles in called genotypes">
+##bcftools_viewVersion=1.13+htslib-1.13
+##bcftools_viewCommand=view -S landraces_subset.txt NB_final_snp.vcf; Date=Fri May 27 19:39:52 2022
+##bcftools_filterVersion=1.13+htslib-1.13
+##bcftools_filterCommand=filter -e 'MAC == 0' landraces_subset.vcf; Date=Sat May 28 02:20:53 2022
