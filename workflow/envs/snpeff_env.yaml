@@ -1,0 +1,10 @@
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - openjdk=11
+  - snpEff==5.1
+  - snpsift==5.1
+  - vt==0.57721
+  - bcftools==1.15.1
+  - samtools=1.16.1
