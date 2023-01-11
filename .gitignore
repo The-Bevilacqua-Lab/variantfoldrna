@@ -1,3 +1,8 @@
 .DS_*
 tests/__pycache__/*
 tests/.snakemake/*
+tests/.test_output/*
+.snakemake/*
+workflow/.snakemake/*
+workflow/scripts/data_tables/*
+scripts/data_tables/*
