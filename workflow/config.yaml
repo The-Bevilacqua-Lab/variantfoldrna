@@ -59,3 +59,16 @@ chunks: 1
 # temperature - Tempureature for RNA folding
 #############################################################
 temperature: 37.0
+
+#############################################################
+# ribosnitch_prediction_tool: Tool to use for predicting
+#                             riboSNitches 
+#                            (SNPfold or RipRap)  
+#############################################################
+ribosnitch_prediction_tool: RipRap
+
+#############################################################
+# structure_prediction_tool: Tool to use for predicting the RNA
+#                  structural ensembles (RNAfold or RNAplfold)
+#############################################################
+structure_prediction_tool: RNAstructure
