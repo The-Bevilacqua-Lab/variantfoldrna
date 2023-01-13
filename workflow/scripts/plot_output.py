@@ -56,15 +56,15 @@ import plotly.express as px
 import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.graph_objects as go
+import json
+import urllib.request as urlreq
+import dash_bio as dashbio
+import base64
+
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.CERULEAN])
 
-heading = html.H4(
-    html.Img(src="/Users/lab/Desktop/snakemake/SPARCS/static/SPARCS.png"),
-    "SPARCS Ouput Analysis", className="bg-primary text-white p-2"
-)
-
-df1 = pd.read_csv("../../combined_ribosnitch_pred_37_40bp_flank_rice.txt", sep="\t", header=None)
+df1 = pd.read_csv("../../test1.txt", sep="\t", header=None)
 df = df1.iloc[:,[0,1,2,3,5,6,8,9]]
 df.columns = ["chrom", "pos", "ref", "alt", "gene", "match", "strand", "score"]
 ops = [{'label': 'All', 'value': 'All'}]
@@ -84,7 +84,7 @@ SIDEBAR_STYLE = {
 CONTENT_STYLE = {
     "margin-left": "18rem",
     "margin-right": "2rem",
-    "padding": "2rem 1rem",
+    "padding": "1rem 1rem",
 }
 
 def get_data(df, drop_value):
@@ -93,12 +93,14 @@ def get_data(df, drop_value):
     else:
         return df["score"][df['gene'] == drop_value]
 
-gene = html.Div(
-    [   dbc.Label("Gene", html_for="gene"),
+gene = html.Div(dbc.Row(
+    [   html.Img(src="assets/sparcs.png"),
+        
+        dbc.Label("Gene", html_for="gene"),
         dcc.Dropdown( id = 'dropdown',
         options = ops,
         value = 'gene',),
-    ],
+    ]),
     className="mt-2", style=SIDEBAR_STYLE
 )
 
@@ -117,14 +119,43 @@ gene = html.Div(
 #     [html.Div(id="error_mss", className="text-danger")]
 # )
 
-content = html.Div(dbc.Row([dcc.Graph(id = 'gene_struct_plot'), dcc.Graph(id = 'bar_plot')]), style=CONTENT_STYLE)
+data = urlreq.urlopen(
+    'https://git.io/needle_PIK3CA.json'
+).read().decode('utf-8')
+
+mdata = json.loads(data)
+print(mdata)
+
+def get_needle_data(df, gene, file_name):
+    df = df[df['gene'] == gene]
+    snp_locs = df['pos'].tolist()
+    snp_scores = df['score'].tolist()
+    utrs = pd.read_csv(file_name, sep="\t", header=None)
+    utrs.columns = ["gene", "start", "end", "five_start", "five_end", "three_start", "three_end"]
+    utrs = utrs[utrs['gene'] == gene]
+    five_coords = str(float(utrs['five_start'].tolist()[0])) + "-" +  str(float(utrs['five_end'].tolist()[0]))
+    print(five_coords)
+    three_coords = str(float(utrs['three_start'].tolist()[0])) + "-" + str(float(utrs['three_end'].tolist()[0]))
+    cds_coords = str(float(utrs['five_end'].tolist()[0])) + "-" + str(float(utrs['three_start'].tolist()[0]))
+
+    data = {'x': [str(round(x, 4)) for x in snp_locs], 'y': [str(x) for x in snp_scores],
+    "domains": [{'name': '5_prime_UTR', 'coord': five_coords},{'name': 'CDS', 'coord': cds_coords},{'name': '3_UTR', 'coord': three_coords}]}
+    print(data)
+    return data
+
+other = get_needle_data(df, "Os01g0100100", "../../gene_locs.txt")
+
+content = html.Div(dbc.Row([dashbio.NeedlePlot(
+        id='dashbio-default-needleplot',
+        mutationData=other, height=300,width=800,
+    ), dcc.Graph(id = 'bar_plot')]), style=CONTENT_STYLE)
 
 
 # the styles for the main content position it to the right of the sidebar and
 # add some padding.
 
 # Layout for the entire page
-app.layout = html.Div([heading, gene, content])
+app.layout = html.Div([gene, content])
 
 @app.callback(Output(component_id='bar_plot', component_property= 'figure'),
               [Input(component_id='dropdown', component_property= 'value')])
@@ -139,51 +170,27 @@ def graph_update(dropdown_value):
     return fig
 
 
-@app.callback(Output(component_id='gene_struct_plot', component_property= 'figure'),
-              [Input(component_id='dropdown', component_property= 'value')])
-def graph_update(dropdown_value):
-    fig = go.Figure()
-    fig.add_shape(type="rect",
-    x0=0, y0=1, x1=2, y1=1,
-    line=dict(
-        color="RoyalBlue",
-        width=2,
-    ),
-    fillcolor="LightSkyBlue",
-    
-)
+# @app.callback(Output(component_id='gene_struct_plot', component_property= 'figure'),
+#               [Input(component_id='dropdown', component_property= 'value')])
+# def graph_update(dropdown_value):
+#     data = urlreq.urlopen(
+#         'https://git.io/needle_PIK3CA.json'
+#     ).read().decode('utf-8')
 
-    fig.add_shape(type="rect",
-    x0=2, y0=2, x1=6, y1=2,
-    line=dict(
-        color="green",
-        width=2,
-    ),
-    fillcolor="LightSkyBlue",
-    
-)
-    # Update axes properties
-    fig.update_xaxes(
-        showticklabels=False,
-        showgrid=False,
-        zeroline=False,
-    )
+#     mdata = json.loads(data)
 
-    fig.update_yaxes(
-        showticklabels=False,
-        showgrid=False,
-        zeroline=False,
-    )
+#     fig = dashbio.NeedlePlot(
+#         mutationData=mdata,
+#         needleStyle={
+#             'stemColor': '#FF8888',
+#             'stemThickness': 2,
+#             'stemConstHeight': True,
+#             'headSize': 10,
+#             'headColor': ['#FFDD00', '#000000']
+#         }
+#     )
+#     return fig
 
-    fig.update_shapes(opacity=0.3, xref="x", yref="y")
-
-    fig.update_layout(
-        margin=dict(l=20, r=20, b=100),
-        height=600, width=800,
-        plot_bgcolor="white"
-    )
-    fig.update_traces(mode="markers+lines")
-    return fig
 
 if __name__ == "__main__":
     app.run_server(debug=True)
