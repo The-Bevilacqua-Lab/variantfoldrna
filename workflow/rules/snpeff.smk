@@ -146,4 +146,4 @@ rule get_annotations_one_per_line:
     conda:
         "../envs/snpeff_env.yaml"
     shell:
-        f'cat {{input}} | {path}/workflow/scripts/vcfEffOnePerLine.pl | SnpSift extractFields - CHROM POS REF ALT "ANN[*].EFFECT" "ANN[*].GENEID" > {{output}} 2> {{log}}'
+        f'cat {{input}} | {path}/workflow/scripts/vcfEffOnePerLine.pl | SnpSift extractFields - CHROM POS REF ALT "ANN[*].EFFECT" "ANN[*].FEATUREID" > {{output}} 2> {{log}}'

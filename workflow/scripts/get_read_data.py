@@ -14,6 +14,7 @@ import argparse
 import gffutils
 import pandas as pd
 
+# ----- Parse arguments ----#
 parser = argparse.ArgumentParser(description="Extract sequences surrounding variants")
 parser.add_argument("--vcf", dest="vcf", help="VCF File")
 parser.add_argument("--database", dest="database", help="gffutils database")
@@ -68,6 +69,8 @@ no_match = open(args.output[:-4] + "_no_match.txt", "w")
 predictions = pd.read_csv(args.vcf, sep="\t", header=0)
 predictions = predictions.dropna()
 
+feature = "ANN[*].FEATUREID"
+
 for i in range(len(predictions)):
     # Check to make sure it is an MNV
     if (
@@ -78,8 +81,8 @@ for i in range(len(predictions)):
         continue
 
     # Get the start and stop positions of the transcript
-    start = db[predictions.iloc[i]["ANN[*].GENEID"]].start
-    end = db[predictions.iloc[i]["ANN[*].GENEID"]].end
+    start = db[predictions.iloc[i][feature]].start
+    end = db[predictions.iloc[i][feature]].end
 
     # Check to make sure it is not within a certain distance from the 5' and 3' ends of the transcript
     if test_five_prime(
@@ -98,17 +101,17 @@ for i in range(len(predictions)):
             ):
                 continue
 
-        sequence = db[predictions.iloc[i]["ANN[*].GENEID"]].sequence(
+        sequence = db[predictions.iloc[i][feature]].sequence(
             args.ref, use_strand=False
         )
 
         # Swap the reference and alternative alleles if the transcript is on the negative strand
-        if db[predictions.iloc[i]["ANN[*].GENEID"]].strand == "-":
+        if db[predictions.iloc[i][feature]].strand == "-":
             sequence = compelement_dna(sequence)
             reference = compelement_dna(predictions.iloc[i]["ALT"])
             alternative = compelement_dna(predictions.iloc[i]["REF"])
 
-        elif db[predictions.iloc[i]["ANN[*].GENEID"]].strand == "+":
+        elif db[predictions.iloc[i][feature]].strand == "+":
             reference = predictions.iloc[i]["REF"]
             alternative = predictions.iloc[i]["ALT"]
 
@@ -134,33 +137,29 @@ for i in range(len(predictions)):
         # Check to see if the sequence in the reference genome matches the reference allele or the alternative allele
         # If it matches the reference, then we do not change anything. If it matches the alternative, then we reverse
         # the reference and alternative alleles
-        if len(predictions.iloc[i]["REF"]) > 1 or len(predictions.iloc[i]["ALT"]) > 1:
-            ref = reference
-            alt = alternative
-            flank = flank_left + ref + flank_right
-            fn.write(
-                f'{predictions.iloc[i]["CHROM"]}\t{predictions.iloc[i]["POS"]}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i]["ANN[*].GENEID"]}\tNA\t{db[predictions.iloc[i]["ANN[*].GENEID"]].featuretype}\t{db[predictions.iloc[i]["ANN[*].GENEID"]].strand}\n'
-            )
-
-        elif snp_seq == alternative:
+        
+        # Check to see if the SNP matches the alternative allele
+        if snp_seq == alternative:
             ref = alternative
             alt = reference
             flank = flank_left + ref + flank_right
             fn.write(
-                f'{predictions.iloc[i]["CHROM"]}\t{predictions.iloc[i]["POS"]}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i]["ANN[*].GENEID"]}\tMATCHED_ALT\t{db[predictions.iloc[i]["ANN[*].GENEID"]].featuretype}\t{db[predictions.iloc[i]["ANN[*].GENEID"]].strand}\n'
+                f'{predictions.iloc[i]["CHROM"]}\t{predictions.iloc[i]["POS"]}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\tMATCHED_ALT\t{db[predictions.iloc[i][feature]].featuretype}\t{db[predictions.iloc[i][feature]].strand}\t{predictions.iloc[i][feature]}\n'
             )
 
+        # Check to see if the SNP matches the reference allele
         elif snp_seq == reference:
             ref = reference
             alt = alternative
             flank = flank_left + ref + flank_right
             fn.write(
-                f'{predictions.iloc[i]["CHROM"]}\t{predictions.iloc[i]["POS"]}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i]["ANN[*].GENEID"]}\tMATCHED_REF\t{db[predictions.iloc[i]["ANN[*].GENEID"]].featuretype}\t{db[predictions.iloc[i]["ANN[*].GENEID"]].strand}\n'
+                f'{predictions.iloc[i]["CHROM"]}\t{predictions.iloc[i]["POS"]}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\tMATCHED_REF\t{db[predictions.iloc[i][feature]].featuretype}\t{db[predictions.iloc[i][feature]].strand}\t{predictions.iloc[i][feature]}\n'
             )
 
+        # If the SNP does not match the reference or alternative allele, then we skip it
         else:
             no_match.write(
-                f'{predictions.iloc[i]["ANN[*].GENEID"]}\t{predictions.iloc[i]["POS"]}\t{flank}\t{predictions.iloc[i]["REF"]}\t{predictions.iloc[i]["ALT"]}\t{db[predictions.iloc[i]["ANN[*].GENEID"]].strand}\n'
+                f'{predictions.iloc[i][feature]}\t{predictions.iloc[i]["POS"]}\t{flank}\t{predictions.iloc[i]["REF"]}\t{predictions.iloc[i]["ALT"]}\t{db[predictions.iloc[i][feature]].strand}\t{predictions.iloc[i][feature]}\n'
             )
 
 fn.close()
