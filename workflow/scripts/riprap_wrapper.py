@@ -55,8 +55,6 @@ def run_riprap(sequence, mutation, path, temp, minwindow, tool, win_type):
         random.choice(string.ascii_uppercase + string.digits) for _ in range(6)
     )
 
-    # cmd = "python2 {0}/workflow/scripts/riprap.py --i {1} --o {2} --foldtype {3} -T {4} -w {5} -f {6}".format(path, fn, name, tool, temp, minwindow, win_type)
-    # print(cmd)
     # Run RipRap:
     riprap = subprocess.call(["python2", "{0}/workflow/scripts/riprap.py".format(path), "--i", fn, "--o", name, "--foldtype", str(tool), "-T", str(temp), "-w", str(minwindow), "-f", str(win_type)], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
@@ -79,7 +77,7 @@ parser = argparse.ArgumentParser(description="Determine RiboSNitches")
 parser.add_argument("--i", dest="in_file", help="Input File")
 parser.add_argument("--o", dest="output", help="Output")
 parser.add_argument("--flank", dest="flank", help="Flanking length")
-parser.add_argument("--temperature", dest="temp", help="Temperature", default=37.0)
+parser.add_argument("--temp", dest="temp", help="Temperature", default=37.0)
 parser.add_argument("--minwindow", dest="minwindow", help="Minimum Window", default=3)
 parser.add_argument("--windowtype", dest="windowtype", help="Window Type", default=0)
 parser.add_argument("--tool", dest="tool", help="Tool", default="RNAfold")
@@ -89,13 +87,17 @@ args = parser.parse_args()
 fn = open(args.in_file)
 lines = fn.readlines()
 
+# Open the output files and the error 
 out = open(args.output, "w")
 error = open(args.output[:-4] + "_error.txt", "w")
+
 # Loop through the input file and perform the riboSNitch prediction:
 for line in lines:
+    # Skip the header:
     if not line.startswith("#"):
         line = line.split("\t")
 
+        # Make sure we don't have any indels:
         if not len(line[3]) == 1 or not len(line[4]) == 1:
             continue
 
@@ -109,6 +111,7 @@ for line in lines:
         seq = str(line[5]) + str(line[3]) + str(line[6])
         mutation = "{0}{1}{2}".format(str(line[3]),str(int(args.flank) + 1), str(line[4]))
 
+        # Get the tool number:
         if args.tool == "RNAfold":
             number = 1
         if args.tool == "RNAstructure":
