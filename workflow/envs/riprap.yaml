@@ -1,0 +1,12 @@
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - pip=19.3.1
+  - rnastructure=6.3
+  - viennarna=2.4.14
+- pip:
+  - scipy==1.2.3
+  - numpy==1.16.6
