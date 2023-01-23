@@ -72,3 +72,11 @@ ribosnitch_prediction_tool: RipRap
 #                  structural ensembles (RNAfold or RNAplfold)
 #############################################################
 structure_prediction_tool: RNAstructure
+
+
+
+# -- ADVANCED PARAMETERS -- #
+#############################################################
+# riprap_min_window: Minimum window size for RipRap
+#############################################################
+riprap_min_window: 3
