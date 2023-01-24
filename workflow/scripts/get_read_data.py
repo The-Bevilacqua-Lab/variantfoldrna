@@ -69,6 +69,7 @@ no_match = open(args.output[:-4] + "_no_match.txt", "w")
 predictions = pd.read_csv(args.vcf, sep="\t", header=0)
 predictions = predictions.dropna()
 
+# Get the feature ID
 feature = "ANN[*].FEATUREID"
 
 for i in range(len(predictions)):
