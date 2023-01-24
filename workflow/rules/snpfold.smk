@@ -27,26 +27,21 @@ for ele in location.split("/"):
 # Convert the path to a string:
 path = "/".join(path)
 
-# Define the input for the riboSNitch prediction:
-riboinput = [f"{config['working_directory']}/{config['out_name']}/temp/extracted_seqs_chunks/extracted_flank_snp_{{i}}.txt"]
-if config["ribosnitch_prediction_tool"] == "RipRap":
-    riboinput.append(f"{path}/workflow/scripts/riprap.py")
-
-rule riboSNitch:
+rule run_snpfold:
     # Perform the riboSNitch analysis with SNPFold
     input:
-        riboinput
+        f"{config['working_directory']}/{config['out_name']}/temp/extracted_seqs_chunks/extracted_flank_snp_{{i}}.txt"
     params:
         f"{{temp_deg}}",
     output:
         ribo=f"{config['working_directory']}/{config['out_name']}/temp/ribosnitch_chunks_{{temp_deg}}/chunk_{{i}}_riboSNitch_{{temp_deg}}.txt",
         error=f"{config['working_directory']}/{config['out_name']}/temp/ribosnitch_chunks_{{temp_deg}}/chunk_{{i}}_riboSNitch_{{temp_deg}}_error.txt",
     conda:
-        "../envs/ribo.yaml"
+        "../envs/snpfold.yaml"
     log:
         f"{config['working_directory']}/{config['out_name']}/logs/ribosnitch_prediction/chunk_{{i}}_riboSNitch_{{temp_deg}}.log",
     shell:
-        f"python3 {path}/workflow/scripts/ribosnitch_wrapper.py --i {{input[0]}} --o {{output.ribo}} --flank {config['flank_len']} --temp {{params}}"
+        f"python3 {path}/workflow/scripts/snpfold_wrapper.py --i {{input[0]}} --o {{output.ribo}} --flank {config['flank_len']} --temp {{params}}"
 
 
 rule combine_ribosnitch_results:
