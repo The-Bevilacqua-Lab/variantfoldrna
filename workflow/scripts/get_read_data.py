@@ -145,7 +145,7 @@ for i in range(len(predictions)):
             alt = reference
             flank = flank_left + ref + flank_right
             fn.write(
-                f'{predictions.iloc[i]["CHROM"]}\t{predictions.iloc[i]["POS"]}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\tMATCHED_ALT\t{db[predictions.iloc[i][feature]].featuretype}\t{db[predictions.iloc[i][feature]].strand}\t{predictions.iloc[i][feature]}\n'
+                f'{predictions.iloc[i]["CHROM"]}\t{predictions.iloc[i]["POS"]}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\tMATCHED_ALT\t{db[predictions.iloc[i][feature]].featuretype}\t{db[predictions.iloc[i][feature]].strand}\t{predictions.iloc[i]["ANN[*].EFFECT"]}\n'
             )
 
         # Check to see if the SNP matches the reference allele
@@ -154,13 +154,13 @@ for i in range(len(predictions)):
             alt = alternative
             flank = flank_left + ref + flank_right
             fn.write(
-                f'{predictions.iloc[i]["CHROM"]}\t{predictions.iloc[i]["POS"]}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\tMATCHED_REF\t{db[predictions.iloc[i][feature]].featuretype}\t{db[predictions.iloc[i][feature]].strand}\t{predictions.iloc[i][feature]}\n'
+                f'{predictions.iloc[i]["CHROM"]}\t{predictions.iloc[i]["POS"]}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\tMATCHED_REF\t{db[predictions.iloc[i][feature]].featuretype}\t{db[predictions.iloc[i][feature]].strand}\t{predictions.iloc[i]["ANN[*].EFFECT"]}\n'
             )
 
         # If the SNP does not match the reference or alternative allele, then we skip it
         else:
             no_match.write(
-                f'{predictions.iloc[i][feature]}\t{predictions.iloc[i]["POS"]}\t{flank}\t{predictions.iloc[i]["REF"]}\t{predictions.iloc[i]["ALT"]}\t{db[predictions.iloc[i][feature]].strand}\t{predictions.iloc[i][feature]}\n'
+                f'{predictions.iloc[i][feature]}\t{predictions.iloc[i]["POS"]}\t{flank}\t{predictions.iloc[i]["REF"]}\t{predictions.iloc[i]["ALT"]}\t{db[predictions.iloc[i][feature]].strand}\t{predictions.iloc[i]["ANN[*].EFFECT"]}\n'
             )
 
 fn.close()
