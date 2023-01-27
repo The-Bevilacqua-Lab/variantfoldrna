@@ -2,17 +2,18 @@
 Installation
 =============
 
-Prerequisites
--------------
+Prerequisites:
+--------------
 :mod:`SPARCS` only requires that your system has Snakemake and the `conda <https://docs.conda.io/en/latest/>`_ package manager installed.
 All other dependencies are handled by Snakemake directly. You can check that both are installed by running::
     
     conda -h
     snakemake -h
 
+Information on how to install Snakemake can be found `here <https://snakemake.readthedocs.io/en/stable/getting_started/installation.html>`_.
 
-Downloading the pipeline
-------------------------
+Downloading the pipeline:
+----------------------------
 To download the pipeline, simply navigate to the directory of your choice and run::
 
     git clone https://github.com/The-Bevilacqua-Lab/SPARCS.git
