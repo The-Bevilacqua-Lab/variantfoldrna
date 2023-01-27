@@ -54,8 +54,8 @@ def prCyan(skk):
     print("\033[96m {}\033[00m".format(skk))
 
 # Get the final output files
-final_input = [f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/combined_ribosnitch_prediction_{config['temperature']}.txt",
-f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/snpfold_scores_hist_t{config['temperature']}.jpg"]
+#f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/snpfold_scores_hist_t{config['temperature']}.jpg"
+final_input = [f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/combined_ribosnitch_prediction_{config['temperature']}.txt"]
 
 if config['structure_prediction_tool'] == "RNAstructure":
     final_input = [f"{path}/scripts/data_tables/autodetect.txt"]
