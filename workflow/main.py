@@ -61,11 +61,23 @@ def main():
     if len([x for x in inputted_files.values() if x != None]) != 3:
         prGreen("\n")
         prGreen("Checking for files in the current directory...")
-        prGreen("Found the following files in the current directory:")
+
+        files_found = []
         for file_type, file_path in inputted_files.items():
             if file_path == None:
-                prGreen("   - {}".format(file_type))
-
+                for file in os.listdir(location):
+                    if file.endswith(file_type.lower()):
+                        inputted_files[file_type] = os.path.join(location, file)
+                        files_found.append("   - {}: {}".format(file_type, inputted_files[file_type]))
+                        break
+        if len(files_found) == 0:
+            prGreen("No files found in the current directory")
+        
+        else:
+            prGreen("Found the following files in the current directory:")
+            for file_found in files_found:
+                prGreen(file_found)
+        
     prGreen("\n")
     prGreen("Generating the necessary files for the SPARCS pipeline...")
     prGreen("All Done!\n")
