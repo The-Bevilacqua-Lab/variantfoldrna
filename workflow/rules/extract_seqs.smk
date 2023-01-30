@@ -77,5 +77,7 @@ rule remove_duplicates:
         f"{config['working_directory']}/{config['out_name']}/temp/extracted_flank_snp.txt",
     output:
         f"{config['working_directory']}/{config['out_name']}/temp/extracted_flank_snp_no_duplicates.txt",
+    conda:
+        "../envs/extract_seqs.yaml"
     shell:
         f"python3 {path}/workflow/scripts/remove_duplicates.py -i {{input}} -o {{output}}"

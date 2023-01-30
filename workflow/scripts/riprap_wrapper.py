@@ -42,7 +42,7 @@ def make_temp_riprap_input(sequence, mutation):
         random.choice(string.ascii_uppercase + string.digits) for _ in range(6)
     )
 
-    fn.write('{0}\t{1}\t{2}\n'.format(name, sequence, mutation))
+    fn.write(('{0}\t{1}\t{2}\n'.format(name, sequence, mutation).encode("utf-8")))
     return fn.name, name
 
 def run_riprap(sequence, mutation, path, temp, minwindow, tool, win_type):
@@ -57,6 +57,10 @@ def run_riprap(sequence, mutation, path, temp, minwindow, tool, win_type):
 
     # Run RipRap:
     riprap = subprocess.call(["python2", "{0}/workflow/scripts/riprap.py".format(path), "--i", fn, "--o", name, "--foldtype", str(tool), "-T", str(temp), "-w", str(minwindow), "-f", str(win_type)], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+    # Check for errors:
+    if riprap.stderr != None:
+        return "NA"
 
     # Read the output:
     with open("{0}_riprap_score.tab".format(name)) as f:

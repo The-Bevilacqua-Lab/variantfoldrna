@@ -69,7 +69,7 @@ with open(args.in_file) as fn:
             results = os.popen(
                 "python3 "
                 + path
-                + "/workflow/scripts/calculate_pearson.py -T "
+                + "/workflow/scripts/snpfold.py -T "
                 + args.temp
                 + " -seq "
                 + transcribe_rna(seq)

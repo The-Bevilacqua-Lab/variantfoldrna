@@ -1,12 +1,14 @@
-===========
-File Types
-===========
+======================
+Input and Output Files
+======================
 
 The SPARCS pipeline relies on several different files for the analysis. 
-The following is a list of the file types and their purpose.
+The following is a list of the file types and their purposes
 
 Input files
 -----------
+SPARCS can handle gzipped files or files that are not compressed as input.  
+
 1. Reference Genome (FASTA) - The reference genome holds the sequence
    of the genome of interest. This file is used to get the sequences of 
    the genes of interest. 
