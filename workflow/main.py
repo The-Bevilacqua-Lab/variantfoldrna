@@ -1,0 +1,78 @@
+###########################################################################
+# Main file for running the SPARCS pipeline. This acts a wrapper that 
+# will automactically create everythigng needed to run the Snakemake 
+# pieline without having to worry about the details.
+#
+# Author: Kobie Kirven (kjk617@psu.edu)
+# Assmann Lab, The Pennsylvania State University
+#
+###########################################################################
+
+# Imports
+import argparse
+import os
+import subprocess
+import sys
+import yaml
+
+# Functions
+def prGreen(skk): print("\033[92m {}\033[00m" .format(skk))
+def prCyan(skk): print("\033[96m {}\033[00m" .format(skk))
+
+
+def main():
+
+    # Parse the command line arguments
+    parser = argparse.ArgumentParser(description="Run the SPARCS pipeline")
+    parser.add_argument("--vcf", dest="vcf", help="Path to VCF file (If not specified, will check the current directory")
+    parser.add_argument("--gtf", dest="gtf", help="Path to GTF file (If not specified, will check the current directory")
+    parser.add_argument("--fasta", dest="fasta", help="Path to FASTA file (If not specified, will check the current directory")
+    parser.add_argument("--out", dest="out", help="Path to output directory (If not specified, will create a new directory named 'sparcs_output' in the current directory")
+    parser.add_argument("--structure-pred-tool", dest="structure_pred_tool", help="Structure prediction tool to use (RNAfold or RNAstructure, Default: RNAfold)")
+    parser.add_argument("--ribosnitch-tool", dest="ribosnitch_tool", help="RiboSNitch prediction tool to use (SNPfold or Riprap, Default: SNPfold)")
+    parser.add_argument("--ribosnitch-flank", dest="ribosnitch_flank", help="Flanking length for RiboSNitch prediction (Default: 40)")
+    parser.add_argument("--temperature", dest="temperature", help="Temperature for structural prediction (Default: 37.0)")
+    args = parser.parse_args()
+
+    # Get the location of where this file is being ran 
+    location = os.getcwd()
+    
+    # Get the location of the output directory
+    if args.out:
+        output_dir = args.out
+    else:
+        output_dir = os.path.join(location, "sparcs_output")
+
+    # Check to to see if the user has a VCF file, a GTF file, and a FASTA file in the current directory
+    inputted_files = {"VCF": None, "GTF": None, "FASTA": None}
+    if args.vcf:
+        inputted_files["VCF"] = args.vcf
+    if args.gtf:
+        inputted_files["GTF"] = args.gtf
+    if args.fasta:
+        inputted_files["FASTA"] = args.fasta
+
+    if len([x for x in inputted_files.values() if x != None]) > 0:
+        prGreen("Specified files inclde: ")
+        for file_type, file_path in inputted_files.items():
+            if file_path:
+                prGreen("   - {}: {}".format(file_type, file_path))
+    
+    if len([x for x in inputted_files.values() if x != None]) != 3:
+        prGreen("\n")
+        prGreen("Checking for files in the current directory...")
+        prGreen("Found the following files in the current directory:")
+        for file_type, file_path in inputted_files.items():
+            if file_path == None:
+                prGreen("   - {}".format(file_type))
+
+    prGreen("\n")
+    prGreen("Generating the necessary files for the SPARCS pipeline...")
+    prGreen("All Done!\n")
+    prCyan("To run the SPARCS pipeline, run the following commands:")
+    prCyan("   cd {}".format(output_dir))
+    prCyan("   snakemake --use-conda --cores 1")
+    prCyan("\n Thank you for using SPARCS!")
+
+if __name__ == "__main__":
+    main()
