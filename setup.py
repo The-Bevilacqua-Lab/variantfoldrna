@@ -38,15 +38,19 @@ setup(
     author=metainfo['authors']['main'][0],
     author_email=metainfo['authors']['main'][1],
     license=metainfo['license'],
-    packages=find_namespace_packages(),
+    package_dir = {'':'workflow'},
 
+    include_package_data = True,
 
-install_requires = open("requirements.txt").read(),
+    install_requires = open("requirements.txt").read(),
 
     # This is recursive include of data files
     exclude_package_data = {"": ["__pycache__"]},
     package_data = {
-        '': ['*.yaml', "*.rules", "*.json", "requirements.txt", "*png", "*yml", "*smk"]
+        'workflow': ['*.yaml', "*.rules", "*.json", "requirements.txt", "*png", "*yml", "*smk", "*.py"],
+        "workflow.rules": ["*/*.rules"],
+        "workflow.scripts":["*/*.py", "*/*.pl"],
+        "workflow.envs": ["*/*.yaml"],
         },
 
     zip_safe=False,
@@ -56,3 +60,4 @@ install_requires = open("requirements.txt").read(),
     }
 
 )
+
