@@ -13,11 +13,7 @@ import argparse
 import os
 import subprocess
 import sys
-import yaml
-
-# Functions
-def prGreen(skk): print("\033[92m {}\033[00m" .format(skk))
-def prCyan(skk): print("\033[96m {}\033[00m" .format(skk))
+from utils import *
 
 
 def main():
@@ -42,6 +38,7 @@ def main():
         output_dir = args.out
     else:
         output_dir = os.path.join(location, "sparcs_output")
+        prYellow("Output directory not specified, so will create a new directory named 'sparcs_output' in the current directory")
 
     # Check to to see if the user has a VCF file, a GTF file, and a FASTA file in the current directory
     inputted_files = {"VCF": None, "GTF": None, "FASTA": None}
@@ -52,12 +49,16 @@ def main():
     if args.fasta:
         inputted_files["FASTA"] = args.fasta
 
+    # The user has specified at least one of the files, so we will 
+    # let the user know what files they have specified
     if len([x for x in inputted_files.values() if x != None]) > 0:
         prGreen("Specified files inclde: ")
         for file_type, file_path in inputted_files.items():
             if file_path:
                 prGreen("   - {}: {}".format(file_type, file_path))
     
+    # The user did not specify all of the files, so we will check to see 
+    # if the files are in the current directory
     if len([x for x in inputted_files.values() if x != None]) != 3:
         prGreen("\n")
         prGreen("Checking for files in the current directory...")
@@ -71,7 +72,7 @@ def main():
                         files_found.append("   - {}: {}".format(file_type, inputted_files[file_type]))
                         break
         if len(files_found) == 0:
-            prGreen("No files found in the current directory")
+            prYellow("Warning: No files found in the current directory! You will need to manually edit the config.yaml file to specify the paths to the files.")
         
         else:
             prGreen("Found the following files in the current directory:")
