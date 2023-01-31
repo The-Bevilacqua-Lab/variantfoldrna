@@ -96,3 +96,19 @@ def config_builder(output_file, working_directory, vcf_file, gtf_file,
     output.write(f"\nriprap_min_window: {riprap_min_window}\n\n")
     output.close()
 
+
+# Create a bash script to run the SPARCS pipeline
+def bash_builder(output_file, cores):
+    '''
+    Generates a bash script for running the SPARCS pipeline
+    '''
+    output = open(output_file, "w")
+    header = '''#!/bin/bash
+
+# This script runs the SPARCS pipeline\n\n'''
+
+    output.write(header)
+    output.write("echo 'Running SPARCS...'\n\n")
+    output.write(f"snakemake -s sparcs.rules --cores {cores} --use-conda --conda-frontend conda\n")
+    output.close()
+
