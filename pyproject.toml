@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sparcs"
+version = "0.0.1"
+authors = [
+  { name="Kobie Kirven", email="kjk6173@psu.edu" },
+]
+description = "A Snakemake pipeline for riboSNitch prediction"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/The-Bevilacqua-Lab/SPARCS"
+
+[project.entry-points."workflow"]
+sparcs = "workflow.sparcs:main"
+

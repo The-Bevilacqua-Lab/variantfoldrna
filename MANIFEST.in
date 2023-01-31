@@ -1,0 +1,6 @@
+include worfklow/envs/*
+include workflow/rules/*
+include workflow/scripts/*
+include workflow/sparcs.py
+include workflow/sparcs.rules
+include workflow/utils.py
