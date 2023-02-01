@@ -1,0 +1,10 @@
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - python=2.7
+  - rnastructure=6.3
+  - viennarna=2.4.14
+  - pip:
+    - scipy==1.2.3
