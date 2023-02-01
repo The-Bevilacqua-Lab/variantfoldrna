@@ -20,10 +20,15 @@ classifiers = [
 [project.urls]
 "Homepage" = "https://github.com/The-Bevilacqua-Lab/SPARCS"
 
-# Include the data files
-[project.data-files]
-"share/sparcs" = ["src/workflow/*", "src/*"]
-
 # Add entry points for the command line interface
 [project.scripts]
 sparcs = "sparcs.sparcs:main"
+
+[tool.hatch.build]
+include = [
+  "sparcs/*/*/*",
+  "sparcs/sparcs_workflow/sparcs.rules",
+  "sparcs/__init__.py",
+  "sparcs/sparcs.py",
+  "sparcs/sparcs_utils.py"
+]

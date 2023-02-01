@@ -1,0 +1,82 @@
+#=======================================================================
+#                       Configuration File
+# ---------------------------------------------------------------------
+# This file contains all of the user-specified parameters for running 
+# the SPARCS pipeline.
+#  
+# Replace each of the values to the right of the colon for each 
+# parameters with the appropriate value.
+# 
+#   ---- Note: File paths must be absolute file paths! ----
+#=======================================================================
+
+# -- PATHS -- #
+#############################################################
+# Working_directory - directory to store the output folders  
+#############################################################
+working_directory: ~/Desktop
+
+# -- INPUT FILES -- # 
+#############################################################
+# vcf_file - Variants file 
+#############################################################
+vcf_file: NA
+
+#############################################################
+# gtf_file - Gene model (must be in GTF format)
+#############################################################
+gtf_file: NA
+
+#############################################################
+# ref_genome - Reference genome in FASTA format 
+#############################################################
+ref_genome: NA
+
+
+# -- PARAMETERS -- #
+#############################################################
+# Name - File prefix name 
+#############################################################
+name: NA
+
+#############################################################
+# out_name - Name of the output directory
+#############################################################
+out_name: NA
+
+#############################################################
+# flank_length - number of nucleotides on either side of 
+#                the SNP for riboSNitch prediciton 
+#############################################################
+flank_len: 10
+
+#############################################################
+# Chunks - The number of splits of the input files 
+#############################################################
+chunks: 1
+
+#############################################################
+# temperature - Tempureature for RNA folding
+#############################################################
+temperature: 37.0
+
+#############################################################
+# ribosnitch_prediction_tool: Tool to use for predicting
+#                             riboSNitches 
+#                            (SNPfold or RipRap)  
+#############################################################
+ribosnitch_prediction_tool: RipRap
+
+#############################################################
+# structure_prediction_tool: Tool to use for predicting the RNA
+#                  structural ensembles (RNAfold or RNAplfold)
+#############################################################
+structure_prediction_tool: RNAstructure
+
+
+
+# -- ADVANCED PARAMETERS -- #
+#############################################################
+# riprap_min_window: Minimum window size for RipRap
+#############################################################
+riprap_min_window: 3
