@@ -13,7 +13,10 @@ import argparse
 import os
 import subprocess
 import sys
-from .sparcs_utils import *
+try:
+    from .sparcs_utils import *
+except:
+    from sparcs_utils import *
 
 
 def main():
@@ -41,6 +44,7 @@ def main():
         help="Path to output directory (If not specified, will create a new directory named 'sparcs_output' in the current directory",
         default="sparcs_pipeline",
     )
+
     parser.add_argument(
         "--chunks",
         dest="chunks",
@@ -54,11 +58,13 @@ def main():
         "--structure-pred-tool",
         dest="structure_pred_tool",
         help="Structure prediction tool to use (RNAfold or RNAstructure, Default: RNAfold)",
+        default = "RNAfold",
     )
     parser.add_argument(
         "--ribosnitch-tool",
         dest="ribosnitch_tool",
         help="RiboSNitch prediction tool to use (SNPfold or Riprap, Default: SNPfold)",
+        default = "SNPfold",
     )
     parser.add_argument(
         "--ribosnitch-flank",
@@ -107,13 +113,21 @@ def main():
         prRed("Error: Could not create output directory: {}".format(output_dir))
         sys.exit(1)
 
+    # Get the full path of the output directory
+    output_dir = os.path.abspath(output_dir)
+
     # -- end output directory -- #
 
     # -- Copying files -- #
     # Copy all of the relevant files to the output directory
     # Copy the scripts directory
     try:
-        subprocess.call("cp -r {}/sparcs_workflow/scripts {}".format(file_location, output_dir), shell=True)
+        subprocess.call("mkdir {}/workflow".format(output_dir), shell=True)
+    except:
+        prRed("Error: Could not copy the workflow directory to the output directory")
+        sys.exit(1)
+    try:
+        subprocess.call("cp -r {}/sparcs_workflow/scripts {}/workflow".format(file_location, output_dir), shell=True)
     except:
         prRed("Error: Could not copy the scripts directory to the output directory")
         sys.exit(1)
@@ -121,7 +135,7 @@ def main():
     # Copy the Snakefile
     try:
         subprocess.call(
-            "cp {}/sparcs_workflow/sparcs.rules {}".format(file_location, output_dir), shell=True
+            "cp {}/sparcs_workflow/sparcs.rules {}/workflow".format(file_location, output_dir), shell=True
         )
     except:
         prRed("Error: Could not copy the Snakefile to the output directory")
@@ -129,7 +143,7 @@ def main():
 
     # Copy the envs directory
     try:
-        subprocess.call("cp -r {}/sparcs_workflow/envs {}".format(file_location, output_dir), shell=True)
+        subprocess.call("cp -r {}/sparcs_workflow/envs {}/workflow".format(file_location, output_dir), shell=True)
 
     except:
         prRed("Error: Could not copy the envs directory to the output directory")
@@ -137,7 +151,7 @@ def main():
 
     # Copy the rules directory
     try:
-        subprocess.call("cp -r {}/sparcs_workflow/rules {}".format(file_location, output_dir), shell=True)
+        subprocess.call("cp -r {}/sparcs_workflow/rules {}/workflow".format(file_location, output_dir), shell=True)
     except:
         prRed("Error: Could not copy the rules directory to the output directory")
         sys.exit(1)
@@ -218,14 +232,15 @@ def main():
     prGreen("\n")
     prGreen("Generating the necessary files for the SPARCS pipeline...")
 
+
     # Generate the config.yaml file
     config_builder(
-        f'{output_dir}/config.yaml',
-        output_dir + "/sparcs_output",
+        f'{output_dir}/workflow/config.yaml',
+        "/".join(output_dir.split("/")[:-1]),
         vcf_file,
         gtf_file,
         ref_genome,
-        output_dir,
+        output_dir.split("/")[-1],
         args.ribosnitch_flank,
         args.chunks,
         args.temperature,
@@ -242,7 +257,6 @@ def main():
     prCyan("   cd {}".format(output_dir))
     prCyan("   bash sparcs.sh\n")
     prCyan("\n Thank you for using SPARCS!")
-
 
 if __name__ == "__main__":
     main()
