@@ -7,28 +7,11 @@
 # The Pennsylvania State University
 ################################################################################
 
-
+# Read in the config file:
 configfile: srcdir("../config.yaml")
-
 
 # Import the python modules:
 import os
-
-# Get the location of this file:
-location = os.getcwd()
-
-# Get the path up to the SPARCS directory:
-path = []
-for ele in location.split("/"):
-    if ele == "SPARCS":
-        path.append(ele)
-        break
-    else:
-        path.append(ele)
-
-# Convert the path to a string:
-path = "/".join(path)
-
 
 rule create_gffutils:
     # Create the gffutils database
@@ -39,7 +22,7 @@ rule create_gffutils:
     conda:
         "../envs/extract_seqs.yaml"
     shell:
-        f"python3 {path}/workflow/scripts/build_gffutils.py --gtf {{params.gtf}} --o {{output}}"
+        f"python3 workflow/scripts/build_gffutils.py --gtf {{params.gtf}} --o {{output}}"
 
 
 rule extract_sequencs:
@@ -51,11 +34,12 @@ rule extract_sequencs:
         ref_genome=config["ref_genome"],
         flank=config["flank_len"],
     output:
-        f"{config['working_directory']}/{config['out_name']}/temp/extracted_sequences/extracted_seqs_{{i}}.txt",
+        seqs = f"{config['working_directory']}/{config['out_name']}/temp/extracted_sequences/extracted_seqs_{{i}}.txt",
+        utrs = f"{config['working_directory']}/{config['out_name']}/temp/utr_locs/extracted_utrs_{{i}}.txt",
     conda:
         "../envs/extract_seqs.yaml"
     shell:
-        f"python3 {path}/workflow/scripts/get_read_data.py --vcf {{input.vcf}} --database {{input.database}} --ref-genome {{params.ref_genome}} --flank {{params.flank}} --o {{output}}"
+        f"python3 workflow/scripts/get_read_data.py --vcf {{input.vcf}} --database {{input.database}} --ref-genome {{params.ref_genome}} --flank {{params.flank}} --o {{output.seqs}} --utr-file {{output.utrs}}"
 
 
 rule combine_extracted_sequences:
@@ -80,4 +64,4 @@ rule remove_duplicates:
     conda:
         "../envs/extract_seqs.yaml"
     shell:
-        f"python3 {path}/workflow/scripts/remove_duplicates.py -i {{input}} -o {{output}}"
+        f"python3 workflow/scripts/remove_duplicates.py -i {{input}} -o {{output}}"
