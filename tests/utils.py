@@ -140,9 +140,14 @@ def add_workflow():
 
     # Make sure that we have the pipeline in our current directory for testing
     if not os.path.exists(f"{workflow_path}/tests/workflow"):
+        try:
+            os.system(f" rm -rf {workflow_path}/tests/sparcs_workflow")
+        except:
+            pass
         os.system(f"cp -r {workflow_path}/sparcs/sparcs_workflow {workflow_path}/tests && mv {workflow_path}/tests/sparcs_workflow {workflow_path}/tests/workflow")
     else:
         os.system("rm -rf {workflow_path}/tests/workflow")
+        os.system(f" rm -rf {workflow_path}/tests/sparcs_workflow")
         os.system(f"cp -r {workflow_path}/sparcs/sparcs_workflow {workflow_path}/tests && mv {workflow_path}/tests/sparcs_workflow {workflow_path}/tests/workflow")
 
 def remove_workflow():
