@@ -8,25 +8,8 @@
 ################################################################################
 configfile: srcdir("../config.yaml")
 
-
 # Import the python modules:
 import os
-
-# Get the location of this file:
-location = os.getcwd()
-
-# Get the path up to the SPARCS directory:
-path = []
-for ele in location.split("/"):
-    if ele == "SPARCS":
-        path.append(ele)
-        break
-    else:
-        path.append(ele)
-
-# Convert the path to a string:
-path = "/".join(path)
-
 
 rule chunk_vcf:
     # Break up the VCF file in to bite-sized chunks so that it is easier to process
@@ -41,7 +24,7 @@ rule chunk_vcf:
     conda:
         "../envs/process_seq.yaml"
     shell:
-        f"python3 {path}/workflow/scripts/chunk_vcf.py --input {{input.vcf}} --dir {config['working_directory']}/{config['out_name']}/temp --vcf-header {{input.header}} --chunk-total {config['chunks']}"
+        f"python3 workflow/scripts/chunk_vcf.py --input {{input.vcf}} --dir {config['working_directory']}/{config['out_name']}/temp --vcf-header {{input.header}} --chunk-total {config['chunks']}"
 
 
 # Chunk the extracted sequences:
