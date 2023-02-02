@@ -80,10 +80,15 @@ def main():
     )
     args = parser.parse_args()
 
-    # Get the location of where this file is stored
+    # Get the location of where this file is stored. We will use this
+    # to copy the necessary files to the output directory
     file_location = os.path.dirname(os.path.realpath(__file__))
 
-    # Get the location of where this file is being ran
+
+    # -- output directory -- # 
+
+    # Get the location of where this file is being ran. We will use this to 
+    # create the output directory
     location = os.getcwd()
 
     # Get the location of the output directory
@@ -99,22 +104,45 @@ def main():
     try:
         os.mkdir(output_dir)
     except:
-        raise Exception("Could not create the output directory")
+        prRed("Error: Could not create output directory: {}".format(output_dir))
+        sys.exit(1)
 
+    # -- end output directory -- #
+
+    # -- Copying files -- #
     # Copy all of the relevant files to the output directory
     # Copy the scripts directory
-    subprocess.call("cp -r {}/sparcs_workflow/scripts {}".format(file_location, output_dir), shell=True)
+    try:
+        subprocess.call("cp -r {}/sparcs_workflow/scripts {}".format(file_location, output_dir), shell=True)
+    except:
+        prRed("Error: Could not copy the scripts directory to the output directory")
+        sys.exit(1)
 
     # Copy the Snakefile
-    subprocess.call(
-        "cp {}/sparcs_workflow/sparcs.rules {}".format(file_location, output_dir), shell=True
-    )
+    try:
+        subprocess.call(
+            "cp {}/sparcs_workflow/sparcs.rules {}".format(file_location, output_dir), shell=True
+        )
+    except:
+        prRed("Error: Could not copy the Snakefile to the output directory")
+        sys.exit(1)
 
     # Copy the envs directory
-    subprocess.call("cp -r {}/sparcs_workflow/envs {}".format(file_location, output_dir), shell=True)
+    try:
+        subprocess.call("cp -r {}/sparcs_workflow/envs {}".format(file_location, output_dir), shell=True)
+
+    except:
+        prRed("Error: Could not copy the envs directory to the output directory")
+        sys.exit(1)
 
     # Copy the rules directory
-    subprocess.call("cp -r {}/sparcs_workflow/rules {}".format(file_location, output_dir), shell=True)
+    try:
+        subprocess.call("cp -r {}/sparcs_workflow/rules {}".format(file_location, output_dir), shell=True)
+    except:
+        prRed("Error: Could not copy the rules directory to the output directory")
+        sys.exit(1)
+
+    # -- end copying files -- #
 
     # Check to to see if the user has a VCF file, a GTF file, and a FASTA file in the current directory
     inputted_files = {"VCF": None, "GTF": None, "FASTA": None}
@@ -143,12 +171,19 @@ def main():
         for file_type, file_path in inputted_files.items():
             if file_path == None:
                 for file in os.listdir(location):
-                    if file.endswith(file_type.lower()):
+                    if file.endswith(file_type.lower() + ".gz") or file.endswith(file_type.lower()):
                         inputted_files[file_type] = os.path.join(location, file)
                         files_found.append(
                             "   - {}: {}".format(file_type, inputted_files[file_type])
                         )
                         break
+                    elif file.endswith(".fa") or file.endswith(".fa.gz"):
+                        inputted_files["FASTA"] = os.path.join(location, file)
+                        files_found.append(
+                            "   - {}: {}".format(file_type, inputted_files[file_type])
+                        )
+                        break
+
         if len(files_found) == 0:
             prYellow(
                 "Warning: No files found in the current directory! You will need to manually edit the config.yaml file to specify the paths to the files."
@@ -178,11 +213,14 @@ def main():
     if output_dir.endswith("/"):
         output_dir = output_dir[:-1]
 
+    
+    # Let the user know that we are generating the necessary files
     prGreen("\n")
     prGreen("Generating the necessary files for the SPARCS pipeline...")
 
+    # Generate the config.yaml file
     config_builder(
-        f"{file_location}/config.yaml",
+        f'{output_dir}/config.yaml',
         output_dir + "/sparcs_output",
         vcf_file,
         gtf_file,
@@ -196,12 +234,13 @@ def main():
         args.minwindow,
     )
 
+    # Generate the sparcs.sh file
     bash_builder(f"{output_dir}/sparcs.sh", args.cores)
 
     prGreen("All Done!\n")
     prCyan("To run the SPARCS pipeline, run the following commands:")
     prCyan("   cd {}".format(output_dir))
-    prCyan("   snakemake --use-conda --cores 1")
+    prCyan("   bash sparcs.sh\n")
     prCyan("\n Thank you for using SPARCS!")
 
 

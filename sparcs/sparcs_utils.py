@@ -6,6 +6,7 @@
 def prGreen(skk): print("\033[92m {}\033[00m" .format(skk))
 def prCyan(skk): print("\033[96m {}\033[00m" .format(skk))
 def prYellow(skk): print("\033[93m {}\033[00m" .format(skk))
+def prRed(skk): print("\033[91m {}\033[00m" .format(skk))
 
 def config_builder(output_file, working_directory, vcf_file, gtf_file, 
                    ref_genome, output_dir, flank, chunks, temperature,
@@ -61,10 +62,10 @@ def config_builder(output_file, working_directory, vcf_file, gtf_file,
     output.write(f"out_name: {output_dir}\n\n")
 
     output.write('''#############################################################
-# flank_length - number of nucleotides on either side of 
+# flank_len - number of nucleotides on either side of 
 #                the SNP for riboSNitch prediciton 
 #############################################################\n''')
-    output.write(f"flank_length: {flank}\n\n")
+    output.write(f"flank_len: {flank}\n\n")
 
     output.write('''#############################################################
 # Chunks - The number of splits of the input files 
