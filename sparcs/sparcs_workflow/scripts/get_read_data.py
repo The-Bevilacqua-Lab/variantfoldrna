@@ -104,7 +104,7 @@ for i in range(len(predictions)):
             five_prime_end = five_prime_utr[0].end
 
         if len(three_prime_utr) == 0:
-            three_prime_starts = ['NA']
+            three_prime_start = ['NA']
             three_prime_end = ['NA']
         else:
             three_prime_start = three_prime_utr[0].start
