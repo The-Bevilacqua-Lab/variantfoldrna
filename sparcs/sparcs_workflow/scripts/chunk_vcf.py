@@ -6,14 +6,19 @@
 # The Penn State University
 ################################################################################
 
-import subprocess
 import argparse
 import os
-import copy
+import gzip 
+import sys
 
 #######################
 #  --  Functions --   #
 #######################
+def prGreen(skk): print("\033[92m {}\033[00m" .format(skk))
+def prCyan(skk): print("\033[96m {}\033[00m" .format(skk))
+def prYellow(skk): print("\033[93m {}\033[00m" .format(skk))
+def prRed(skk): print("\033[91m {}\033[00m" .format(skk))
+
 parser = argparse.ArgumentParser(description="Break up VCF file")
 parser.add_argument("--input", dest="input", help="input file")
 parser.add_argument("--dir", dest="dir", help="working directory")
@@ -23,22 +28,31 @@ parser.add_argument(
 )
 args = parser.parse_args()
 
+# Check to see if we are dealing with a gzipped VCF file or not
+if args.input.ends
+
 # Make a directory to store the VCF chunks
 if not os.path.exists(f"{args.dir}/vcf_chunks/"):
-    os.system(f"mkdir -p {args.dir}/vcf_chunks/")
+    try:
+        os.system(f"mkdir -p {args.dir}/vcf_chunks/")
+    except:
+        prRed("Error: Can not create directory to hold VCF chunks")
+        sys.exit(1)
 
-
-def get_vcf_len(file_name):
+def get_vcf_len(file_name, gzip=False):
     """
     Get the number of lines in the VCF file
     """
     total = 0
-    with open(file_name) as fn:
-        for line in fn:
-            if line.startswith("#"):
-                continue
-            else:
-                total += 1
+    if gzip:
+        fn = gzip.open(file_name, 'rb')
+    else:
+        fn = open(file_name)
+    for line in fn:
+        if line.startswith("#"):
+            continue
+        else:
+            total += 1
     return total
 
 
