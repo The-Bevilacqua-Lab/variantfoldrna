@@ -38,7 +38,7 @@ def run_snakemake(
     try:
         #subprocess.check_call(cmd, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
         subprocess.check_call(cmd)
-
+        
     except:
         print(f"Error in snakemake invocation:", file=sys.stderr)
         sys.exit(1)
