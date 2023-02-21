@@ -14,11 +14,11 @@ import os
 rule chunk_vcf:
     # Break up the VCF file in to bite-sized chunks so that it is easier to process
     input:
-        vcf=f"{config['working_directory']}/{config['out_name']}/temp/vcf_no_header.vcf",
-        header=f"{config['working_directory']}/{config['out_name']}/temp/vcf_header.txt",
+        vcf=f"{config['working_directory']}/{config['out_name']}/temp/vcf_no_header.vcf.gz",
+        header=f"{config['working_directory']}/{config['out_name']}/temp/vcf_header.txt.gz",
     output:
         expand(
-            f"{config['working_directory']}/{config['out_name']}/temp/vcf_chunks/vcf_no_header_{{i}}.vcf",
+            f"{config['working_directory']}/{config['out_name']}/temp/vcf_chunks/vcf_no_header_{{i}}.vcf.gz",
             i=range(1, int(config["chunks"]) + 1),
         ),
     conda:

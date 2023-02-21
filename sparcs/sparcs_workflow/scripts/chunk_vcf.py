@@ -29,7 +29,10 @@ parser.add_argument(
 args = parser.parse_args()
 
 # Check to see if we are dealing with a gzipped VCF file or not
-if args.input.ends
+if args.input.endswith(".gz"):
+    vcf_gz = True
+else:
+    vcf_gz = False
 
 # Make a directory to store the VCF chunks
 if not os.path.exists(f"{args.dir}/vcf_chunks/"):
@@ -39,26 +42,28 @@ if not os.path.exists(f"{args.dir}/vcf_chunks/"):
         prRed("Error: Can not create directory to hold VCF chunks")
         sys.exit(1)
 
-def get_vcf_len(file_name, gzip=False):
+def get_vcf_len(file_name, gzip_file=False):
     """
     Get the number of lines in the VCF file
     """
     total = 0
-    if gzip:
+
+    if gzip_file:
+        print(file_name)
         fn = gzip.open(file_name, 'rb')
     else:
         fn = open(file_name)
     for line in fn:
-        if line.startswith("#"):
+        if line.startswith("#".encode()):
             continue
         else:
             total += 1
     return total
 
-
 # Get the number of lines in the VCF file
-vcf_len = get_vcf_len(args.input)
+vcf_len = get_vcf_len(args.input, gzip_file=vcf_gz)
 
+# Check to see if we are splitting the VCF file into more chunks than there are lines
 if int(args.chunk) == 1:
     chunk_len = vcf_len
 else:
@@ -66,11 +71,17 @@ else:
     chunk_len = vcf_len // (int(args.chunk) - 1)
 
 # Split the VCF file up into tiny files
-in_file = open(args.input, "r")
-header_one = str(in_file.readline())
+
+# If the VCF file is gzipped, we need to open it differently
+if vcf_gz:
+    in_file = gzip.open(args.input, "rb")
+else:
+    in_file = open(args.input, "r")
+
+header_one = in_file.readline()
 for i in range(1, int(args.chunk)):
-    fn = open(f"{args.dir}/vcf_chunks/vcf_no_header_{i}.vcf", "w")
-    with open(args.header, "r") as header:
+    fn = gzip.open(f"{args.dir}/vcf_chunks/vcf_no_header_{i}.vcf.gz", "wb")
+    with gzip.open(args.header, "rb") as header:
         for line in header:
             fn.write(line)
     fn.write(header_one)
@@ -79,11 +90,12 @@ for i in range(1, int(args.chunk)):
     fn.close()
 
 # Write what's left to the last file
-fn = open(f"{args.dir}/vcf_chunks/vcf_no_header_{int(args.chunk)}.vcf", "w")
-with open(args.header, "r") as header:
+fn = gzip.open(f"{args.dir}/vcf_chunks/vcf_no_header_{int(args.chunk)}.vcf.gz", "wb")
+with gzip.open(args.header, "rb") as header:
     for line in header:
         fn.write(line)
 fn.write(header_one)
+
 for line in in_file:
     fn.write(line)
 fn.close()
