@@ -38,11 +38,10 @@ def run_snakemake(
     try:
         #subprocess.check_call(cmd, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
         subprocess.check_call(cmd)
-    except subprocess.CalledProcessError as e:
-        print(f"Error in snakemake invocation: {e}", file=sys.stderr)
-        return e.returncode
 
-    return 0
+    except:
+        print(f"Error in snakemake invocation:", file=sys.stderr)
+        sys.exit(1)
 
 def config_builder(output_file, working_directory, vcf_file, gtf_file, 
                    ref_genome, output_dir, flank, chunks, temperature,

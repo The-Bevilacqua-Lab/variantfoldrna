@@ -10,6 +10,7 @@ import argparse
 import os
 import gzip 
 import sys
+import subprocess
 
 #######################
 #  --  Functions --   #
@@ -45,6 +46,7 @@ def get_vcf_len(file_name, gzip_file=False):
         else:
             total += 1
     return total
+    
 
 # -- Main --   #
 

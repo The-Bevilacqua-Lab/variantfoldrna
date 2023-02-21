@@ -27,8 +27,8 @@ rule chunk_vcf:
         f"python3 workflow/scripts/chunk_vcf.py --input {{input.vcf}} --dir {config['working_directory']}/{config['out_name']}/temp --vcf-header {{input.header}} --chunk-total {config['chunks']}"
 
 
-# Chunk the extracted sequences:
 rule chunk_extracted_sequences:
+    # Chunk the extracted sequences:
     input:
         f"{config['working_directory']}/{config['out_name']}/temp/extracted_flank_snp_no_duplicates.txt",
     output:
