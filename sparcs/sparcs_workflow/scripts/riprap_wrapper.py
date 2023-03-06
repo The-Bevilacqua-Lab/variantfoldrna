@@ -87,6 +87,11 @@ parser.add_argument("--windowtype", dest="windowtype", help="Window Type", defau
 parser.add_argument("--tool", dest="tool", help="Tool", default="RNAfold")
 args = parser.parse_args()
 
+# If the tool is RNAstructure, make sure we add the data tables to the path:
+if args.tool == "RNAstructure":
+    if "DATAPATH" not in os.environ:
+        os.environ["DATAPATH"] = f"{os.environ['CONDA_PREFIX']}/share/RNAstructure/data_tables"
+
 # Open the input file
 fn = open(args.in_file)
 lines = fn.readlines()
