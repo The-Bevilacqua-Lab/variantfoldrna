@@ -13,10 +13,8 @@ import sys
 import os
 from gzip import open as gzopen
 
+
 # --- Functions ---#
-# Check to make sure the the input file exists
-
-
 def is_gzipped(filename):
     """
     Check to make sure the file is gzipped
@@ -39,6 +37,7 @@ def is_gff_gtf_file(filename, gzip=False):
             first_line = f.readline().strip().decode("utf-8")
             return first_line.startswith("##gff-version") or first_line.startswith("#")
 
+
 def print_red(text):
     """
     Print in red
@@ -48,13 +47,13 @@ def print_red(text):
 
 # --- Main ---#
 if __name__ == "__main__":
-
     # Parse the arguments
     parser = argparse.ArgumentParser(description="Build the database for gffutils")
     parser.add_argument("--gtf", dest="gtf", help="GTF File")
     parser.add_argument("--o", dest="out", help="output_directory")
     args = parser.parse_args()
 
+    # Check to make sure the the input file exists
     if not os.path.exists(args.gtf):
         print("GTF file does not exist")
         sys.exit(1)
