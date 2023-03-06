@@ -25,7 +25,7 @@ rule create_gffutils:
         f"python3 workflow/scripts/build_gffutils.py --gtf {{params.gtf}} --o {{output}}"
 
 
-rule extract_sequencs:
+rule extract_sequences:
     # Extract the sequences flanking the SNP
     input:
         vcf=f"{config['working_directory']}/{config['out_name']}/temp/annotated_vcf_chunks_effects/vcf_no_header_{{i}}_annotated_one_per_line.txt",
