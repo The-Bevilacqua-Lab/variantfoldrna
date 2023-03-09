@@ -69,9 +69,44 @@ def test_split_file_by_line():
     print(vcf_file.name)
     # Create the dummy vcf file
     generate_dummy_vcf(100, vcf_file.name)
+
+    for num_chunks in range(1,100):
+
+        # Create a fake header file
+        header_file = tempfile.NamedTemporaryFile(suffix=".txt", delete=False)
+        header_file.close()
+        header = open(header_file.name, "w")
+        header.write("##fileformat=VCFv4.2\n")
+        header.write("##fileDate=20190805\n")
+        header.close()
+
+        # Split the file into chunks
+        chunk_vcf(vcf_file.name, num_chunks, "test_chunkfile", header.name)
+        
+        # Check that the number of lines in each chunk is equal to the number of lines in the original file divided by the number of chunks
+        # Get the files in the current directory
+        files = os.listdir()
+
+        # Get the files that start with "test_file_"
+        test_files = [f for f in files if f.startswith("test_chunkfile")]
+
+        # Check to make sure we have the correct number of chunks
+        assert len(test_files) == num_chunks
+
+        # Check to make sure the total number of lines in the chunks is equal to the number of lines in the original file
+        total_lines = 0
+        for f in test_files:
+            os.system(f"gunzip {f}.gz")
+            with open(f) as f:
+                total_lines += sum(1 for line in f if line.startswith("#") == False)
+        
+        assert total_lines == 100
+
+        # Remove the test files
+        for f in test_files:
+            os.remove(f)
+
     os.system(f"gzip {vcf_file.name}")
-
-
     for num_chunks in range(1,100):
 
         # Create a fake header file
@@ -107,6 +142,7 @@ def test_split_file_by_line():
         # Remove the test files
         for f in test_files:
             os.remove(f)
+
 
     # Remove the original vcf file
     os.remove(f"{vcf_file.name}.gz")

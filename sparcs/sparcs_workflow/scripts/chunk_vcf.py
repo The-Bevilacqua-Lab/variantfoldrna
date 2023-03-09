@@ -80,12 +80,13 @@ def split_file_by_line(filename, n):
     header = f.readline()
     start = 0
     for i in range(n):
-        chunk = [f"#{header.decode()}"]
         if gzip_file:
+            chunk = [f"#{header.decode()}"]
             for j in range(chunk_size + (i < remainder)):
                 chunk.append(f.readline().decode())
             yield chunk
         else:
+            chunk = [f"#{header}"]
             for j in range(chunk_size + (i < remainder)):
                 chunk.append(f.readline())
             yield chunk
@@ -118,47 +119,3 @@ if __name__ == "__main__":
 
     # Check to see if the input file is gzipped or not
     chunk_vcf(args.input, args.chunk, f"{args.dir}/vcf_chunks/vcf_no_header", args.header)
-    
-
-
-
-
-
-
-
-
-
-
-
-
-# # Read in the first line of the VCF file which is the column header
-# header_one = in_file.readline()
-# for i in range(1, int(args.chunk)):
-#     fn = gzip.open(f"{args.dir}/vcf_chunks/vcf_no_header_{i}.vcf.gz", "wb")
-
-#     # Write the header to the file
-#     with gzip.open(args.header, "rb") as header:
-#         for line in header:
-#             fn.write(line)
-
-#     # Add the column header to the file
-#     fn.write(header_one)
-
-#     # Write the VCF lines to the file
-#     for g in range(chunk_len):
-#         fn.write(in_file.readline())
-#     fn.close()
-
-# # Write what's left to the last file
-# fn = gzip.open(f"{args.dir}/vcf_chunks/vcf_no_header_{int(args.chunk)}.vcf.gz", "wb")
-
-# # Write the header to the file
-# with gzip.open(args.header, "rb") as header:
-#     for line in header:
-#         fn.write(line)
-# fn.write(header_one)
-
-# # Write the VCF lines to the file
-# for line in in_file:
-#     fn.write(line)
-# fn.close()
