@@ -98,6 +98,7 @@ def chunk_vcf(vcf_file, chunks, prefix, header):
                 f.write(line)
             for line in chunk:
                 f.write(line)
+        os.system("gzip {prefix}_{i}.vcf")
 
 # -- main --   #
 if __name__ == "__main__":
@@ -112,8 +113,11 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
+    # Create the output directory
+    create_output_dir(f"{args.dir}/vcf_chunks/")
 
     # Check to see if the input file is gzipped or not
+    chunk_vcf(args.input, args.chunk, f"{args.dir}/vcf_chunks/vcf_no_header", args.header)
     
 
 

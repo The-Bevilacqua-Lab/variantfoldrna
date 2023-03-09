@@ -88,6 +88,7 @@ def test_split_file_by_line():
         # Check that the number of lines in each chunk is equal to the number of lines in the original file divided by the number of chunks
         # Get the files in the current directory
         files = os.listdir()
+
         # Get the files that start with "test_file_"
         test_files = [f for f in files if f.startswith("test_chunkfile")]
 
@@ -97,7 +98,8 @@ def test_split_file_by_line():
         # Check to make sure the total number of lines in the chunks is equal to the number of lines in the original file
         total_lines = 0
         for f in test_files:
-            with open(f, "r") as f:
+            os.system(f"gunzip {f}.gz")
+            with open(f) as f:
                 total_lines += sum(1 for line in f if line.startswith("#") == False)
         
         assert total_lines == 100
