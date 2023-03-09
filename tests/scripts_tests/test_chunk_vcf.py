@@ -73,9 +73,17 @@ def test_split_file_by_line():
 
 
     for num_chunks in range(1,100):
-        
+
+        # Create a fake header file
+        header_file = tempfile.NamedTemporaryFile(suffix=".txt", delete=False)
+        header_file.close()
+        header = open(header_file.name, "w")
+        header.write("##fileformat=VCFv4.2\n")
+        header.write("##fileDate=20190805\n")
+        header.close()
+
         # Split the file into chunks
-        chunk_vcf(f"{vcf_file.name}.gz", num_chunks, "test_chunkfile")
+        chunk_vcf(f"{vcf_file.name}.gz", num_chunks, "test_chunkfile", header.name)
         
         # Check that the number of lines in each chunk is equal to the number of lines in the original file divided by the number of chunks
         # Get the files in the current directory

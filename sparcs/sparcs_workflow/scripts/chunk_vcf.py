@@ -90,9 +90,12 @@ def split_file_by_line(filename, n):
                 chunk.append(f.readline())
             yield chunk
 
-def chunk_vcf(vcf_file, chunks, prefix):
+def chunk_vcf(vcf_file, chunks, prefix, header):
+    header = open(header, "r").readlines()
     for i, chunk in enumerate(split_file_by_line(vcf_file, chunks)):
         with open(f"{prefix}_{i}.vcf", "w") as f:
+            for line in header:
+                f.write(line)
             for line in chunk:
                 f.write(line)
 
@@ -110,31 +113,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
 
-    # Get the number of lines in the VCF file
-    vcf_len = get_vcf_len(args.input, gzip_file=is_gzipped(args.input))
-
-    # Check to see if we are splitting the VCF file into more chunks than there are lines
-    if int(args.chunk) == 1:
-        chunk_len = vcf_len
-    else:
-        # Get the length of the chunks
-        chunk_len = vcf_len // (int(args.chunk) - 1)
-
-    # If the VCF file is gzipped, we need to open it differently
-    if is_gzipped(args.input):
-        in_file = gzip.open(args.input, "rb")
-    else:
-        in_file = open(args.input, "r")
-
-    # Open the header file
-    header = gzip.open(args.header, "rb")
-
-    # Column header
-    column_header = in_file.readline()
-
-    # Chunk the VCF file
-    chunk_vcf(in_file, header, int(args.chunk), args.dir, gzip=is_gzipped(args.input))
-
+    # Check to see if the input file is gzipped or not
     
 
 
