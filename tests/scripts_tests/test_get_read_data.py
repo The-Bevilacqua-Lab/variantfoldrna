@@ -46,5 +46,10 @@ def test_main():
     data_path = os.path.join(os.path.dirname(__file__), "..", "test_data", "get_read_data")
     command = subprocess.run(["python3", path, "--vcf", f"{data_path}/test_coords.txt", "--database", f"{data_path}/test.db", 
     "--ref-genome", f"{data_path}/chr1.fa", "--o", "test_output.txt", "--flank", "5"])
-    assert command.returncode == 0
+    
+    assert sum(1 for line in open("test_output.txt")) == 6
+    os.remove("test_output.txt")
+
+    assert sum(1 for line in open("test_output_no_match.txt")) == 2
+    os.remove("test_output_no_match.txt")
     
