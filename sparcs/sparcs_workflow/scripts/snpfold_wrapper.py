@@ -10,79 +10,84 @@
 # Imports
 import argparse
 import os
+import subprocess
 
-# Get the location of this file:
-location = os.getcwd()
-
-# Get the path up to the SPARCS directory:
-path = []
-for ele in location.split("/"):
-    if ele == "SPARCS":
-        path.append(ele)
-        break
-    else:
-        path.append(ele)
-
-# Convert the path to a string:
-path = "/".join(path)
-
-parser = argparse.ArgumentParser(description="Determine RiboSNitches")
-parser.add_argument("--i", dest="in_file", help="Input File")
-parser.add_argument("--o", dest="output", help="Output")
-parser.add_argument("--flank", dest="flank", help="Flanking length")
-
-parser.add_argument("--temp", dest="temp", help="Temp")
-
-
+# -- Functions -- #
 def transcribe_rna(seq):
+    """
+    Convert the DNA sequence to RNA
+    """
     return seq.replace("T", "U")
 
 
 def change_nuc(nuc):
+    """
+    Complement nucleotides 
+    """
     nuc_dict = {"A": "U", "T": "A", "G": "C", "C": "G"}
     return nuc_dict[nuc]
 
+def run_snpfold(seq, path, temp, mutation):
+    """
+    Run SNPfold on the sequence.
+    """
+    results = subprocess.run(["python3", f"{path}/sparcs_workflow/scripts/snpfold.py", "-T", temp, "-seq", seq, "-mut", mutation], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    try:
+        return float(results.stdout.decode("utf-8"))
+    except:
+        return "Error"
+      
 
-args = parser.parse_args()
+if __name__ == "__main__":
 
-outfile = open(args.output, "w")
-error = open(args.output.strip(".txt") + "_error.txt", "w")
-ids, seqs = [], []
+    # Get the path to the sparcs directory
+    path = os.path.dirname(os.path.realpath(__file__))
 
-with open(args.in_file) as fn:
-    for line in fn:
-        if not line.startswith("#"):
-            line = line.split("\t")
+    # Parse the arguments
+    parser = argparse.ArgumentParser(description="Determine RiboSNitches")
+    parser.add_argument("--i", dest="in_file", help="Input File")
+    parser.add_argument("--o", dest="output", help="Output")
+    parser.add_argument("--flank", dest="flank", help="Flanking length")
+    parser.add_argument("--temp", dest="temp", help="Temp")
+    args = parser.parse_args()
 
-            if not len(line[3]) == 1 or not len(line[4]) == 1:
-                continue
+    # Open the output files 
+    outfile = open(args.output, "w")
+    error = open(args.output.strip(".txt") + "_error.txt", "w")
+    
 
-            # Change the reference and alternative alleles
-            if line[2] == "T":
-                line[2] = "U"
-            if line[3] == "T":
-                line[3] = "U"
+    ids, seqs = [], []
+    with open(args.in_file) as fn:
+        for line in fn:
 
-            seq = str(line[5]) + str(line[3]) + str(line[6])
+            # Skip the header
+            if not line.startswith("#"):
+                line = line.split("\t")
 
-            # Run the riboSNitch analysis
-            results = os.popen(
-                "python3 "
-                + path
-                + "/workflow/scripts/snpfold.py -T "
-                + args.temp
-                + " -seq "
-                + transcribe_rna(seq)
-                + "  -mut "
-                + line[3]
-                + (str(int(args.flank) + 1))
-                + line[4]
-            ).read()
+                # Check to make sure we don't have any indels
+                if not len(line[3]) == 1 or not len(line[4]) == 1:
+                    continue
 
-            try:
-                corr = results.split("\n")[0]
-                outfile.write("\t".join(line).strip("\n") + "\t" + corr + "\n")
-            except:
-                error.write("\t".join(line) + "\n")
-fn.close()
-error.close()
+                # Change the reference and alternative alleles
+                if line[2] == "T":
+                    line[2] = "U"
+                if line[3] == "T":
+                    line[3] = "U"
+
+                # Get the sequence and the mutation
+                seq = str(line[5]) + str(line[3]) + str(line[6])
+                mutation =  f"{line[3]}{int(args.flank) + 1}{line[4]}"
+
+                # Run snpfold
+                results = run_snpfold(transcribe_rna(seq), path, args.temp, mutation)
+                
+                # Write the results to the output file
+                try:
+                    corr = results
+                    outfile.write("\t".join(line).strip("\n") + "\t" + corr + "\n")
+                except:
+                    error.write("\t".join(line) + "\n")
+
+    # Close the output and error files
+    fn.close()
+    error.close()
