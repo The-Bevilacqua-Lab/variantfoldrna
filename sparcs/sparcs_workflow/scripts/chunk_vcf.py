@@ -73,13 +73,15 @@ def split_file_by_line(filename, n):
         f = open(filename)
         
     f.seek(1)
-    chunk_size = sum(1 for line in f) // n
+    chunk_size = sum(1 for line in f) // int(n)
+    print(chunk_size)
+    print(n)
     f.seek(1)
-    remainder = sum(1 for line in f) % n
+    remainder = sum(1 for line in f) % int(n)
     f.seek(1)
     header = f.readline()
     start = 0
-    for i in range(n):
+    for i in range(int(n)):
         if gzip_file:
             chunk = [f"#{header.decode()}"]
             for j in range(chunk_size + (i < remainder)):
@@ -92,14 +94,17 @@ def split_file_by_line(filename, n):
             yield chunk
 
 def chunk_vcf(vcf_file, chunks, prefix, header):
-    header = open(header, "r").readlines()
+    header = gzip.open(header, "rb")
     for i, chunk in enumerate(split_file_by_line(vcf_file, chunks)):
-        with open(f"{prefix}_{i}.vcf", "w") as f:
+        with gzip.open(f"{prefix}_{i}.vcf", "w") as f:
+            header.seek(0)
             for line in header:
                 f.write(line)
             for line in chunk:
-                f.write(line)
-        os.system("gzip {prefix}_{i}.vcf")
+                f.write(line.encode())
+    header.close()
+    f.close()
+        # os.system(f"gzip {prefix}_{i}.vcf")
 
 # -- main --   #
 if __name__ == "__main__":
@@ -118,4 +123,4 @@ if __name__ == "__main__":
     create_output_dir(f"{args.dir}/vcf_chunks/")
 
     # Check to see if the input file is gzipped or not
-    chunk_vcf(args.input, args.chunk, f"{args.dir}/vcf_chunks/vcf_no_header", args.header)
+    chunk_vcf(args.input, args.chunk, f"{args.dir}/vcf_chunks/vcf_chunks/vcf_no_header", args.header)

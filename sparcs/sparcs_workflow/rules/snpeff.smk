@@ -93,7 +93,7 @@ rule create_snpeff_database:
 rule seperate_multi_vars:
     # Seperate multi-allelic variants
     input:
-        vcf=f"{config['working_directory']}/{config['out_name']}/temp/vcf_chunks/vcf_no_header_{{i}}.vcf",
+        vcf=f"{config['working_directory']}/{config['out_name']}/temp/vcf_chunks/vcf_no_header_{{i}}.vcf.gz",
     log:
         f"{config['working_directory']}/{config['out_name']}/logs/seperate_multi_vars/vcf_no_header_{{i}}_seperated.vcf.log",
     output:

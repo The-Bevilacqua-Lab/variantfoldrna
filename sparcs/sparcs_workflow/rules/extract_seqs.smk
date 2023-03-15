@@ -35,11 +35,10 @@ rule extract_sequences:
         flank=config["flank_len"],
     output:
         seqs = f"{config['working_directory']}/{config['out_name']}/temp/extracted_sequences/extracted_seqs_{{i}}.txt",
-        utrs = f"{config['working_directory']}/{config['out_name']}/temp/utr_locs/extracted_utrs_{{i}}.txt",
     conda:
         "../envs/extract_seqs.yaml"
     shell:
-        f"python3 workflow/scripts/get_read_data.py --vcf {{input.vcf}} --database {{input.database}} --ref-genome {{params.ref_genome}} --flank {{params.flank}} --o {{output.seqs}} --utr-file {{output.utrs}}"
+        f"python3 workflow/scripts/get_read_data.py --vcf {{input.vcf}} --database {{input.database}} --ref-genome {{params.ref_genome}} --flank {{params.flank}} --o {{output.seqs}}"
 
 
 rule combine_extracted_sequences:

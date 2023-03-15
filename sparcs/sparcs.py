@@ -1,14 +1,14 @@
 ###########################################################################
 # Main file for running the SPARCS pipeline. This acts a wrapper that
-# will automactically create everythigng needed to run the Snakemake
-# pieline without having to worry about the details.
+# will automatically create everything needed to run the Snakemake
+# pipeline without having to worry about the details.
 #
 # Author: Kobie Kirven (kjk617@psu.edu)
 # Assmann Lab, The Pennsylvania State University
 #
 ###########################################################################
 
-# Imports
+# -- Imports -- #
 import argparse
 import os
 import subprocess
@@ -135,7 +135,7 @@ def main():
     # Copy the Snakefile
     try:
         subprocess.call(
-            "cp {}/sparcs_workflow/sparcs.rules {}/workflow".format(file_location, output_dir), shell=True
+            "cp {}/sparcs_workflow/sparcs.smk {}/workflow".format(file_location, output_dir), shell=True
         )
     except:
         prRed("Error: Could not copy the Snakefile to the output directory")
@@ -200,7 +200,7 @@ def main():
 
         if len(files_found) == 0:
             prYellow(
-                "Warning: No files found in the current directory! You will need to manually edit the config.yaml file to specify the paths to the files."
+                "\nWarning: No files found in the current directory! You will need to manually edit the config.yaml file to specify the paths to the files."
             )
 
         else:

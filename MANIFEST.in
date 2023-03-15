@@ -1,6 +1,6 @@
-include worfklow/envs/*
-include workflow/rules/*
-include workflow/scripts/*
-include workflow/sparcs.py
-include workflow/sparcs.rules
-include workflow/utils.py
+include sparcs/sparcs_worfklow/envs/*
+include sparcs/sparcs_worfklow/rules/*
+include sparcs/sparcs_worfklow/scripts/*
+include sparcs/sparcs_worfklow/sparcs.smk
+include sparcs/sparcs.py
+include sparcs/sparcs_utils.py

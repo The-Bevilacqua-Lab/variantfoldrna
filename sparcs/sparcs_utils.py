@@ -110,6 +110,6 @@ def bash_builder(output_file, cores):
 
     output.write(header)
     output.write("echo 'Running SPARCS...'\n\n")
-    output.write(f"snakemake -s workflow/sparcs.rules --cores {cores} --use-conda --conda-frontend conda\n")
+    output.write(f"snakemake -s workflow/sparcs.smk --cores {cores} --use-conda --conda-frontend conda\n")
     output.close()
 

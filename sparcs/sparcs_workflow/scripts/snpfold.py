@@ -22,7 +22,6 @@ parser = argparse.ArgumentParser(
 parser.add_argument("-seq", dest="seq", help="Sequence")
 parser.add_argument("-mut", dest="mutation", help="Mutation")
 parser.add_argument("-T", dest="temp", help="Temperature")
-
 args = parser.parse_args()
 
 # Check to make sure "N" is not in the sequence
@@ -45,7 +44,6 @@ def get_temp_fasta(sequence):
     fn.write(b">.sq" + name.encode("utf-8") + b"\n")
     fn.write(sequence.encode("utf-8"))
     return fn.name, name
-
 
 def get_bppm(sequence):
     """

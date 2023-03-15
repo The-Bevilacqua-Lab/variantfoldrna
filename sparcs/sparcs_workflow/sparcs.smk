@@ -37,7 +37,6 @@ include: "rules/snpeff.smk"
 include: "rules/extract_seqs.smk"
 include: "rules/plot.smk"
 include: "rules/vcf_header.smk"
-include: "rules/download.smk"
 
 # Load the rules for the appropriate prediction tool
 if config['ribosnitch_prediction_tool'] == "SNPfold":

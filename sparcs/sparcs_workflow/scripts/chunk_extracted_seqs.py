@@ -16,6 +16,7 @@ import os
 #######################
 
 def split_file_by_line(filename, n):
+    n = int(n)
     with open(filename, 'r') as f:
         chunk_size = sum(1 for line in f) // n
         f.seek(0)
