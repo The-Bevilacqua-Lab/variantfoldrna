@@ -12,21 +12,6 @@ configfile: srcdir("../config.yaml")
 # Import the python modules:
 import os
 
-# Get the location of this file:
-location = os.getcwd()
-
-# Get the path up to the SPARCS directory:
-path = []
-for ele in location.split("/"):
-    if ele == "SPARCS":
-        path.append(ele)
-        break
-    else:
-        path.append(ele)
-
-# Convert the path to a string:
-path = "/".join(path)
-
 rule run_snpfold:
     # Perform the riboSNitch analysis with SNPFold
     input:
@@ -41,7 +26,7 @@ rule run_snpfold:
     log:
         f"{config['working_directory']}/{config['out_name']}/logs/ribosnitch_prediction/chunk_{{i}}_riboSNitch_{{temp_deg}}.log",
     shell:
-        f"python3 {path}/workflow/scripts/snpfold_wrapper.py --i {{input[0]}} --o {{output.ribo}} --flank {config['flank_len']} --temp {{params}}"
+        f"python3 workflow/scripts/snpfold_wrapper.py --i {{input[0]}} --o {{output.ribo}} --flank {config['flank_len']} --temp {{params}}"
 
 
 rule combine_ribosnitch_results:
@@ -56,7 +41,7 @@ rule combine_ribosnitch_results:
     log:
         f"{config['working_directory']}/{config['out_name']}/logs/combine_ribosnitch_results_{{temp_deg}}.log",
     shell:
-        "cat {input} > {output}"
+        "echo	'Chrom	Pos	Ref	Alt	Flank_left	Flank_right	Gene	Match	Type	Strand	Effect	Score' > {output}  && cat {input} >> {output}"
 
 
 # rule combine_ribosnitch_errors:

@@ -31,7 +31,7 @@ def run_snpfold(seq, path, temp, mutation):
     """
     Run SNPfold on the sequence.
     """
-    results = subprocess.run(["python3", f"{path}/sparcs_workflow/scripts/snpfold.py", "-T", temp, "-seq", seq, "-mut", mutation], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    results = subprocess.run(["python3", f"{path}/snpfold.py", "-T", temp, "-seq", seq, "-mut", mutation], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     try:
         return float(results.stdout.decode("utf-8"))
     except:
@@ -83,8 +83,8 @@ if __name__ == "__main__":
                 
                 # Write the results to the output file
                 try:
-                    corr = results
-                    outfile.write("\t".join(line).strip("\n") + "\t" + corr + "\n")
+                    previous = "\t".join(line[1:]).strip("\n")
+                    outfile.write(f"{previous}\t{results}\n")
                 except:
                     error.write("\t".join(line) + "\n")
 
