@@ -26,4 +26,4 @@ if __name__ == "__main__":
     data = data.drop_duplicates()
 
     # Write the output
-    data.to_csv(args.output, sep="\t", header=None)
+    data.to_csv(args.output, sep="\t", index=False, header=False)

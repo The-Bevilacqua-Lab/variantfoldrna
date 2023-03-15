@@ -44,7 +44,7 @@ def run_riprap(sequence, mutation, path, temp, minwindow, tool, win_type=0):
     )
 
     # Run RipRap:
-    riprap = subprocess.run(["python3", "{0}/sparcs_workflow/scripts/riprap.py".format(path), "--i", fn, "--o", name, "--foldtype", str(tool), "-T", str(temp), "-w", str(minwindow), "-f", str(win_type)], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    riprap = subprocess.run(["python3", "{0}/riprap.py".format(path), "--i", fn, "--o", name, "--foldtype", str(tool), "-T", str(temp), "-w", str(minwindow), "-f", str(win_type)], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     # Read the output:
     with open("{0}_riprap_score.tab".format(name)) as f:
@@ -88,18 +88,18 @@ if __name__ == "__main__":
             line = line.split("\t")
 
             # Make sure we don't have any indels:
-            if not len(line[3]) == 1 or not len(line[4]) == 1:
+            if not len(line[2]) == 1 or not len(line[3]) == 1:
                 continue
 
             # Change the reference and alternative alleles
+            if line[2] == "T":
+                line[1] = "U"
             if line[3] == "T":
                 line[3] = "U"
-            if line[4] == "T":
-                line[4] = "U"
 
             # Get the mutation 
-            seq = str(line[5]) + str(line[3]) + str(line[6])
-            mutation = "{0}{1}{2}".format(str(line[3]),str(int(args.flank) + 1), str(line[4]))
+            seq = str(line[4]) + str(line[2]) + str(line[5])
+            mutation = "{0}{1}{2}".format(str(line[2]),str(int(args.flank) + 1), str(line[3]))
 
             # Get the tool number:
             if args.tool == "RNAfold":
@@ -109,7 +109,6 @@ if __name__ == "__main__":
 
             # Get the path:
             path = os.path.dirname(os.path.realpath(__file__))
-            print(path)
 
             # Run RipRap:
             score = run_riprap(seq, mutation, path, args.temp, args.minwindow, number, args.windowtype)

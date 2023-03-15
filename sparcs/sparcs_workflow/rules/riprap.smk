@@ -13,21 +13,6 @@ configfile: srcdir("../config.yaml")
 # Import the python modules:
 import os
 
-# Get the location of this file:
-location = os.getcwd()
-
-# Get the path up to the SPARCS directory:
-path = []
-for ele in location.split("/"):
-    if ele == "SPARCS":
-        path.append(ele)
-        break
-    else:
-        path.append(ele)
-
-# Convert the path to a string:
-path = "/".join(path)
-
 
 ###########################
 # Rules for running Riprap
@@ -46,7 +31,7 @@ rule run_riprap:
     log:
         f"{config['working_directory']}/{config['out_name']}/logs/ribosnitch_prediction/chunk_{{i}}_riboSNitch_{{temp_deg}}.log",
     shell:
-        f"python3 {path}/workflow/scripts/riprap_wrapper.py --i {{input[0]}} --o {{output.ribo}} --flank {config['flank_len']} --temp {{params}}"
+        f"python3 workflow/scripts/riprap_wrapper.py --i {{input}} --o {{output.ribo}} --flank {config['flank_len']} --temp {{params}}"
 
 
 rule combine_ribosnitch_results:
@@ -61,4 +46,4 @@ rule combine_ribosnitch_results:
     log:
         f"{config['working_directory']}/{config['out_name']}/logs/combine_ribosnitch_results_{{temp_deg}}.log",
     shell:
-        "cat {input} > {output}"
+        "echo	'Chrom	Pos	Ref	Alt	Flank_left	Flank_right	Gene	Match	Type	Strand	Effect	Score' > {output} && cat {input} >> {output}"
