@@ -93,7 +93,7 @@ if __name__ == "__main__":
 
             # Change the reference and alternative alleles
             if line[2] == "T":
-                line[1] = "U"
+                line[2] = "U"
             if line[3] == "T":
                 line[3] = "U"
 
