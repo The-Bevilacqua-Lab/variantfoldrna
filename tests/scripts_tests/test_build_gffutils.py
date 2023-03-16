@@ -1,7 +1,7 @@
 ##############################################################################
 # Testing different functions of the build gffutils script
 #
-#
+# Author: Kobie Kirven
 ##############################################################################
 
 import os
@@ -17,7 +17,7 @@ import tempfile
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "..", "sparcs", "sparcs_workflow", "scripts"))
 
 # Import the functions from the build_gffutils.py script
-from build_gffutils import is_gzipped, is_gff_gtf_file, print_red
+from build_gffutils import is_gzipped, is_gff_gtf_file
 
 def test_is_gzipped():
     # Create temporary files for testing
