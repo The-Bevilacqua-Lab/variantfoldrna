@@ -26,17 +26,17 @@ def main():
     parser.add_argument(
         "--vcf",
         dest="vcf",
-        help="Path to VCF file (If not specified, will check the current directory",
+        help="Absolute ath to VCF file (If not specified, will check the current directory",
     )
     parser.add_argument(
         "--gtf",
         dest="gtf",
-        help="Path to GTF file (If not specified, will check the current directory",
+        help="Absolute path to GTF file (If not specified, will check the current directory",
     )
     parser.add_argument(
-        "--fasta",
+        "--ref",
         dest="fasta",
-        help="Path to FASTA file (If not specified, will check the current directory",
+        help="Absolute path to the reference genome file (If not specified, will check the current directory",
     )
     parser.add_argument(
         "--out-dir",
@@ -170,7 +170,7 @@ def main():
     # The user has specified at least one of the files, so we will
     # let the user know what files they have specified
     if len([x for x in inputted_files.values() if x != None]) > 0:
-        prGreen("Specified files inclde: ")
+        prGreen("Specified files include: ")
         for file_type, file_path in inputted_files.items():
             if file_path:
                 prGreen("   - {}: {}".format(file_type, file_path))

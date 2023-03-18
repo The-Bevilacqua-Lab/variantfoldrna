@@ -101,7 +101,7 @@ rule seperate_multi_vars:
     conda:
         "../envs/snpeff_env.yaml"
     shell:
-        "vt decompose -s {input.vcf} | bgzip > {output} 2> {log} && tabix -p vcf {output} 2> {log}"
+        "vt decompose -s {input.vcf} 2> {log} | bgzip > {output} 2> {log} && tabix -p vcf {output} 2> {log}"
 
 
 rule normalize:

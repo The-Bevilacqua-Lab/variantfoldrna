@@ -65,7 +65,7 @@ if __name__ == "__main__":
                 line = line.split("\t")
 
                 # Check to make sure we don't have any indels
-                if not len(line[3]) == 1 or not len(line[4]) == 1:
+                if not len(line[2]) == 1 or not len(line[3]) == 1:
                     continue
 
                 # Change the reference and alternative alleles
@@ -75,15 +75,15 @@ if __name__ == "__main__":
                     line[3] = "U"
 
                 # Get the sequence and the mutation
-                seq = str(line[5]) + str(line[3]) + str(line[6])
-                mutation =  f"{line[3]}{int(args.flank) + 1}{line[4]}"
+                seq = str(line[4]) + str(line[2]) + str(line[5])
+                mutation =  f"{line[2]}{int(args.flank) + 1}{line[3]}"
 
                 # Run snpfold
                 results = run_snpfold(transcribe_rna(seq), path, args.temp, mutation)
                 
                 # Write the results to the output file
                 try:
-                    previous = "\t".join(line[1:]).strip("\n")
+                    previous = "\t".join(line).strip("\n")
                     outfile.write(f"{previous}\t{results}\n")
                 except:
                     error.write("\t".join(line) + "\n")

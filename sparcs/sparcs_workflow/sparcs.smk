@@ -52,12 +52,16 @@ def prCyan(skk):
     """
     print("\033[96m {}\033[00m".format(skk))
 
-# Get the final output files
-#f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/snpfold_scores_hist_t{config['temperature']}.jpg"
-final_input = [f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/combined_ribosnitch_prediction_{config['temperature']}.txt"]
+if '-' in str(config['temperature']):
+    start_stop = str(config['temperature']).split('-')
+    temperature_range = range(int(start_stop[0]), int(start_stop[1]) + 1)
+else:
+    temperature_range = [config['temperature']]
 
-if config['structure_prediction_tool'] == "RNAstructure":
-    final_input = [f"{path}/scripts/data_tables/autodetect.txt"]
+final_input = []
+for temp in temperature_range:
+    final_input.append(f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/combined_ribosnitch_prediction_{temp}.txt")
+    final_input.append(f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/combined_ribosnitch_prediction_hist_{temp}.png")
 
 # Let the user know what files we are creating
 prCyan("Creating the following files:")
@@ -69,4 +73,4 @@ prCyan("\t-" + "\n\t-".join(final_input))
 #######################
 rule all:
     input:
-        final_input,
+        final_input
