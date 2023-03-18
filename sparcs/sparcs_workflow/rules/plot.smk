@@ -8,6 +8,7 @@
 # Import the python modules:
 import os
 
+
 rule plot_scores:
     # Plot the results of the riboSNtch prediciton
     input:

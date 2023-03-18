@@ -22,21 +22,26 @@ def transcribe_rna(seq):
 
 def change_nuc(nuc):
     """
-    Complement nucleotides 
+    Complement nucleotides
     """
     nuc_dict = {"A": "U", "T": "A", "G": "C", "C": "G"}
     return nuc_dict[nuc]
+
 
 def run_snpfold(seq, path, temp, mutation):
     """
     Run SNPfold on the sequence.
     """
-    results = subprocess.run(["python3", f"{path}/snpfold.py", "-T", temp, "-seq", seq, "-mut", mutation], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    results = subprocess.run(
+        ["python3", f"{path}/snpfold.py", "-T", temp, "-seq", seq, "-mut", mutation],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
     try:
         return float(results.stdout.decode("utf-8"))
     except:
         return "Error"
-      
+
 
 if __name__ == "__main__":
 
@@ -51,10 +56,9 @@ if __name__ == "__main__":
     parser.add_argument("--temp", dest="temp", help="Temp")
     args = parser.parse_args()
 
-    # Open the output files 
+    # Open the output files
     outfile = open(args.output, "w")
     error = open(args.output.strip(".txt") + "_error.txt", "w")
-    
 
     ids, seqs = [], []
     with open(args.in_file) as fn:
@@ -76,11 +80,11 @@ if __name__ == "__main__":
 
                 # Get the sequence and the mutation
                 seq = str(line[4]) + str(line[2]) + str(line[5])
-                mutation =  f"{line[2]}{int(args.flank) + 1}{line[3]}"
+                mutation = f"{line[2]}{int(args.flank) + 1}{line[3]}"
 
                 # Run snpfold
                 results = run_snpfold(transcribe_rna(seq), path, args.temp, mutation)
-                
+
                 # Write the results to the output file
                 try:
                     previous = "\t".join(line).strip("\n")

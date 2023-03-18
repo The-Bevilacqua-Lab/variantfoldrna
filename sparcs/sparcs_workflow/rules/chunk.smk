@@ -8,8 +8,10 @@
 ################################################################################
 configfile: srcdir("../config.yaml")
 
+
 # Import the python modules:
 import os
+
 
 rule chunk_vcf:
     # Break up the VCF file in to bite-sized chunks so that it is easier to process

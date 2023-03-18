@@ -15,9 +15,10 @@ import os
 #  --  Functions --   #
 #######################
 
+
 def split_file_by_line(filename, n):
     n = int(n)
-    with open(filename, 'r') as f:
+    with open(filename, "r") as f:
         chunk_size = sum(1 for line in f) // n
         f.seek(0)
         remainder = sum(1 for line in f) % n
@@ -29,7 +30,8 @@ def split_file_by_line(filename, n):
                 chunk.append(f.readline())
             yield chunk
 
-if __name__ == "__main__":    
+
+if __name__ == "__main__":
 
     # Parse the arguments
     parser = argparse.ArgumentParser(description="Break up VCF file")
@@ -40,15 +42,15 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-
     # Make a directory to store the VCF chunks
     if not os.path.exists(f"{args.dir}/extracted_seqs_chunks/"):
         os.system(f"mkdir -p {args.dir}/extracted_seqs_chunks/")
 
     for i, chunk in enumerate(split_file_by_line(args.input, args.chunk)):
-        with open(f"{args.dir}/extracted_seqs_chunks/extracted_flank_snp_{i+1}.txt", 'w') as f:
+        with open(
+            f"{args.dir}/extracted_seqs_chunks/extracted_flank_snp_{i+1}.txt", "w"
+        ) as f:
             f.writelines(chunk)
-
 
     # # Split the VCF file up into smaller files
     # in_file = open(args.input, "r")
@@ -58,7 +60,7 @@ if __name__ == "__main__":
     #         fn.write(in_file.readline())
     #     fn.close()
 
-    # # Write the last chunk to the output file 
+    # # Write the last chunk to the output file
     # fn = open(
     #     f"{args.dir}/extracted_seqs_chunks/extracted_flank_snp_{int(args.chunk)}.txt", "w"
     # )

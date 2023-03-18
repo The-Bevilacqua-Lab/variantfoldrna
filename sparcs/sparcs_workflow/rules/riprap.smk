@@ -6,7 +6,8 @@
 # The Pennsylvania State University
 ############################################################################################
 
-# Path to the config file 
+
+# Path to the config file
 configfile: srcdir("../config.yaml")
 
 
@@ -20,7 +21,7 @@ import os
 rule run_riprap:
     # Perform the riboSNitch analysis with Riprap
     input:
-        f"{config['working_directory']}/{config['out_name']}/temp/extracted_seqs_chunks/extracted_flank_snp_{{i}}.txt"
+        f"{config['working_directory']}/{config['out_name']}/temp/extracted_seqs_chunks/extracted_flank_snp_{{i}}.txt",
     params:
         f"{{temp_deg}}",
     output:
@@ -46,4 +47,4 @@ rule combine_ribosnitch_results:
     log:
         f"{config['working_directory']}/{config['out_name']}/logs/combine_ribosnitch_results_{{temp_deg}}.log",
     shell:
-        "echo	'Chrom	Pos	Ref	Alt	Flank_left	Flank_right	Gene	Match	Type	Strand	Effect	Score' > {output} && cat {input} >> {output}"
+        "echo    'Chrom    Pos    Ref    Alt    Flank_left    Flank_right    Gene    Match    Type    Strand    Effect    Score' > {output} && cat {input} >> {output}"

@@ -7,11 +7,14 @@
 # The Pennsylvania State University
 ################################################################################
 
+
 # Read in the config file:
 configfile: srcdir("../config.yaml")
 
+
 # Import the python modules:
 import os
+
 
 rule create_gffutils:
     # Create the gffutils database
@@ -34,7 +37,7 @@ rule extract_sequences:
         ref_genome=config["ref_genome"],
         flank=config["flank_len"],
     output:
-        seqs = f"{config['working_directory']}/{config['out_name']}/temp/extracted_sequences/extracted_seqs_{{i}}.txt",
+        seqs=f"{config['working_directory']}/{config['out_name']}/temp/extracted_sequences/extracted_seqs_{{i}}.txt",
     conda:
         "../envs/extract_seqs.yaml"
     shell:

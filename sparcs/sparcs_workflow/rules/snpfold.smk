@@ -12,10 +12,11 @@ configfile: srcdir("../config.yaml")
 # Import the python modules:
 import os
 
+
 rule run_snpfold:
     # Perform the riboSNitch analysis with SNPFold
     input:
-        f"{config['working_directory']}/{config['out_name']}/temp/extracted_seqs_chunks/extracted_flank_snp_{{i}}.txt"
+        f"{config['working_directory']}/{config['out_name']}/temp/extracted_seqs_chunks/extracted_flank_snp_{{i}}.txt",
     params:
         f"{{temp_deg}}",
     output:
@@ -41,7 +42,7 @@ rule combine_ribosnitch_results:
     log:
         f"{config['working_directory']}/{config['out_name']}/logs/combine_ribosnitch_results_{{temp_deg}}.log",
     shell:
-        "echo	'Chrom	Pos	Ref	Alt	Flank_left	Flank_right	Gene	Match	Type	Strand	Effect	Score' > {output}  && cat {input} >> {output}"
+        "echo    'Chrom    Pos    Ref    Alt    Flank_left    Flank_right    Gene    Match    Type    Strand    Effect    Score' > {output}  && cat {input} >> {output}"
 
 
 # rule combine_ribosnitch_errors:

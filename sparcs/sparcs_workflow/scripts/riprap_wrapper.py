@@ -7,7 +7,7 @@
 # The Pennsylvania State University
 ################################################################################
 
-#-- Imports --#
+# -- Imports --#
 import argparse
 import numpy as np
 import subprocess
@@ -16,10 +16,10 @@ import os
 import string
 import random
 
-#-- Functions --#
+# -- Functions --#
 def make_temp_riprap_input(sequence, mutation):
     """
-    Create a temporary input file for RipRap. 
+    Create a temporary input file for RipRap.
     We will use random integers and letters to name the sequence.
     """
     fn = tempfile.NamedTemporaryFile(delete=False)
@@ -27,8 +27,9 @@ def make_temp_riprap_input(sequence, mutation):
         random.choice(string.ascii_uppercase + string.digits) for _ in range(6)
     )
 
-    fn.write(('{0}\t{1}\t{2}\n'.format(name, sequence, mutation).encode("utf-8")))
+    fn.write(("{0}\t{1}\t{2}\n".format(name, sequence, mutation).encode("utf-8")))
     return fn.name, name
+
 
 def run_riprap(sequence, mutation, path, temp, minwindow, tool, win_type=0):
     """
@@ -44,7 +45,26 @@ def run_riprap(sequence, mutation, path, temp, minwindow, tool, win_type=0):
     )
 
     # Run RipRap:
-    riprap = subprocess.run(["python3", "{0}/riprap.py".format(path), "--i", fn, "--o", name, "--foldtype", str(tool), "-T", str(temp), "-w", str(minwindow), "-f", str(win_type)], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    riprap = subprocess.run(
+        [
+            "python3",
+            "{0}/riprap.py".format(path),
+            "--i",
+            fn,
+            "--o",
+            name,
+            "--foldtype",
+            str(tool),
+            "-T",
+            str(temp),
+            "-w",
+            str(minwindow),
+            "-f",
+            str(win_type),
+        ],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
 
     # Read the output:
     with open("{0}_riprap_score.tab".format(name)) as f:
@@ -60,7 +80,8 @@ def run_riprap(sequence, mutation, path, temp, minwindow, tool, win_type=0):
     except:
         return "Error"
 
-#-- Main --#
+
+# -- Main --#
 if __name__ == "__main__":
     # Parse the arguments:
     parser = argparse.ArgumentParser(description="Determine RiboSNitches")
@@ -68,8 +89,12 @@ if __name__ == "__main__":
     parser.add_argument("--o", dest="output", help="Output")
     parser.add_argument("--flank", dest="flank", help="Flanking length")
     parser.add_argument("--temp", dest="temp", help="Temperature", default=37.0)
-    parser.add_argument("--minwindow", dest="minwindow", help="Minimum Window", default=3)
-    parser.add_argument("--windowtype", dest="windowtype", help="Window Type", default=0)
+    parser.add_argument(
+        "--minwindow", dest="minwindow", help="Minimum Window", default=3
+    )
+    parser.add_argument(
+        "--windowtype", dest="windowtype", help="Window Type", default=0
+    )
     parser.add_argument("--tool", dest="tool", help="Tool", default="RNAfold")
     args = parser.parse_args()
 
@@ -77,7 +102,7 @@ if __name__ == "__main__":
     fn = open(args.in_file)
     lines = fn.readlines()
 
-    # Open the output files and the error 
+    # Open the output files and the error
     out = open(args.output, "w")
     error = open(args.output[:-4] + "_error.txt", "w")
 
@@ -97,9 +122,11 @@ if __name__ == "__main__":
             if line[3] == "T":
                 line[3] = "U"
 
-            # Get the mutation 
+            # Get the mutation
             seq = str(line[4]) + str(line[2]) + str(line[5])
-            mutation = "{0}{1}{2}".format(str(line[2]),str(int(args.flank) + 1), str(line[3]))
+            mutation = "{0}{1}{2}".format(
+                str(line[2]), str(int(args.flank) + 1), str(line[3])
+            )
 
             # Get the tool number:
             if args.tool == "RNAfold":
@@ -111,12 +138,12 @@ if __name__ == "__main__":
             path = os.path.dirname(os.path.realpath(__file__))
 
             # Run RipRap:
-            score = run_riprap(seq, mutation, path, args.temp, args.minwindow, number, args.windowtype)
+            score = run_riprap(
+                seq, mutation, path, args.temp, args.minwindow, number, args.windowtype
+            )
 
             # Write the output:
             if score == "NA":
                 error.write("\t".join(line) + "\n")
             else:
-                out.write("\t".join(line).strip("\n") + "\t" + str(score)+ "\n")
-
-
+                out.write("\t".join(line).strip("\n") + "\t" + str(score) + "\n")

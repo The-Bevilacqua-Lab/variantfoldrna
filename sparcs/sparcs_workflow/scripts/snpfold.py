@@ -1,6 +1,6 @@
 ##################################################################
 # This script will calculate the SNPfold score for a given SNP
-# 
+#
 # Original code was obtained from https://github.com/Halvee/SNPfold
 # Updated for python3 by Kobie Kirven
 # Assmann and Bevilacqua Labs
@@ -16,9 +16,7 @@ import string
 import random
 
 
-parser = argparse.ArgumentParser(
-    description="Calculate SNPfold score for a given SNP"
-)
+parser = argparse.ArgumentParser(description="Calculate SNPfold score for a given SNP")
 parser.add_argument("-seq", dest="seq", help="Sequence")
 parser.add_argument("-mut", dest="mutation", help="Mutation")
 parser.add_argument("-T", dest="temp", help="Temperature")
@@ -44,6 +42,7 @@ def get_temp_fasta(sequence):
     fn.write(b">.sq" + name.encode("utf-8") + b"\n")
     fn.write(sequence.encode("utf-8"))
     return fn.name, name
+
 
 def get_bppm(sequence):
     """

@@ -13,7 +13,7 @@
 import argparse
 import gffutils
 import pandas as pd
-import json 
+import json
 import sys
 
 
@@ -51,12 +51,15 @@ def three_prime_test(position, end, flank):
     else:
         return False
 
+
 # -- main --#
 
 if __name__ == "__main__":
 
     # ----- Parse arguments ----#
-    parser = argparse.ArgumentParser(description="Extract sequences surrounding variants")
+    parser = argparse.ArgumentParser(
+        description="Extract sequences surrounding variants"
+    )
     parser.add_argument("--vcf", dest="vcf", help="VCF File")
     parser.add_argument("--database", dest="database", help="gffutils database")
     parser.add_argument("--ref-genome", dest="ref", help="Reference Genome")
@@ -90,7 +93,6 @@ if __name__ == "__main__":
         # Get the start and stop positions of the transcript
         start = db[predictions.iloc[i][feature]].start
         end = db[predictions.iloc[i][feature]].end
-        
 
         # Check to make sure it is not within a certain distance from the 5' and 3' ends of the transcript
         if five_prime_test(
@@ -145,7 +147,7 @@ if __name__ == "__main__":
             # Check to see if the sequence in the reference genome matches the reference allele or the alternative allele
             # If it matches the reference, then we do not change anything. If it matches the alternative, then we reverse
             # the reference and alternative alleles
-            
+
             # Check to see if the SNP matches the alternative allele
             if snp_seq == alternative:
                 ref = alternative

@@ -6,7 +6,7 @@
 # The Penn State University
 ##############################################################################
 
-#-- Imports --#
+# -- Imports --#
 import argparse
 import pandas as pd
 

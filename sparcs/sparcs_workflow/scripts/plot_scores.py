@@ -27,7 +27,7 @@ if __name__ == "__main__":
 
     # Plot the scores
     plt.style.use("grayscale")
-    plt.hist(data['Score'], color="royalblue")
+    plt.hist(data["Score"], color="royalblue")
 
     # Check to see which tool was used and update the plot accordingly
     if args.tool.upper() == "SNPFOLD":
