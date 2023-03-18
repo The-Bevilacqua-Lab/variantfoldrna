@@ -30,7 +30,6 @@ path = "/".join(path)
 # Config File
 configfile: srcdir("config.yaml")
 
-
 # Import Rules
 include: "rules/chunk.smk"
 include: "rules/snpeff.smk"
