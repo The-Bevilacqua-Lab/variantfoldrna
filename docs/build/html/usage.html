@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Config File &mdash; SPARCS 0.0 documentation</title>
+  <title>Usage &mdash; SPARCS 0.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -23,8 +23,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Examples" href="examples.html" />
-    <link rel="prev" title="Input and Output Files" href="file_types.html" /> 
+    <link rel="next" title="Input and Output Files" href="file_types.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -45,9 +45,9 @@
               <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="file_types.html">Input and Output Files</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Config File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Config File</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Guides</span></p>
 <ul>
@@ -68,9 +68,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a></li>
-      <li class="breadcrumb-item active">Config File</li>
+      <li class="breadcrumb-item active">Usage</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/config.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/usage.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -78,57 +78,57 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="config-file">
-<h1>Config File<a class="headerlink" href="#config-file" title="Permalink to this heading"></a></h1>
-<p>The config file is a convenient way to hold all of the parameters for
-running the SPARCS pipeline. These parameters are automaticly filled in
-when running the <code class="docutils literal notranslate"><span class="pre">sparcs</span></code> command, but you can also edit the config file
-directly. The config file is located at <code class="docutils literal notranslate"><span class="pre">workflow/config.yaml</span></code> inside of the <code class="docutils literal notranslate"><span class="pre">SPARCS</span></code> output directory.</p>
+  <div class="section" id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this heading"></a></h1>
+<p>Command line usage:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sparcs -h
+</pre></div>
+</div>
 <table class="colwidths-given docutils align-default">
 <colgroup>
 <col style="width: 50%" />
 <col style="width: 50%" />
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>Config Parameter</p></th>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
 <th class="head"><p>Description</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>working_directory</p></td>
-<td><p>Directory where all the output files will be written</p></td>
-</tr>
-<tr class="row-odd"><td><p>vcf_file</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--vcf</span></code></p></td>
 <td><p>Absolute path to the VCF file</p></td>
 </tr>
-<tr class="row-even"><td><p>gtf_file</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--gtf</span></code></p></td>
 <td><p>Absolute path to the GTF/GFF file</p></td>
 </tr>
-<tr class="row-odd"><td><p>ref_genome</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--ref</span></code></p></td>
 <td><p>Absolute path to the reference genome in FASTA format</p></td>
 </tr>
-<tr class="row-even"><td><p>name</p></td>
-<td><p>Name for file prefixes</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--out-dir</span></code></p></td>
+<td><p>Absolute path to the output directory</p></td>
 </tr>
-<tr class="row-odd"><td><p>output_name</p></td>
-<td><p>Name of the output directory</p></td>
-</tr>
-<tr class="row-even"><td><p>flank_len</p></td>
-<td><p>Number of nucleotides on either side of the SNP for riboSNitch prediction</p></td>
-</tr>
-<tr class="row-odd"><td><p>chunks</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--chunks</span></code></p></td>
 <td><p>Number of chunks to split the VCF file into for parallel processing</p></td>
 </tr>
-<tr class="row-even"><td><p>temperature</p></td>
-<td><p>Temperature for prediction of RNA secondary structure (in degrees Celsius)</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--cores</span></code></p></td>
+<td><p>Number of cores to use for parallel processing</p></td>
 </tr>
-<tr class="row-odd"><td><p>ribosnitch_prediction_tool</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--structure-pred-tool</span></code></p></td>
+<td><p>Structure prediction tool to use (RNAfold or RNAstructure, Default: RNAfold)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--ribosnitch-tool</span></code></p></td>
+<td><p>RiboSNitch prediction tool to use (SNPfold or Riprap, Default: SNPfold)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--ribosnitch-flank</span></code></p></td>
+<td><p>Flanking length for RiboSNitch prediction (Default: 40)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--ribosnitch_prediction_tool</span></code></p></td>
 <td><p>Tool to use for riboSNitch prediction. Options are <code class="docutils literal notranslate"><span class="pre">SNPfold</span></code> and <code class="docutils literal notranslate"><span class="pre">RipRap</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p>structure_prediction_tool</p></td>
-<td><p>Tool to use for RNA secondary structure prediction. Options are <code class="docutils literal notranslate"><span class="pre">RNAfold</span></code> and <code class="docutils literal notranslate"><span class="pre">RNAstructure</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--temperature</span></code></p></td>
+<td><p>Temperature for structural prediction (Default: 37.0)</p></td>
 </tr>
-<tr class="row-odd"><td><p>riprap_min_window</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--minwindow</span></code></p></td>
 <td><p>Minimum window size for RipRap</p></td>
 </tr>
 </tbody>
@@ -139,8 +139,8 @@ directly. The config file is located at <code class="docutils literal notranslat
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="file_types.html" class="btn btn-neutral float-left" title="Input and Output Files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="file_types.html" class="btn btn-neutral float-right" title="Input and Output Files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

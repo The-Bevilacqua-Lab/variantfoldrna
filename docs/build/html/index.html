@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Introduction &mdash; SPARCS 0.0 documentation</title>
+  <title>Features &mdash; SPARCS 0.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -44,6 +44,7 @@
               <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="file_types.html">Input and Output Files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="config.html">Config File</a></li>
 </ul>
@@ -66,7 +67,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="#" class="icon icon-home"></a></li>
-      <li class="breadcrumb-item active">Introduction</li>
+      <li class="breadcrumb-item active">Features</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -76,20 +77,29 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <figure class="align-center">
-<a class="reference internal image-reference" href="_images/sparcs.png"><img alt="_images/sparcs.png" src="_images/sparcs.png" style="width: 50%;" /></a>
-</figure>
+  <div class="figure align-center">
+<a class="reference internal image-reference" href="_images/SPARCS_logo.png"><img alt="_images/SPARCS_logo.png" src="_images/SPARCS_logo.png" style="width: 40%;" /></a>
+</div>
+<p><code class="xref py py-mod docutils literal notranslate"><span class="pre">SPARCS</span></code> is a <a class="reference external" href="https://snakemake.readthedocs.io/en/stable/">snakemake</a> pipeline for the transcriptome-wide
+prediction of riboSNitches.The SPARCS pipeline makes it easy to predict the effects of SNPs on RNA secondary structure.</p>
+<div class="section" id="features">
+<h1>Features<a class="headerlink" href="#features" title="Permalink to this heading"></a></h1>
+<ul class="simple">
+<li><p>Automatic dependency management</p></li>
+<li><p>Ability to utilize custom gene models</p></li>
+</ul>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#prerequisites">Prerequisites:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#downloading-the-pipeline">Downloading the pipeline:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#installing-the-pipeline">Installing the pipeline:</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="file_types.html">Input and Output Files</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="file_types.html#input-files">Input files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="file_types.html#config-file">Config File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_types.html#output-files">Output files:</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="config.html">Config File</a></li>
@@ -108,22 +118,15 @@
 </li>
 </ul>
 </div>
-<section id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h1>
-<p><code class="xref py py-mod docutils literal notranslate"><span class="pre">SPARCS</span></code> is a <a class="reference external" href="https://snakemake.readthedocs.io/en/stable/">snakemake</a> pipeline for the transcriptome-wide
-prediction of riboSNitches.</p>
-<p>The SPARCS pipeline makes it easy to predict the effects of SNPs on local RNA secondary structure. Built entirely in
-<a class="reference external" href="https://snakemake.readthedocs.io/en/stable/">snakemake</a>, SPARCS is designed to be modular and easy to customize.</p>
-<section id="features">
-<h2>Features<a class="headerlink" href="#features" title="Permalink to this heading"></a></h2>
-<ul class="simple">
-<li><p>Modular design allowing for easy customization</p></li>
-<li><p>Automatic dependency management</p></li>
-<li><p>Ability to utilize custom gene models</p></li>
+<dl class="simple">
+<dt>If using SPARCS, please be sure to cite all relevant papers:</dt><dd><ul class="simple">
+<li><p>Cingolani, Pablo. “Variant annotation and functional prediction: SnpEff.” Variant Calling: Methods and Protocols. New York, NY: Springer US, 2012. 289-314.</p></li>
+<li><p>Halvorsen, Matthew, et al. “Disease-associated mutations that alter the RNA structural ensemble.” PLoS genetics 6.8 (2010): e1001074.</p></li>
+<li><p>Lin, Jianan, et al. “Identification and analysis of RNA structural disruptions induced by single nucleotide variants using Riprap and RiboSNitchDB.” NAR Genomics and Bioinformatics 2.3 (2020): lqaa057.</p></li>
 </ul>
-<p>If using SPARCS, please be sure to cite all relevant papers:</p>
-</section>
-</section>
+</dd>
+</dl>
+</div>
 
 
            </div>
@@ -135,7 +138,7 @@ prediction of riboSNitches.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Kobie Kirven.</p>
+    <p>&#169; Copyright 2022, Assmann Lab.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

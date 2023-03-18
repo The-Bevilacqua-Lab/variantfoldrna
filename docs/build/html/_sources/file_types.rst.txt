@@ -13,7 +13,7 @@ SPARCS can handle gzipped files or files that are not compressed as input.
    of the genome of interest. This file is used to get the sequences of 
    the genes of interest. 
 
-2. Gene Annotation (GTF) - The gene annotation file holds the locations 
+2. Gene Annotation (GTF/GFF) - The gene annotation file holds the locations 
    of the genes in the genome. This file is used to get the locations 
    of the start and stop positions of the genes of interest. 
 
@@ -22,10 +22,10 @@ SPARCS can handle gzipped files or files that are not compressed as input.
    variants of interest.
 
 
-Config File
------------
-The config file holds the paths to all of the files that are used in the
-pipeline as well as all of the pertinent parameters. The config file is
-located in the workflow directory and is named config.yaml. You will need
-to edit this file to include the paths to the files that you are using
-as well as the parameters that you would like to use.
+Output files:
+-------------
+The main output of the SPARCS pipeline is a file that contains all 
+of the riboSNitch predictions for the variants of interest. This file 
+is located inside of the ``results/ribosnitch_predictions`` directory
+inside of the output directory. The file name is ``combined_ribosnitch_prediction_{TEMPERATURE}.txt`` 
+where ``{TEMPERATURE}`` is the temperature that was used for the analysis.

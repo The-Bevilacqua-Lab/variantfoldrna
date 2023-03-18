@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'SPARCS'
-copyright = '2022, Kobie Kirven'
+copyright = '2022, Assmann Lab'
 author = 'Kobie Kirven'
 release = '0.0'
 
@@ -15,7 +15,7 @@ release = '0.0'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = []
-
+html_css_files = ["custom.css"]
 templates_path = ['_templates']
 exclude_patterns = []
 
