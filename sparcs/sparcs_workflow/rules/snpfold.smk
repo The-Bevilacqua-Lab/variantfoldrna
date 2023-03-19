@@ -42,7 +42,7 @@ rule combine_ribosnitch_results:
     log:
         f"{config['working_directory']}/{config['out_name']}/logs/combine_ribosnitch_results_{{temp_deg}}.log",
     shell:
-        "echo    'Chrom    Pos    Ref    Alt    Flank_left    Flank_right    Gene    Match    Type    Strand    Effect    Score' > {output}  && cat {input} >> {output}"
+        "echo    'Chrom	Pos	Ref	Alt	Flank_left	Flank_right	Gene	Match	Type	Strand	Effect	Score' > {output} && cat {input} >> {output}"
 
 
 # rule combine_ribosnitch_errors:
