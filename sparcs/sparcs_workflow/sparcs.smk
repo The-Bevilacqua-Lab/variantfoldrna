@@ -59,7 +59,7 @@ def prCyan(skk):
 
 if "-" in str(config["temperature"]):
     start_stop = str(config["temperature"]).split("-")
-    temperature_range = range(int(start_stop[0]), int(start_stop[1]) + 1, int(configfile['temp_step']))
+    temperature_range = range(int(start_stop[0]), int(start_stop[1]) + 1, int(config['temp_step']))
 else:
     temperature_range = [config["temperature"]]
 
