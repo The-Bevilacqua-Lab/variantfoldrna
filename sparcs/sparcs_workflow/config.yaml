@@ -61,6 +61,11 @@ chunks: 1
 temperature: 37.0
 
 #############################################################
+# temp_step - Temperature step for RNA folding
+#############################################################
+temp_step: 5
+
+#############################################################
 # ribosnitch_prediction_tool: Tool to use for predicting
 #                             riboSNitches 
 #                            (SNPfold or RipRap)  

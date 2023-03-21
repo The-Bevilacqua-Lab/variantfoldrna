@@ -78,6 +78,14 @@ def main():
         help="Temperature for structural prediction (Default: 37.0)",
         default=37.0,
     )
+
+    parser.add_argument(
+        "--temp-step",
+        dest="temp_step",
+        help="Temperature step for structural prediction (Default: 5)",
+        default=5,
+    )
+
     parser.add_argument(
         "--minwindow",
         dest="minwindow",
@@ -247,6 +255,7 @@ def main():
         args.ribosnitch_tool,
         args.structure_pred_tool,
         args.minwindow,
+        args.temp_step
     )
 
     # Generate the sparcs.sh file
