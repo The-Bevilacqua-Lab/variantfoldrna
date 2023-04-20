@@ -2,9 +2,9 @@ channels:
   - conda-forge
   - bioconda
 dependencies:
-  - samtools==1.9 
-  - openjdk==17.0.5.8
-  - snpEff==5.1
-  - snpsift==5.1
-  - vt==2015.11.10
-  - bcftools==1.12
+  - samtools
+  - openjdk
+  - snpEff
+  - snpsift
+  - vt
+  - bcftools

@@ -16,6 +16,16 @@ configfile: srcdir("../config.yaml")
 import os
 
 
+if config['scramble'] == True:
+    combine_input = expand(f"{config['working_directory']}/{config['out_name']}/temp/extracted_sequences/shuffled_seqs_{{i}}.txt",
+        i=range(1, config["chunks"] + 1),
+    ),
+else:
+    combine_input = expand(
+        f"{config['working_directory']}/{config['out_name']}/temp/extracted_sequences/extracted_seqs_{{i}}.txt",
+        i=range(1, config["chunks"] + 1),
+    ),
+
 rule create_gffutils:
     # Create the gffutils database
     params:
@@ -27,6 +37,17 @@ rule create_gffutils:
     shell:
         f"python3 workflow/scripts/build_gffutils.py --gtf {{params.gtf}} --o {{output}}"
 
+rule extract_cdna_from_gff_with_gffread:
+    # Extract the cDNA sequences from the GTF file
+    params:
+        gtf=config["gtf_file"],
+        ref=config["ref_genome"],
+    output:
+        f"{config['working_directory']}/{config['out_name']}/temp/cdna.fa",
+    conda:
+        "../envs/extract_seqs.yaml"
+    shell:
+        f"gffread {{params.gtf}} -g {{params.ref}} -w {{output}}"
 
 rule extract_sequences:
     # Extract the sequences flanking the SNP
@@ -47,15 +68,11 @@ rule extract_sequences:
 rule combine_extracted_sequences:
     # Combine the extracted sequences into one file
     input:
-        expand(
-            f"{config['working_directory']}/{config['out_name']}/temp/extracted_sequences/extracted_seqs_{{i}}.txt",
-            i=range(1, config["chunks"] + 1),
-        ),
+        combine_input
     output:
         f"{config['working_directory']}/{config['out_name']}/temp/extracted_flank_snp.txt",
     shell:
         "cat {input} > {output}"
-
 
 rule remove_duplicates:
     # Remove duplicates from the extracted sequences

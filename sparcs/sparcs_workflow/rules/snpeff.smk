@@ -16,20 +16,13 @@ configfile: srcdir("../config.yaml")
 # Import the python modules:
 import os
 
-# Get the location of this file:
-location = os.getcwd()
-
-# Get the path up to the SPARCS directory:
-path = []
-for ele in location.split("/"):
-    if ele == "SPARCS":
-        path.append(ele)
-        break
+# Check to see if the VCF file is gzipped using the magic number
+with open(config["vcf_file"], "rb") as f:
+    magic_number = f.read(2)
+    if magic_number == b"\x1f\x8b":
+        command = "zcat"
     else:
-        path.append(ele)
-
-# Convert the path to a string:
-path = "/".join(path)
+        command = "cat"
 
 # Prefix for the VCF file
 prefix = config["vcf_file"].split("/")[-1].strip(".vcf")
@@ -44,9 +37,9 @@ rule add_gtf:
     log:
         f"{config['working_directory']}/{config['out_name']}/logs/add_gtf.log",
     output:
-        f"{config['working_directory']}/{config['out_name']}/temp/data/{config['out_name']}/genes.gtf.gz",
+        f"{config['working_directory']}/{config['out_name']}/temp/data/{config['out_name']}/genes.gtf",
     shell:
-        "cat {params.gtf} >> {params.dir_name}/genes.gtf && gzip {params.dir_name}/genes.gtf 2> {log}"
+        f"{command} < {{params.gtf}} >> {{params.dir_name}}/genes.gtf 2> {{log}}"
 
 
 rule add_ref:
@@ -77,7 +70,7 @@ rule create_config:
 rule create_snpeff_database:
     # Create the snpEff database
     input:
-        genes=f"{config['working_directory']}/{config['out_name']}/temp/data/{config['out_name']}/genes.gtf.gz",
+        genes=f"{config['working_directory']}/{config['out_name']}/temp/data/{config['out_name']}/genes.gtf",
         genome=f"{config['working_directory']}/{config['out_name']}/temp/data/genomes/{config['out_name']}.fa",
         snpeff_config=f"{config['working_directory']}/{config['out_name']}/temp/snpeff.config",
     log:
@@ -146,4 +139,4 @@ rule get_annotations_one_per_line:
     conda:
         "../envs/snpeff_env.yaml"
     shell:
-        f'cat {{input}} | {path}/workflow/scripts/vcfEffOnePerLine.pl | SnpSift extractFields - CHROM POS REF ALT "ANN[*].EFFECT" "ANN[*].FEATUREID" > {{output}} 2> {{log}}'
+        f'cat {{input}} | workflow/scripts/vcfEffOnePerLine.pl | SnpSift extractFields - CHROM POS REF ALT "ANN[*].EFFECT" "ANN[*].FEATUREID" "ANN[*].CDNA_POS" > {{output}} 2> {{log}}'

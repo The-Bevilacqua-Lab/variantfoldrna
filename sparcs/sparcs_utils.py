@@ -10,7 +10,7 @@ def prRed(skk): print("\033[91m {}\033[00m" .format(skk))
 
 def config_builder(output_file, working_directory, vcf_file, gtf_file, 
                    ref_genome, output_dir, flank, chunks, temperature,
-                   ribo_tool, structure_tool, riprap_min_window, temp_step):
+                   ribo_tool, structure_tool, riprap_min_window, temp_step, scramble):
     '''
     Generates a config file for running the SPARCS pipeline
     '''
@@ -100,6 +100,13 @@ def config_builder(output_file, working_directory, vcf_file, gtf_file,
 # riprap_min_window: Minimum window size for RipRap
 #############################################################''')
     output.write(f"\nriprap_min_window: {riprap_min_window}\n\n")
+
+    output.write('''
+##################################################################
+# scramble: Scramble the RNA sequence before riboSNitch prediction
+###################################################################''')
+    output.write(f"\nscramble: {scramble}\n\n")
+    
     output.close()
 
 

@@ -92,6 +92,14 @@ def main():
         help="Minimum window size for Riprap (Default: 3)",
         default=3,
     )
+
+    parser.add_argument(
+        "--scramble",
+        dest="scramble",
+        help="Whether to scramble the sequences before doing the riboSNitch prediction (Default: False)",
+        default=3,
+    )
+
     args = parser.parse_args()
 
     # Get the location of where this file is stored. We will use this
@@ -255,7 +263,8 @@ def main():
         args.ribosnitch_tool,
         args.structure_pred_tool,
         args.minwindow,
-        args.temp_step
+        args.temp_step, 
+        args.scramble,
     )
 
     # Generate the sparcs.sh file
