@@ -49,6 +49,9 @@ elif config["ribosnitch_prediction_tool"].lower() == "riprap":
 
     include: "rules/riprap.smk"
 
+elif config["ribosnitch_prediction_tool"].lower() == "rnasnp":
+
+    include: "rules/rnasnp.smk"
 
 def prCyan(skk):
     """

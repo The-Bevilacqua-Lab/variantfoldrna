@@ -41,3 +41,9 @@ if __name__ == "__main__":
         plt.xlabel("Riprap Score")
         plt.ylabel("# of SNPs")
         plt.savefig(f"{args.out}", bbox_inches="tight", dpi=200)
+
+    elif args.tool.upper() == "RNASNP":
+        plt.title("RNAsnp:p-value")
+        plt.xlabel("RNAsnp:p-value")
+        plt.ylabel("# of SNPs")
+        plt.savefig(f"{args.out}", bbox_inches="tight", dpi=200)
