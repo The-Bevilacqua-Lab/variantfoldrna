@@ -109,7 +109,7 @@ if __name__ == "__main__":
 
             # Run RipRap:
             score = run_rnasnp(seq, mutation, args.flank, args.kind)
-            print(score)
+
             # Write the output:
             if score == "NA":
                 error.write("\t".join(line) + "\n")

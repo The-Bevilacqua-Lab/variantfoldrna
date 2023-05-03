@@ -42,8 +42,14 @@ if __name__ == "__main__":
         plt.ylabel("# of SNPs")
         plt.savefig(f"{args.out}", bbox_inches="tight", dpi=200)
 
-    elif args.tool.upper() == "RNASNP":
+    elif args.tool.upper() == "RNASNP:P-VALUE":
         plt.title("RNAsnp:p-value")
         plt.xlabel("RNAsnp:p-value")
+        plt.ylabel("# of SNPs")
+        plt.savefig(f"{args.out}", bbox_inches="tight", dpi=200)
+
+    elif args.tool.upper() == "RNASNP:DIST":
+        plt.title("RNAsnp:dist")
+        plt.xlabel("RNAsnp:dist")
         plt.ylabel("# of SNPs")
         plt.savefig(f"{args.out}", bbox_inches="tight", dpi=200)

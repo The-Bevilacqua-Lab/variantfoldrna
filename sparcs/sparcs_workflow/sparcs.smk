@@ -49,7 +49,7 @@ elif config["ribosnitch_prediction_tool"].lower() == "riprap":
 
     include: "rules/riprap.smk"
 
-elif config["ribosnitch_prediction_tool"].lower() == "rnasnp":
+elif config["ribosnitch_prediction_tool"].lower() == "rnasnp:p-value" or config["ribosnitch_prediction_tool"].lower() == "rnasnp:dist":
 
     include: "rules/rnasnp.smk"
 
