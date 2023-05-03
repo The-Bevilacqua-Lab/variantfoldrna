@@ -1,5 +1,5 @@
 ################################################################################
-# Wrapper for RNAsnp tool
+# Wrapper for the remuRNA tool
 #
 # Author: Kobie Kirven
 #
@@ -17,7 +17,7 @@ import string
 import random
 
 # -- Functions --#
-def make_temp_rnasnp_inputs(sequence, mutation):
+def make_temp_remurna_inputs(sequence, mutation):
     """
     Create a temporary input file for RNAsnp
     """
@@ -28,17 +28,12 @@ def make_temp_rnasnp_inputs(sequence, mutation):
     fn.close()
 
     # Create a file to hold the input sequence
-    with open(f"{fn.name}.seq", "w") as seq:
-        seq.write(sequence)
+    with open(f"{fn.name}.fa", "w") as seq:
+        seq.write(f">test\n{sequence}*{mutation}")
 
-    # Create a file to hold the mutation
-    with open(f"{fn.name}.mut", "w") as mut:
-        mut.write(mutation)
+    return f"{fn.name}.fa"
 
-    return f"{fn.name}.seq", f"{fn.name}.mut"
-
-
-def run_rnasnp(sequence, mutation, flank, kind):
+def run_remurna(sequence, mutation,temperature):
     """
     Run RNAsnp on the sequence
     """
@@ -46,27 +41,22 @@ def run_rnasnp(sequence, mutation, flank, kind):
         return "Error"
 
     # Make the input file:
-    seq, mut = make_temp_rnasnp_inputs(sequence, mutation)
+    seq = make_temp_remurna_inputs(sequence, mutation)
 
     # Run RNAsnp
-    rnasnp = subprocess.run(["RNAsnp", "-f", seq, "-s", mut, "-w", flank], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-
-    # Read the output
-    try:
-        dist = rnasnp.stdout.decode("utf-8").split("\n")[1].split("\t")[5]
-        p_value = rnasnp.stdout.decode("utf-8").split("\n")[1].split("\t")[6]
+    remurna = subprocess.run(["/data2/remuRNA/remuRNA", seq, f"--tmin={temperature}", f"--tmax={temperature}"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     # Remove the temporary files
     subprocess.run(["rm", seq])
-    subprocess.run(["rm", mut])
 
+    # Read the output
+    try:
+        entropy = remurna.stdout.decode("utf-8").split("\n")[1].split("\t")[4]
     except:
         return "Error"
-    
-    if kind == 'dist':
-        return dist
-    else:
-        return p_value
+
+    return entropy
+
 
 # -- Main --#
 if __name__ == "__main__":
@@ -75,7 +65,7 @@ if __name__ == "__main__":
     parser.add_argument("--i", dest="in_file", help="Input File")
     parser.add_argument("--o", dest="output", help="Output")
     parser.add_argument("--flank", dest="flank", help="Flanking length")
-    parser.add_argument("--kind", dest="kind", help="Dist or p_value")
+    parser.add_argument("--temp", dest="temp", help="Temperature", default=37.0)
     args = parser.parse_args()
 
     # Open the input file
@@ -112,7 +102,7 @@ if __name__ == "__main__":
             path = os.path.dirname(os.path.realpath(__file__))
 
             # Run RipRap:
-            score = run_rnasnp(seq, mutation, args.flank, args.kind)
+            score = run_remurna(seq, mutation, args.temp)
 
             # Write the output:
             if score == "NA":

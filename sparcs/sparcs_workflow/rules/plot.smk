@@ -18,4 +18,4 @@ rule plot_scores:
     conda:
         "../envs/plotting.yaml"
     shell:
-        f"python3 workflow/scripts/plot_scores.py --i {{input}} --o {{output}} --t {config['ribosnitch_prediction_tool']}"
+        f"python3 scripts/plot_scores.py --i {{input}} --o {{output}} --t {config['ribosnitch_prediction_tool']}"

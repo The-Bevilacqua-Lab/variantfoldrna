@@ -53,6 +53,10 @@ elif config["ribosnitch_prediction_tool"].lower() == "rnasnp:p-value" or config[
 
     include: "rules/rnasnp.smk"
 
+elif config["ribosnitch_prediction_tool"].lower() == "remurna":
+
+    include: "rules/remurna.smk"
+
 def prCyan(skk):
     """
     Print in cyan
