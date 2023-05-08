@@ -22,8 +22,10 @@ rule run_snpfold:
     output:
         ribo=f"{config['working_directory']}/{config['out_name']}/temp/ribosnitch_chunks_{{temp_deg}}/chunk_{{i}}_riboSNitch_{{temp_deg}}.txt",
         error=f"{config['working_directory']}/{config['out_name']}/temp/ribosnitch_chunks_{{temp_deg}}/chunk_{{i}}_riboSNitch_{{temp_deg}}_error.txt",
-    conda:
-        "../envs/snpfold.yaml"
+    # conda:
+    #     "../envs/snpfold.yaml"
+    singularity:
+        "docker://kjkirven/snpfold:latest"
     log:
         f"{config['working_directory']}/{config['out_name']}/logs/ribosnitch_prediction/chunk_{{i}}_riboSNitch_{{temp_deg}}.log",
     shell:
