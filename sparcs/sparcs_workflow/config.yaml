@@ -14,41 +14,41 @@
 #############################################################
 # Working_directory - directory to store the output folders  
 #############################################################
-working_directory: ~/Desktop
+working_directory: /storage/home/kjk6173/scratch/sparcs_test
 
 # -- INPUT FILES -- # 
 #############################################################
 # vcf_file - Variants file 
 #############################################################
-vcf_file: NA
+vcf_file: /storage/home/kjk6173/work/yeast_data/saccharomyces_cerevisiae.1000.vcf
 
 #############################################################
 # gtf_file - Gene model (must be in GTF format)
 #############################################################
-gtf_file: NA
+gtf_file: /storage/home/kjk6173/work/yeast_data/Saccharomyces_cerevisiae.R64-1-1.55.gtf
 
 #############################################################
 # ref_genome - Reference genome in FASTA format 
 #############################################################
-ref_genome: NA
+ref_genome: /storage/home/kjk6173/work/yeast_data/Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa 
 
 
 # -- PARAMETERS -- #
 #############################################################
 # Name - File prefix name 
 #############################################################
-name: NA
+name: test
 
 #############################################################
 # out_name - Name of the output directory
 #############################################################
-out_name: NA
+out_name: test
 
 #############################################################
 # flank_length - number of nucleotides on either side of 
 #                the SNP for riboSNitch prediction
 #############################################################
-flank_len: 10
+flank_len: 50
 
 #############################################################
 # Chunks - The number of splits of the input files 
@@ -85,3 +85,5 @@ structure_prediction_tool: RNAstructure
 # riprap_min_window: Minimum window size for RipRap
 #############################################################
 riprap_min_window: 3
+
+scramble: FALSE

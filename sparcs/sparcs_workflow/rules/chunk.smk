@@ -26,7 +26,7 @@ rule chunk_vcf:
     conda:
         "../envs/process_seq.yaml"
     shell:
-        f"python3 workflow/scripts/chunk_vcf.py --input {{input.vcf}} --dir {config['working_directory']}/{config['out_name']}/temp --vcf-header {{input.header}} --chunk-total {config['chunks']}"
+        f"python3 scripts/chunk_vcf.py --input {{input.vcf}} --dir {config['working_directory']}/{config['out_name']}/temp --vcf-header {{input.header}} --chunk-total {config['chunks']}"
 
 
 rule chunk_extracted_sequences:
@@ -41,4 +41,4 @@ rule chunk_extracted_sequences:
     conda:
         "../envs/process_seq.yaml"
     shell:
-        f"python3 workflow/scripts/chunk_extracted_seqs.py --input {{input}} --dir {config['working_directory']}/{config['out_name']}/temp --chunk-total {config['chunks']}"
+        f"python3 scripts/chunk_extracted_seqs.py --input {{input}} --dir {config['working_directory']}/{config['out_name']}/temp --chunk-total {config['chunks']}"

@@ -6,4 +6,4 @@ rule scramble_fasta:
     conda:
         "workflow/envs/scramble.yaml"
     shell:
-        "python3 workflow/scripts/scramble.py -seq {input} -out {output}"
+        "python3 scripts/scramble.py -seq {input} -out {output}"
