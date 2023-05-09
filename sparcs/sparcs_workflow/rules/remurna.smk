@@ -18,7 +18,7 @@ import os
 ###########################
 # Rules for running Riprap
 ###########################
-rule run_riprap:
+rule run_remurna:
     # Perform the riboSNitch analysis with Riprap
     input:
         f"{config['working_directory']}/{config['out_name']}/temp/extracted_seqs_chunks/extracted_flank_snp_{{i}}.txt",
@@ -28,11 +28,11 @@ rule run_riprap:
         ribo=f"{config['working_directory']}/{config['out_name']}/temp/ribosnitch_chunks_{{temp_deg}}/chunk_{{i}}_riboSNitch_{{temp_deg}}.txt",
         error=f"{config['working_directory']}/{config['out_name']}/temp/ribosnitch_chunks_{{temp_deg}}/chunk_{{i}}_riboSNitch_{{temp_deg}}_error.txt",
     singularity:
-        "docker://kjkirven/riprap"
+        "docker://kjkirven/remurna"
     log:
         f"{config['working_directory']}/{config['out_name']}/logs/ribosnitch_prediction/chunk_{{i}}_riboSNitch_{{temp_deg}}.log",
     shell:
-        f"python3 workflow/scripts/riprap_wrapper.py --i {{input}} --o {{output.ribo}} --flank {config['flank_len']} --temp {{params}}"
+        f"python3 scripts/remurna_wrapper.py --i {{input}} --o {{output.ribo}} --temp {{params}} --flank {config['flank_len']}"
 
 
 rule combine_ribosnitch_results:
