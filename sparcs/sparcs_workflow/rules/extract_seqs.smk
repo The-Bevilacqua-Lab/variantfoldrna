@@ -35,7 +35,7 @@ rule create_gffutils:
     conda:
         "../envs/extract_seqs.yaml"
     shell:
-        f"python3 workflow/scripts/build_gffutils.py --gtf {{params.gtf}} --o {{output}}"
+        f"python3 scripts/build_gffutils.py --gtf {{params.gtf}} --o {{output}}"
 
 rule extract_cdna_from_gff_with_gffread:
     # Extract the cDNA sequences from the GTF file
@@ -62,7 +62,7 @@ rule extract_sequences:
     conda:
         "../envs/extract_seqs.yaml"
     shell:
-        f"python3 workflow/scripts/get_read_data.py --vcf {{input.vcf}} --database {{input.database}} --ref-genome {{params.ref_genome}} --flank {{params.flank}} --o {{output.seqs}}"
+        f"python3 scripts/get_read_data.py --vcf {{input.vcf}} --database {{input.database}} --ref-genome {{params.ref_genome}} --flank {{params.flank}} --o {{output.seqs}}"
 
 
 rule combine_extracted_sequences:
@@ -83,4 +83,4 @@ rule remove_duplicates:
     conda:
         "../envs/extract_seqs.yaml"
     shell:
-        f"python3 workflow/scripts/remove_duplicates.py -i {{input}} -o {{output}}"
+        f"python3 scripts/remove_duplicates.py -i {{input}} -o {{output}}"
