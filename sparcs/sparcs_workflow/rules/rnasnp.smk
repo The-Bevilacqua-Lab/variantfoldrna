@@ -16,8 +16,10 @@ rule run_rnasnp:
     output:
         ribo=f"{config['working_directory']}/{config['out_name']}/temp/ribosnitch_chunks_{{temp_deg}}/chunk_{{i}}_riboSNitch_{{temp_deg}}.txt",
         error=f"{config['working_directory']}/{config['out_name']}/temp/ribosnitch_chunks_{{temp_deg}}/chunk_{{i}}_riboSNitch_{{temp_deg}}_error.txt",
-    conda:
-        "../envs/rnasnp.yaml"
+    # conda:
+    #     "../envs/rnasnp.yaml"
+    singularity:
+        "docker://kjkirven/rnasnp"
     log:
         f"{config['working_directory']}/{config['out_name']}/logs/ribosnitch_prediction/chunk_{{i}}_riboSNitch_{{temp_deg}}.log",
     shell:
