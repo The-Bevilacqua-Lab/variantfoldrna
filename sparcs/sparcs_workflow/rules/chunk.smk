@@ -23,8 +23,8 @@ rule chunk_vcf:
             f"{config['working_directory']}/{config['out_name']}/temp/vcf_chunks/vcf_no_header_{{i}}.vcf.gz",
             i=range(1, int(config["chunks"]) + 1),
         ),
-    conda:
-        "../envs/process_seq.yaml"
+    singularity:
+        "docker://kjkirven/process_seq"
     shell:
         f"python3 scripts/chunk_vcf.py --input {{input.vcf}} --dir {config['working_directory']}/{config['out_name']}/temp --vcf-header {{input.header}} --chunk-total {config['chunks']}"
 
@@ -38,7 +38,7 @@ rule chunk_extracted_sequences:
             f"{config['working_directory']}/{config['out_name']}/temp/extracted_seqs_chunks/extracted_flank_snp_{{i}}.txt",
             i=range(1, config["chunks"] + 1),
         ),
-    conda:
-        "../envs/process_seq.yaml"
+    singularity:
+        "docker://kjkirven/process_seq"
     shell:
         f"python3 scripts/chunk_extracted_seqs.py --input {{input}} --dir {config['working_directory']}/{config['out_name']}/temp --chunk-total {config['chunks']}"

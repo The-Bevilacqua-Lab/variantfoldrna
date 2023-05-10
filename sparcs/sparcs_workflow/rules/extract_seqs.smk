@@ -32,8 +32,8 @@ rule create_gffutils:
         gtf=config["gtf_file"],
     output:
         f"{config['working_directory']}/{config['out_name']}/temp/{config['gtf_file'].split('/')[-1].strip('.gtf')}.db",
-    conda:
-        "../envs/extract_seqs.yaml"
+    singularity:
+        "docker://kjkirven/process_seq"
     shell:
         f"python3 scripts/build_gffutils.py --gtf {{params.gtf}} --o {{output}}"
 
@@ -44,8 +44,8 @@ rule extract_cdna_from_gff_with_gffread:
         ref=config["ref_genome"],
     output:
         f"{config['working_directory']}/{config['out_name']}/temp/cdna.fa",
-    conda:
-        "../envs/extract_seqs.yaml"
+    singularity:
+        "docker://kjkirven/process_seq"
     shell:
         f"gffread {{params.gtf}} -g {{params.ref}} -w {{output}}"
 
@@ -59,8 +59,8 @@ rule extract_sequences:
         flank=config["flank_len"],
     output:
         seqs=f"{config['working_directory']}/{config['out_name']}/temp/extracted_sequences/extracted_seqs_{{i}}.txt",
-    conda:
-        "../envs/extract_seqs.yaml"
+    singularity:
+        "docker://kjkirven/process_seq"
     shell:
         f"python3 scripts/get_read_data.py --vcf {{input.vcf}} --database {{input.database}} --ref-genome {{params.ref_genome}} --flank {{params.flank}} --o {{output.seqs}}"
 
@@ -80,7 +80,7 @@ rule remove_duplicates:
         f"{config['working_directory']}/{config['out_name']}/temp/extracted_flank_snp.txt",
     output:
         f"{config['working_directory']}/{config['out_name']}/temp/extracted_flank_snp_no_duplicates.txt",
-    conda:
-        "../envs/extract_seqs.yaml"
+    singularity:
+        "docker://kjkirven/process_seq"
     shell:
         f"python3 scripts/remove_duplicates.py -i {{input}} -o {{output}}"
