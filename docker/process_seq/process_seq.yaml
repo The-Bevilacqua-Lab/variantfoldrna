@@ -9,3 +9,5 @@ dependencies:
   - vcftools=0.1.16
   - pip:
     - filesplit==4.0.1
+    - gffutils==0.10.1
+    - pandas==1.3.3
