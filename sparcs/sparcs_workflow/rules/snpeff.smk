@@ -77,8 +77,8 @@ rule create_snpeff_database:
         f"{config['working_directory']}/{config['out_name']}/logs/create_snpeff_database.log",
     output:
         f"{config['working_directory']}/{config['out_name']}/temp/data/{config['out_name']}/snpEffectPredictor.bin",
-    conda:
-        "../envs/snpeff_env.yaml"
+    singularity:
+        "docker://kjkirven/snpeff"
     shell:
         f"(cd {config['working_directory']}/{config['out_name']}/temp/ && snpEff build -c {{input.snpeff_config}} -gtf22 -v {config['out_name']} -noCheckCds -noCheckProtein) 2> {{log}}"
 
@@ -91,8 +91,8 @@ rule seperate_multi_vars:
         f"{config['working_directory']}/{config['out_name']}/logs/seperate_multi_vars/vcf_no_header_{{i}}_seperated.vcf.log",
     output:
         f"{config['working_directory']}/{config['out_name']}/temp/vcf_chunks/vcf_no_header_{{i}}_seperated.vcf.gz",
-    conda:
-        "../envs/snpeff_env.yaml"
+    singularity:
+        "docker://kjkirven/snpeff"
     shell:
         "vt decompose -s {input.vcf} 2> {log} | bgzip > {output} 2> {log} && tabix -p vcf {output} 2> {log}"
 
@@ -106,8 +106,8 @@ rule normalize:
         f"{config['working_directory']}/{config['out_name']}/logs/normalize/vcf_no_header_{{i}}_normalized.vcf.log",
     output:
         f"{config['working_directory']}/{config['out_name']}/temp/vcf_chunks/vcf_no_header_{{i}}_normalized.vcf",
-    conda:
-        "../envs/snpeff_env.yaml"
+    singularity:
+        "docker://kjkirven/snpeff"
     shell:
         "bcftools norm --check-ref s --fasta-ref {input.ref} --output-type v -o {output} {input.vcf} 2> {log}"
 
@@ -122,8 +122,8 @@ rule run_snpeff:
         f"{config['working_directory']}/{config['out_name']}/logs/run_snpeff/vcf_no_header_{{i}}_annotated.vcf.log",
     output:
         f"{config['working_directory']}/{config['out_name']}/temp/annotated_vcf_chunks/vcf_no_header_{{i}}_annotated.vcf",
-    conda:
-        "../envs/snpeff_env.yaml"
+    singularity:
+        "docker://kjkirven/snpeff"
     shell:
         f"snpEff ann -c {{input.snpeff_config}} -noStats -canon -no-upstream -no-downstream -no-intergenic {config['out_name']} {{input.vcf}} > {{output}} 2> {{log}}"
 
@@ -136,7 +136,7 @@ rule get_annotations_one_per_line:
         f"{config['working_directory']}/{config['out_name']}/logs/get_annotations_one_per_line/vcf_no_header_{{i}}_annotated_one_per_line.vcf.log",
     output:
         f"{config['working_directory']}/{config['out_name']}/temp/annotated_vcf_chunks_effects/vcf_no_header_{{i}}_annotated_one_per_line.txt",
-    conda:
-        "../envs/snpeff_env.yaml"
+    singularity:
+        "docker://kjkirven/snpeff"
     shell:
         f'cat {{input}} | scripts/vcfEffOnePerLine.pl | SnpSift extractFields - CHROM POS REF ALT "ANN[*].EFFECT" "ANN[*].FEATUREID" "ANN[*].CDNA_POS" > {{output}} 2> {{log}}'
