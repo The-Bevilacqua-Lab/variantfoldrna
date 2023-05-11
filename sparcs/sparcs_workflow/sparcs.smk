@@ -41,7 +41,7 @@ include: "rules/vcf_header.smk"
 include: "rules/scramble.smk"
 
 # Load the rules for the appropriate prediction tool
-if config["ribosnitch_prediction_tool"].lower() == "SNPfold":
+if config["ribosnitch_prediction_tool"].lower() == "snpfold":
 
     include: "rules/snpfold.smk"
 
@@ -56,6 +56,7 @@ elif config["ribosnitch_prediction_tool"].lower() == "rnasnp:p-value" or config[
 elif config["ribosnitch_prediction_tool"].lower() == "remurna":
 
     include: "rules/remurna.smk"
+
 
 def prCyan(skk):
     """
