@@ -61,6 +61,7 @@ def get_cdna(hgvs, flank, genes, transcript):
     """
     Get the location of the SNP in the cDNA
     """
+    # hgvs = hgvs -1 
     try:
         length = len(genes[transcript][0:].seq)
     except:
@@ -68,13 +69,13 @@ def get_cdna(hgvs, flank, genes, transcript):
             length = len(genes[f"{transcript}.1"][0:].seq)
             # Check to make sure it is not too close to the 5' or 3' ends
             if five_prime_test(hgvs, 1, flank) and three_prime_test(hgvs, length, flank):
-                return genes[f"{transcript}.1"][hgvs - flank:hgvs + flank +1 ].seq
+                return genes[f"{transcript}.1"][hgvs - flank+1:hgvs + flank+1].seq
         except:
             return none
 
     # Check to make sure it is not too close to the 5' or 3' ends
     if five_prime_test(hgvs, 1, flank) and three_prime_test(hgvs, length, flank):
-        return genes[transcript][hgvs - flank:hgvs + flank +1 ].seq
+        return genes[transcript][hgvs - flank:hgvs + flank + 1].seq
     else:
         return None
 
@@ -90,9 +91,9 @@ def get_cdna_pos_dict(cdna_pos_file):
             if len(line) > 1:
                 line[1] = line[1].strip("\n").split("=")[1]
                 # print(line)
-                cds_dict[line[0][1:]] = [line[1].split("-")[0], line[1].split("-")[1]]
+                cds_dict[line[0][1:].strip("\n")] = [line[1].split("-")[0], line[1].split("-")[1]]
             else:
-                cds_dict[line[0]] = "None"
+                cds_dict[line[0][1:].strip("\n")] = "None"
     return cds_dict
 
 def get_hgvs(hgvs):
@@ -162,47 +163,53 @@ if __name__ == "__main__":
                     if cds_dict[predictions.iloc[i][feature]] != "None":
                         cds_start = cds_dict[predictions.iloc[i][feature]][0]
                         cds_end = cds_dict[predictions.iloc[i][feature]][1]
-                else:
-                    cds_start = 0
-
-                if 'offset' not in parsed:
-                    if 'outside_cds' in parsed:
-                        if parsed['outside_cds'] == 'downstream':
-                            position = int(cds_end) + int(parsed['position'])
-                        elif parsed['outside_cds'] == 'upstream':
-                            position = int(cds_start) - int(parsed['position'])
-                        else:
-                            continue 
                     else:
-                        position = int(cds_start) + int(parsed['position']) - 1
+                        print("HERE")
+                        print(predictions.iloc[i][feature])
+                        cds_start = 0
 
-                    seq = get_cdna(position, int(args.flank), genes, predictions.iloc[i][feature])
-
-                    if seq:
-                        snp_seq = seq[int(args.flank)-1]
-                        if snp_seq == alternative:
-                            ref = alternative
-                            alt = reference
-                            flank = seq
-                            flank_left = seq[:int(args.flank)-1]
-                            flank_right = seq[int(args.flank) + 1:]
-                            fn.write(
-                                f'{predictions.iloc[i]["CHROM"]}\t{predictions.iloc[i]["POS"]}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\tMATCHED_ALT\t{db[predictions.iloc[i][feature]].featuretype}\t{db[predictions.iloc[i][feature]].strand}\t{predictions.iloc[i]["ANN[*].EFFECT"]}\n'
-                            )
-                        elif snp_seq == reference:
-                            ref = reference
-                            alt = alternative
-                            flank = seq
-                            flank_left = seq[:int(args.flank)]
-                            flank_right = seq[int(args.flank) + 1:]
-                            fn.write(
-                                f'{predictions.iloc[i]["CHROM"]}\t{predictions.iloc[i]["POS"]}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\tMATCHED_REF\t{db[predictions.iloc[i][feature]].featuretype}\t{db[predictions.iloc[i][feature]].strand}\t{predictions.iloc[i]["ANN[*].EFFECT"]}\n'
-                            )
-
-                        # If the SNP does not match the reference or alternative allele, then we skip it
+                    if 'offset' not in parsed:
+                        if 'outside_cds' in parsed:
+                            if parsed['outside_cds'] == 'downstream':
+                                position = int(cds_end) + int(parsed['position'])
+                            elif parsed['outside_cds'] == 'upstream':
+                                position = int(cds_start) - int(parsed['position']) 
+                            else:
+                                continue 
                         else:
-                            flank = seq
-                            no_match.write(
-                                f'{predictions.iloc[i][feature]}\t{predictions.iloc[i]["POS"]}\t{flank}\t{predictions.iloc[i]["REF"]}\t{predictions.iloc[i]["ALT"]}\t{db[predictions.iloc[i][feature]].strand}\t{predictions.iloc[i]["ANN[*].EFFECT"]}\n'
-                        )
-                
+                            position = int(cds_start) + int(parsed['position']) 
+
+                        seq = get_cdna(position, int(args.flank), genes, predictions.iloc[i][feature])
+
+                        if seq:
+                            if db[predictions.iloc[i][feature]].strand == "-":
+                                seq = compelement_dna(seq)
+
+                            snp_seq = seq[int(args.flank)]
+                            if snp_seq == alternative:
+                                ref = alternative
+                                alt = reference
+                                flank = seq
+                                flank_left = seq[0:int(args.flank)]
+                                flank_right = seq[int(args.flank) + 1:]
+                                fn.write(
+                                    f'{predictions.iloc[i]["CHROM"]}\t{predictions.iloc[i]["POS"]}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\tMATCHED_ALT\t{db[predictions.iloc[i][feature]].featuretype}\t{db[predictions.iloc[i][feature]].strand}\t{predictions.iloc[i]["ANN[*].EFFECT"]}\n'
+                                )
+                            elif snp_seq == reference:
+                                ref = reference
+                                alt = alternative
+                                flank = seq
+                                flank_left = seq[0:int(args.flank)]
+                                flank_right = seq[int(args.flank) + 1:]
+                                fn.write(
+                                    f'{predictions.iloc[i]["CHROM"]}\t{predictions.iloc[i]["POS"]}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\tMATCHED_REF\t{db[predictions.iloc[i][feature]].featuretype}\t{db[predictions.iloc[i][feature]].strand}\t{predictions.iloc[i]["ANN[*].EFFECT"]}\n'
+                                )
+
+                            # If the SNP does not match the reference or alternative allele, then we skip it
+                            else:
+                                flank = seq
+                                no_match.write(
+                                    f'{predictions.iloc[i][feature]}\t{predictions.iloc[i]["POS"]}\t{flank}\t{predictions.iloc[i]["REF"]}\t{predictions.iloc[i]["ALT"]}\t{db[predictions.iloc[i][feature]].strand}\t{predictions.iloc[i]["ANN[*].EFFECT"]}\n'
+                            )
+                else:
+                    print(f"NOT HERE:{predictions.iloc[i][feature]}")
