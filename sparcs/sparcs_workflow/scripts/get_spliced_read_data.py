@@ -174,7 +174,7 @@ if __name__ == "__main__":
                         else:
                             continue 
                     else:
-                        position = int(cds_start) + int(parsed['position'])
+                        position = int(cds_start) + int(parsed['position']) - 1
 
                     seq = get_cdna(position, int(args.flank), genes, predictions.iloc[i][feature])
 
@@ -184,7 +184,7 @@ if __name__ == "__main__":
                             ref = alternative
                             alt = reference
                             flank = seq
-                            flank_left = seq[:int(args.flank)]
+                            flank_left = seq[:int(args.flank)-1]
                             flank_right = seq[int(args.flank) + 1:]
                             fn.write(
                                 f'{predictions.iloc[i]["CHROM"]}\t{predictions.iloc[i]["POS"]}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\tMATCHED_ALT\t{db[predictions.iloc[i][feature]].featuretype}\t{db[predictions.iloc[i][feature]].strand}\t{predictions.iloc[i]["ANN[*].EFFECT"]}\n'
