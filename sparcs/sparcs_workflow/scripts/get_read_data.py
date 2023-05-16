@@ -115,11 +115,11 @@ if __name__ == "__main__":
                 args.ref, use_strand=False
             )
 
-            # Swap the reference and alternative alleles if the transcript is on the negative strand
+            # Complement the reference and alternative alleles if the transcript is on the negative strand
             if db[predictions.iloc[i][feature]].strand == "-":
                 sequence = compelement_dna(sequence)
-                reference = compelement_dna(predictions.iloc[i]["ALT"])
-                alternative = compelement_dna(predictions.iloc[i]["REF"])
+                reference = compelement_dna(predictions.iloc[i]["REF"])
+                alternative = compelement_dna(predictions.iloc[i]["ALT"])
 
             elif db[predictions.iloc[i][feature]].strand == "+":
                 reference = predictions.iloc[i]["REF"]
@@ -171,5 +171,6 @@ if __name__ == "__main__":
                 no_match.write(
                     f'{predictions.iloc[i][feature]}\t{predictions.iloc[i]["POS"]}\t{flank}\t{predictions.iloc[i]["REF"]}\t{predictions.iloc[i]["ALT"]}\t{db[predictions.iloc[i][feature]].strand}\t{predictions.iloc[i]["ANN[*].EFFECT"]}\n'
                 )
+                print("EHEHEHEHEHEHEHE")
 
     fn.close()

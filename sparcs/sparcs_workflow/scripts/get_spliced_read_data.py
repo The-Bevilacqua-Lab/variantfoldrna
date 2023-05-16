@@ -75,7 +75,7 @@ def get_cdna(hgvs, flank, genes, transcript):
 
     # Check to make sure it is not too close to the 5' or 3' ends
     if five_prime_test(hgvs, 1, flank) and three_prime_test(hgvs, length, flank):
-        return genes[transcript][hgvs - flank:hgvs + flank + 1].seq
+        return genes[transcript][hgvs - flank - 2:hgvs + flank -1].seq
     else:
         return None
 
@@ -140,10 +140,10 @@ if __name__ == "__main__":
             # Get the strand of the transcript
             strand = db[predictions.iloc[i][feature]].strand
 
-            # Swap the reference and alternative alleles if the transcript is on the negative strand
+            # Complement the reference and alternative alleles if the transcript is on the negative strand
             if db[predictions.iloc[i][feature]].strand == "-":
-                reference = compelement_dna(predictions.iloc[i]["ALT"])
-                alternative = compelement_dna(predictions.iloc[i]["REF"])
+                reference = compelement_dna(predictions.iloc[i]["REF"])
+                alternative = compelement_dna(predictions.iloc[i]["ALT"])
 
             elif db[predictions.iloc[i][feature]].strand == "+":
                 reference = predictions.iloc[i]["REF"]
@@ -182,9 +182,7 @@ if __name__ == "__main__":
                         seq = get_cdna(position, int(args.flank), genes, predictions.iloc[i][feature])
 
                         if seq:
-                            if db[predictions.iloc[i][feature]].strand == "-":
-                                seq = compelement_dna(seq)
-
+                            print(seq[int(args.flank)-2:int(args.flank)+2], reference , seq[int(args.flank)], db[predictions.iloc[i][feature]].strand)
                             snp_seq = seq[int(args.flank)]
                             if snp_seq == alternative:
                                 ref = alternative
@@ -213,3 +211,5 @@ if __name__ == "__main__":
                             )
                 else:
                     print(f"NOT HERE:{predictions.iloc[i][feature]}")
+    no_match.close()
+    fn.close()
