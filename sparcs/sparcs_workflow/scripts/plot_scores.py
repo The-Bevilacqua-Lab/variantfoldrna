@@ -65,3 +65,9 @@ if __name__ == "__main__":
         plt.xlabel("$\Delta$ Ensemble Diversity")
         plt.ylabel("# of SNPs")
         plt.savefig(f"{args.out}", bbox_inches="tight", dpi=200)
+
+    elif args.tool.upper() == "DELTA_ENSEMBLE_FREE_ENERGY":
+        plt.title("$\Delta$ Ensemble Free Energy")
+        plt.xlabel("$\Delta$ Ensemble Free Energy")
+        plt.ylabel("# of SNPs")
+        plt.savefig(f"{args.out}", bbox_inches="tight", dpi=200)

@@ -35,7 +35,6 @@ configfile: srcdir("config.yaml")
 # Import Rules
 include: "rules/chunk.smk"
 include: "rules/snpeff.smk"
-include: "rules/extract_seqs.smk"
 include: "rules/plot.smk"
 include: "rules/vcf_header.smk"
 include: "rules/scramble.smk"
@@ -57,6 +56,16 @@ elif config["ribosnitch_prediction_tool"].lower() == "remurna":
 
     include: "rules/remurna.smk"
 
+elif config["ribosnitch_prediction_tool"].lower() == "delta_ensemble_diversity" or config["ribosnitch_prediction_tool"].lower() == "delta_ensemble_free_energy":
+
+    include: "rules/ensemble.smk"
+
+
+if config['spliced'] == True:
+    include: "rules/extract_seqs_spliced.smk"
+
+else:
+    include: "rules/extract_seqs.smk"
 
 def prCyan(skk):
     """
