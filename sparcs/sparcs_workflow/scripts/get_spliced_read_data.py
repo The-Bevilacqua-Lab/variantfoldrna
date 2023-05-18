@@ -71,7 +71,7 @@ def get_cdna(hgvs, flank, genes, transcript):
             if five_prime_test(hgvs, 1, flank) and three_prime_test(hgvs, length, flank):
                 return genes[f"{transcript}.1"][hgvs - flank+1:hgvs + flank+1].seq
         except:
-            return none
+            return None
 
     # Check to make sure it is not too close to the 5' or 3' ends
     if five_prime_test(hgvs, 1, flank) and three_prime_test(hgvs, length, flank):
@@ -164,16 +164,14 @@ if __name__ == "__main__":
                         cds_start = cds_dict[predictions.iloc[i][feature]][0]
                         cds_end = cds_dict[predictions.iloc[i][feature]][1]
                     else:
-                        print("HERE")
-                        print(predictions.iloc[i][feature])
                         cds_start = 0
 
                     if 'offset' not in parsed:
                         if 'outside_cds' in parsed:
                             if parsed['outside_cds'] == 'downstream':
-                                position = int(cds_end) + int(parsed['position'])
+                                position = int(cds_end) + int(parsed['position']) + 1
                             elif parsed['outside_cds'] == 'upstream':
-                                position = int(cds_start) - int(parsed['position']) 
+                                position = int(cds_start) - int(parsed['position']) + 1
                             else:
                                 continue 
                         else:
@@ -182,7 +180,6 @@ if __name__ == "__main__":
                         seq = get_cdna(position, int(args.flank), genes, predictions.iloc[i][feature])
 
                         if seq:
-                            print(seq[int(args.flank)-2:int(args.flank)+2], reference , seq[int(args.flank)], db[predictions.iloc[i][feature]].strand)
                             snp_seq = seq[int(args.flank)]
                             if snp_seq == alternative:
                                 ref = alternative
