@@ -59,3 +59,9 @@ if __name__ == "__main__":
         plt.xlabel("remuRNA Entropy")
         plt.ylabel("# of SNPs")
         plt.savefig(f"{args.out}", bbox_inches="tight", dpi=200)
+
+    elif args.tool.upper() == "DELTA_ENSEMBLE_DIVERSITY":
+        plt.title("$\Delta$ Ensemble Diversity")
+        plt.xlabel("$\Delta$ Ensemble Diversity")
+        plt.ylabel("# of SNPs")
+        plt.savefig(f"{args.out}", bbox_inches="tight", dpi=200)
