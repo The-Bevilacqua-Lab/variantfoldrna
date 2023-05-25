@@ -51,14 +51,14 @@ def run_rnasnp(sequence, mutation, flank, kind):
     # Run RNAsnp
     rnasnp = subprocess.run(["RNAsnp", "-f", seq, "-s", mut, "-w", flank], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
+    # Remove the temporary files
+    subprocess.run(["rm", seq])
+    subprocess.run(["rm", mut])
+    
     # Read the output
     try:
         dist = rnasnp.stdout.decode("utf-8").split("\n")[1].split("\t")[5]
         p_value = rnasnp.stdout.decode("utf-8").split("\n")[1].split("\t")[6]
-
-    # Remove the temporary files
-    subprocess.run(["rm", seq])
-    subprocess.run(["rm", mut])
 
     except:
         return "Error"
