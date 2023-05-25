@@ -11,10 +11,11 @@
 
 # ----- Import modules ----#
 import argparse
-import gffutils
+import json
 import pandas as pd
 import json
 import sys
+import pyfaidx
 
 
 # ----- Functions ------#
@@ -61,14 +62,11 @@ if __name__ == "__main__":
         description="Extract sequences surrounding variants"
     )
     parser.add_argument("--vcf", dest="vcf", help="VCF File")
-    parser.add_argument("--database", dest="database", help="gffutils database")
     parser.add_argument("--ref-genome", dest="ref", help="Reference Genome")
+    parser.add_argument("--gffread", dest="gffread", help="Gffread Table")
     parser.add_argument("--flank", dest="flank", help="SNP flanking length")
     parser.add_argument("--o", dest="output", help="Output File")
     args = parser.parse_args()
-
-    # load the GFFUtils database
-    db = gffutils.FeatureDB(args.database, keep_order=True)
 
     # Open the output files
     fn = open(args.output, "w")
@@ -79,67 +77,83 @@ if __name__ == "__main__":
     predictions = predictions.dropna()
 
     # Get the feature ID
-    feature = "ANN[*].FEATUREID"
+    feature = "Feature"
+
+    import json
+  
+    # Opening JSON file
+    f = open(args.gffread)
+    
+    # returns JSON object as 
+    # a dictionary
+    transcript_data = json.load(f)
+  
 
     for i in range(len(predictions)):
         # Check to make sure it is not an INDEL
         if (
-            len(predictions.iloc[i]["REF"]) > 1
-            and len(predictions.iloc[i]["ALT"]) > 1
-            and len(predictions.iloc[i]["REF"]) == len(predictions.iloc[i]["ALT"])
+            len(predictions.iloc[i]["REF_ALLELE"]) > 1
+            and len(predictions.iloc[i]["Allele"]) > 1
+            and len(predictions.iloc[i]["REF_ALLELE"]) == len(predictions.iloc[i]["ALT"])
         ):
             continue
 
         # Get the start and stop positions of the transcript
-        start = db[predictions.iloc[i][feature]].start
-        end = db[predictions.iloc[i][feature]].end
+        print(predictions.iloc[i])
+        start = transcript_data[predictions.iloc[i][feature]][1]
+        end = transcript_data[predictions.iloc[i][feature]][2]
+
+        chrom = predictions.iloc[i]["#Location"].split(":")[0]
+        position = int(predictions.iloc[i]["#Location"].split(":")[1])
 
         # Check to make sure it is not within a certain distance from the 5' and 3' ends of the transcript
         if five_prime_test(
-            predictions.iloc[i]["POS"], start, args.flank
-        ) and three_prime_test(predictions.iloc[i]["POS"], end, args.flank):
+            position, start, args.flank
+        ) and three_prime_test(position, end, args.flank):
 
-            if len(predictions.iloc[i]["REF"]) > 1:
+            if len(predictions.iloc[i]["REF_ALLELE"]) > 1:
                 if not five_prime_test(
-                    (predictions.iloc[i]["POS"] + len(predictions.iloc[i]["REF"])),
+                    (position + len(predictions.iloc[i]["REF_ALLELE"])),
                     start,
                     args.flank,
                 ) and three_prime_test(
-                    predictions.iloc[i]["POS"] + len(predictions.iloc[i]["REF"]),
+                    position + len(predictions.iloc[i]["REF_ALLELE"]),
                     end,
                     args.flank,
                 ):
                     continue
 
-            sequence = db[predictions.iloc[i][feature]].sequence(
-                args.ref, use_strand=False
-            )
+            sequence = pyfaidx.Fasta(args.ref)[chrom][start-1:end].seq
 
             # Complement the reference and alternative alleles if the transcript is on the negative strand
-            if db[predictions.iloc[i][feature]].strand == "-":
+            
+            if str(predictions.iloc[i]["STRAND"]) == "-1":
                 sequence = compelement_dna(sequence)
-                reference = compelement_dna(predictions.iloc[i]["REF"])
-                alternative = compelement_dna(predictions.iloc[i]["ALT"])
+                reference = compelement_dna(predictions.iloc[i]["REF_ALLELE"])
+                alternative = compelement_dna(predictions.iloc[i]["Allele"])
 
-            elif db[predictions.iloc[i][feature]].strand == "+":
-                reference = predictions.iloc[i]["REF"]
-                alternative = predictions.iloc[i]["ALT"]
+            elif str(predictions.iloc[i]["STRAND"]) == "1":
+                reference = predictions.iloc[i]["REF_ALLELE"]
+                alternative = predictions.iloc[i]["Allele"]
 
             # Get the nucleotides at the location of the variant
+            else:
+                print(type(predictions.iloc[i]["STRAND"]))
+
             snp_seq = sequence[
-                (predictions.iloc[i]["POS"] - start) : (
-                    (predictions.iloc[i]["POS"] - start) + (len(reference))
+                (position - start) : (
+                    (position - start) + (len(reference))
                 )
             ]
 
             # Get the flanking sequence
             flank_left = sequence[
-                (predictions.iloc[i]["POS"] - start)
-                - int(args.flank) : (predictions.iloc[i]["POS"] - start)
+                (position - start)
+                - int(args.flank) : (position - start)
             ]
             flank_right = sequence[
-                ((predictions.iloc[i]["POS"] - start) + len(reference)) : (
-                    (predictions.iloc[i]["POS"] - start) + len(reference)
+                ((position - start) + len(reference)) : (
+                    (position - start) + len(reference)
                 )
                 + int(args.flank)
             ]
@@ -154,7 +168,7 @@ if __name__ == "__main__":
                 alt = reference
                 flank = flank_left + ref + flank_right
                 fn.write(
-                    f'{predictions.iloc[i]["CHROM"]}\t{predictions.iloc[i]["POS"]}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\tMATCHED_ALT\t{db[predictions.iloc[i][feature]].featuretype}\t{db[predictions.iloc[i][feature]].strand}\t{predictions.iloc[i]["ANN[*].EFFECT"]}\n'
+                    f'{chrom}\t{position}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\tMATCHED_ALT\t{predictions.iloc[i]["Consequence"]}\t{predictions.iloc[i]["STRAND"]}\n'
                 )
 
             # Check to see if the SNP matches the reference allele
@@ -163,13 +177,15 @@ if __name__ == "__main__":
                 alt = alternative
                 flank = flank_left + ref + flank_right
                 fn.write(
-                    f'{predictions.iloc[i]["CHROM"]}\t{predictions.iloc[i]["POS"]}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\tMATCHED_REF\t{db[predictions.iloc[i][feature]].featuretype}\t{db[predictions.iloc[i][feature]].strand}\t{predictions.iloc[i]["ANN[*].EFFECT"]}\n'
+                    f'{chrom}\t{position}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\tMATCHED_REF\t{predictions.iloc[i]["Consequence"]}\t{predictions.iloc[i]["STRAND"]}\n'
                 )
 
             # If the SNP does not match the reference or alternative allele, then we skip it
             else:
+                ref = alternative
+                alt = reference
                 no_match.write(
-                    f'{predictions.iloc[i][feature]}\t{predictions.iloc[i]["POS"]}\t{flank}\t{predictions.iloc[i]["REF"]}\t{predictions.iloc[i]["ALT"]}\t{db[predictions.iloc[i][feature]].strand}\t{predictions.iloc[i]["ANN[*].EFFECT"]}\n'
+                    f'{chrom}\t{position}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\n'
                 )
                 print("EHEHEHEHEHEHEHE")
 

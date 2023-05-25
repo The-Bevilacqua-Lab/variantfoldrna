@@ -34,7 +34,8 @@ configfile: srcdir("config.yaml")
 
 # Import Rules
 include: "rules/chunk.smk"
-include: "rules/snpeff.smk"
+# include: "rules/snpeff.smk"
+include: "rules/vep.smk"
 include: "rules/plot.smk"
 include: "rules/vcf_header.smk"
 include: "rules/scramble.smk"
@@ -88,6 +89,10 @@ for temp in temperature_range:
     final_input.append(
         f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/combined_ribosnitch_prediction_hist_{temp}.png"
     )
+    # if config["top_n_percent"]:
+    #     final_input.append(
+    #         f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/combined_ribosnitch_prediction_top_{config['top_n_percent']}_{temp}.txt"
+    #     )
 
 # Let the user know what files we are creating
 prCyan("Creating the following files:")
