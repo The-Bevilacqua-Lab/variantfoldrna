@@ -13,9 +13,17 @@ else:
     annotation = config["gff_file"]
     kind = "gff"
 
+# Check to see if the user only wants to use the canonical transcripts:
+if config["canonical"] == True:
+    gff_file = f"{config['working_directory']}/{config['out_name']}/temp/canonical_transcripts.gff3"
+    print("YES")
+else:
+    gff_file = annotation
+
+
 rule sort_gene_model:
     input:
-        annotation
+        gff_file
     output:
         f"{config['working_directory']}/{config['out_name']}/temp/annotation.sorted.{kind}.gz"
     singularity:
@@ -70,8 +78,13 @@ rule vep:
         tbi = f"{config['working_directory']}/{config['out_name']}/temp/annotation.sorted.{kind}.gz.tbi"
     output:
         f"{config['working_directory']}/{config['out_name']}/temp/annotated_vcf_chunks_effects/vcf_no_header_{{i}}_annotated_one_per_line.txt",
+    params:
+        f"{config['working_directory']}/{config['out_name']}/temp/annotated_vcf_chunks_effects/vcf_no_header_{{i}}_annotated_one_per_line_temp.txt",
     singularity:
         "docker://ensemblorg/ensembl-vep:release_100.2"
+    log:
+        f"{config['working_directory']}/{config['out_name']}/logs/vep/vcf_no_header_{{i}}_annotated_one_per_line.log"
     shell:
-        f'vep -i {{input.vcf}} --{kind} {{input.annotation}} --fasta {{input.fasta}} -o {{output}} --force_overwrite --tab --fields "Location,REF_ALLELE,Allele,Consequence,Feature,cDNA_position,HGVSc" --hgvs --show_ref_allele'
+        f'vep -i {{input.vcf}} --{kind} {{input.annotation}} --fasta {{input.fasta}} -o {{params}} --force_overwrite --tab --fields "Location,REF_ALLELE,Allele,Consequence,Feature,cDNA_position,HGVSc,STRAND,CANONICAL" --hgvs --show_ref_allele --canonical && cat {{params}} | grep -v "##" | grep -v "stream_gene_variant" | grep -v "intergenic" > {{output}}'
+
 
