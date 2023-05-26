@@ -25,8 +25,10 @@ rule chunk_vcf:
         ),
     singularity:
         "docker://kjkirven/process_seq"
+    log:
+        f"{config['working_directory']}/{config['out_name']}/logs/chunk_vcf.log"
     shell:
-        f"python3 scripts/chunk_vcf.py --input {{input.vcf}} --dir {config['working_directory']}/{config['out_name']}/temp --vcf-header {{input.header}} --chunk-total {config['chunks']}"
+        f"python3 scripts/chunk_vcf.py --input {{input.vcf}} --dir {config['working_directory']}/{config['out_name']}/temp --vcf-header {{input.header}} --chunk-total {config['chunks']} > {{log}}"
 
 
 rule chunk_extracted_sequences:
