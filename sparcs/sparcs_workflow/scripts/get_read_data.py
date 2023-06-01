@@ -16,7 +16,7 @@ import pandas as pd
 import json
 import sys
 import pyfaidx
-
+import json
 
 # ----- Functions ------#
 def compelement_dna(dna):
@@ -78,8 +78,6 @@ if __name__ == "__main__":
 
     # Get the feature ID
     feature = "Feature"
-
-    import json
   
     # Opening JSON file
     f = open(args.gffread)
@@ -93,13 +91,13 @@ if __name__ == "__main__":
         # Check to make sure it is not an INDEL
         if (
             len(predictions.iloc[i]["REF_ALLELE"]) > 1
-            and len(predictions.iloc[i]["Allele"]) > 1
-            and len(predictions.iloc[i]["REF_ALLELE"]) == len(predictions.iloc[i]["ALT"])
+            or len(predictions.iloc[i]["Allele"]) > 1
+            or predictions.iloc[i]["Allele"] == "-" 
+            or predictions.iloc[i]["REF_ALLELE"] == "-"
         ):
             continue
 
         # Get the start and stop positions of the transcript
-        print(predictions.iloc[i])
         start = transcript_data[predictions.iloc[i][feature]][1]
         end = transcript_data[predictions.iloc[i][feature]][2]
 
@@ -126,7 +124,6 @@ if __name__ == "__main__":
             sequence = pyfaidx.Fasta(args.ref)[chrom][start-1:end].seq
 
             # Complement the reference and alternative alleles if the transcript is on the negative strand
-            
             if str(predictions.iloc[i]["STRAND"]) == "-1":
                 sequence = compelement_dna(sequence)
                 reference = compelement_dna(predictions.iloc[i]["REF_ALLELE"])
@@ -187,6 +184,5 @@ if __name__ == "__main__":
                 no_match.write(
                     f'{chrom}\t{position}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\n'
                 )
-                print("EHEHEHEHEHEHEHE")
 
     fn.close()
