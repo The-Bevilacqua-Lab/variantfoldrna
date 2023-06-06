@@ -95,3 +95,16 @@ rule remove_duplicates:
         "docker://kjkirven/process_seq"
     shell:
         f"python3 scripts/remove_duplicates.py -i {{input}} -o {{output}}"
+
+rule get_canonical_transcripts_with_AGAT:
+    # Use AGAT to keep the longest isoform for each gene to speed up the process, if the user wants to
+    input:
+        gff=config["gff_file"],
+    output:
+        f"{config['working_directory']}/{config['out_name']}/temp/canonical_transcripts.gff3"
+    singularity:
+        "docker://quay.io/biocontainers/agat:1.0.0--pl5321hdfd78af_0"
+    log:
+        f"{config['working_directory']}/{config['out_name']}/logs/get_canonical_transcripts_with_AGAT.log"
+    shell:
+        f"cd {config['working_directory']} && agat_sp_keep_longest_isoform.pl -gff {{input.gff}} -o {{output}} > {{log}} 2>&1"
