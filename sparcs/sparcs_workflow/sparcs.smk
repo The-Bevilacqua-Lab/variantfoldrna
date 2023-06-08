@@ -34,7 +34,6 @@ configfile: srcdir("config.yaml")
 
 # Import Rules
 include: "rules/chunk.smk"
-# include: "rules/snpeff.smk"
 include: "rules/vep.smk"
 include: "rules/plot.smk"
 include: "rules/vcf_header.smk"
@@ -73,7 +72,6 @@ def prCyan(skk):
     Print in cyan
     """
     print("\033[96m {}\033[00m".format(skk))
-
 
 if "@" in str(config["temperature"]):
     start_stop = str(config["temperature"]).split("@")
