@@ -26,7 +26,19 @@ combine_input = expand(
     f"{config['working_directory']}/{config['out_name']}/temp/extracted_sequences/extracted_seqs_{{i}}.txt",
     i=range(1, config["chunks"] + 1),
 )
-
+rule get_canonical_transcripts_with_AGAT:
+    # Use AGAT to keep the longest isoform for each gene to speed up the process, if the user wants to
+    input:
+        gff=config["gff_file"],
+    output:
+        f"{config['working_directory']}/{config['out_name']}/temp/canonical_transcripts.gff3"
+    singularity:
+        "docker://quay.io/biocontainers/agat:1.0.0--pl5321hdfd78af_0"
+    log:
+        f"{config['working_directory']}/{config['out_name']}/logs/get_canonical_transcripts_with_AGAT.log"
+    shell:
+        f"cd {config['working_directory']} && agat_sp_keep_longest_isoform.pl -gff {{input.gff}} -o {{output}} > {{log}} 2>&1"
+        
 #---- Rules ----#
 rule extract_cds_from_gff_with_gffread:
     # Extract the CDS sequences from the GFF file
