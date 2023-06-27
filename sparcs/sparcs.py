@@ -211,11 +211,11 @@ def main():
     # Check to to see if the user has a VCF file, a GTF file, and a FASTA file in the current directory
     inputted_files = {"VCF": None, "GFF3": None, "FASTA": None}
     if args.vcf:
-        inputted_files["VCF"] = args.vcf
+        inputted_files["VCF"] = os.path.abspath(args.vcf)
     if args.gff:
-        inputted_files["GFF3"] = args.gff
+        inputted_files["GFF3"] = os.path.abspath(args.gff)
     if args.fasta:
-        inputted_files["FASTA"] = args.fasta
+        inputted_files["FASTA"] = os.path.abspath(args.fasta)
 
     # The user has specified at least one of the files, so we will
     # let the user know what files they have specified
