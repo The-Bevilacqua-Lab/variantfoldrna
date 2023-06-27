@@ -5,16 +5,14 @@
 # Path to the config file
 configfile: srcdir("../config.yaml")
 
-annotation = config["gff_file"]
-kind = "gff"
+kind = "gff3"
+gff_file = config['gff_file']
 
 # Check to see if the user only wants to use the canonical transcripts:
 if config["canonical"] == True:
     gff_file = f"{config['working_directory']}/{config['out_name']}/temp/canonical_transcripts.gff3"
-    print("YES")
 else:
     gff_file = annotation
-
 
 rule sort_gene_model:
     input:
