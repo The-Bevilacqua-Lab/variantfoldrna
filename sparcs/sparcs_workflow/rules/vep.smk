@@ -5,13 +5,8 @@
 # Path to the config file
 configfile: srcdir("../config.yaml")
 
-# Check to see if the user input a GTF or a GFF file
-if config["gtf_file"] != "None":
-    annotation = config["gtf_file"]
-    kind = "gtf"
-else:
-    annotation = config["gff_file"]
-    kind = "gff"
+annotation = config["gff_file"]
+kind = "gff"
 
 # Check to see if the user only wants to use the canonical transcripts:
 if config["canonical"] == True:
