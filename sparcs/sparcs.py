@@ -300,7 +300,7 @@ def main():
     )
 
     # Generate the sparcs.sh file
-    bash_builder(f"{output_dir}/sparcs.sh", args.cores, args.working_directory)
+    bash_builder(f"{output_dir}/sparcs.sh", args.cores, args.out)
 
     prGreen("All Done!\n")
     prCyan("To run the SPARCS pipeline, run the following commands:")
