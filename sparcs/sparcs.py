@@ -13,6 +13,7 @@ import argparse
 import os
 import subprocess
 import sys
+import shutil
 try:
     from .sparcs_utils import *
 except:
@@ -110,6 +111,13 @@ def main():
         help="Path to directory that holds the singularity containers"
     )
 
+    parser.add_argument(
+        "--force",
+        action='store_true', 
+        help='Create the output directory even if it already exists'
+        
+        )
+
     # Parse the command line arguments
     args = parser.parse_args()
 
@@ -144,6 +152,9 @@ def main():
 
     # Try to create the output directory
     try:
+        if args.force:
+            if os.path.exists(output_dir):
+            shutil.rmtree(output_dir)
         os.mkdir(output_dir)
     except:
         prRed("Error: Could not create output directory: {}".format(output_dir))
@@ -199,7 +210,7 @@ def main():
     if args.vcf:
         inputted_files["VCF"] = os.path.abspath(args.vcf)
     if args.gff:
-        inputted_files["GFF"] = os.path.abspath(args.gff)
+        inputted_files["GFF3"] = os.path.abspath(args.gff)
     if args.fasta:
         inputted_files["FASTA"] = os.path.abspath(args.fasta)
 
@@ -251,10 +262,10 @@ def main():
     else:
         vcf_file = inputted_files["VCF"]
 
-    if inputted_files["GFF"] == None:
+    if inputted_files["GFF3"] == None:
         gff_file = "NA"
     else:
-        gff_file = inputted_files["GFF"]
+        gff_file = inputted_files["GFF3"]
 
     if inputted_files["FASTA"] == None:
         ref_genome = "NA"
