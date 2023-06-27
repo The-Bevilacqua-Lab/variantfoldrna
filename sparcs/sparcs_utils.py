@@ -41,7 +41,7 @@ def config_builder(output_file, working_directory, vcf_file, gff_file,
     output.write(f"vcf_file: {vcf_file}\n\n")
 
     output.write('''#############################################################
-# gff_file - Gene model (must be in GTF format)
+# gff_file - Gene model (must be in GFF format)
 #############################################################\n''')
     output.write(f"gff_file: {gff_file}\n\n")
 

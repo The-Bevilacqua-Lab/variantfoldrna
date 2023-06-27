@@ -198,7 +198,7 @@ def main():
     inputted_files = {"VCF": None, "GFF": None, "FASTA": None}
     if args.vcf:
         inputted_files["VCF"] = os.path.abspath(args.vcf)
-    if args.gtf:
+    if args.gff:
         inputted_files["GFF"] = os.path.abspath(args.gff)
     if args.fasta:
         inputted_files["FASTA"] = os.path.abspath(args.fasta)
@@ -275,7 +275,7 @@ def main():
         f'{output_dir}/workflow/config.yaml',
         "/".join(output_dir.split("/")[:-1]),
         vcf_file,
-        gtf_file,
+        gff_file,
         ref_genome,
         output_dir.split("/")[-1],
         args.ribosnitch_flank,
