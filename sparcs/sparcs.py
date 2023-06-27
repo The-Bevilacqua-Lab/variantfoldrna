@@ -154,7 +154,7 @@ def main():
     try:
         if args.force:
             if os.path.exists(output_dir):
-            shutil.rmtree(output_dir)
+                shutil.rmtree(output_dir)
         os.mkdir(output_dir)
     except:
         prRed("Error: Could not create output directory: {}".format(output_dir))
