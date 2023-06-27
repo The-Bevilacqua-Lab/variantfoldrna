@@ -50,6 +50,14 @@ def main():
         help='Used the spliced form of transcripts'
         
         )
+
+    parser.add_argument(
+        "--canonical",
+        action='store_true', 
+        help='Used only the canonical transcripts'
+        
+        )
+
     parser.add_argument(
         "--chunks",
         dest="chunks",
@@ -277,6 +285,7 @@ def main():
         args.structure_pred_tool,
         args.minwindow,
         args.temp_step, 
+        args.canonical,
     )
 
     # Generate the sparcs.sh file

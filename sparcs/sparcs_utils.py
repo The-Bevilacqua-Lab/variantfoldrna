@@ -8,9 +8,9 @@ def prCyan(skk): print("\033[96m {}\033[00m" .format(skk))
 def prYellow(skk): print("\033[93m {}\033[00m" .format(skk))
 def prRed(skk): print("\033[91m {}\033[00m" .format(skk))
 
-def config_builder(output_file, working_directory, vcf_file, gtf_file, 
+def config_builder(output_file, working_directory, vcf_file, gff_file, 
                    ref_genome, output_dir, flank, chunks, temperature,
-                   ribo_tool, structure_tool, riprap_min_window, temp_step, scramble):
+                   ribo_tool, structure_tool, riprap_min_window, temp_step, spliced="TRUE", canonical="TRUE"):
     '''
     Generates a config file for running the SPARCS pipeline
     '''
@@ -41,9 +41,9 @@ def config_builder(output_file, working_directory, vcf_file, gtf_file,
     output.write(f"vcf_file: {vcf_file}\n\n")
 
     output.write('''#############################################################
-# gtf_file - Gene model (must be in GTF format)
+# gff_file - Gene model (must be in GTF format)
 #############################################################\n''')
-    output.write(f"gtf_file: {gtf_file}\n\n")
+    output.write(f"gff_file: {gff_file}\n\n")
 
     output.write('''#############################################################
 # ref_genome - Reference genome in FASTA format 
@@ -66,6 +66,18 @@ def config_builder(output_file, working_directory, vcf_file, gtf_file,
 #                the SNP for riboSNitch prediciton 
 #############################################################\n''')
     output.write(f"flank_len: {flank}\n\n")
+
+    output.write('''#############################################################
+# spliced - Boolen whether to use the spliced or unspliced transcripts
+# for riboSNitch prediction 
+#############################################################\n''')
+    output.write(f"spliced: {spliced}\n\n")
+
+    output.write('''#############################################################
+# Canonical - Boolen whether to use the canonical form of the transcripts
+# for riboSNitch prediction 
+#############################################################\n''')
+    output.write(f"canonical: {canonical}\n\n")
 
     output.write('''#############################################################
 # Chunks - The number of splits of the input files 
@@ -100,18 +112,12 @@ def config_builder(output_file, working_directory, vcf_file, gtf_file,
 # riprap_min_window: Minimum window size for RipRap
 #############################################################''')
     output.write(f"\nriprap_min_window: {riprap_min_window}\n\n")
-
-    output.write('''
-##################################################################
-# scramble: Scramble the RNA sequence before riboSNitch prediction
-###################################################################''')
-    output.write(f"\nscramble: {scramble}\n\n")
     
     output.close()
 
 
 # Create a bash script to run the SPARCS pipeline
-def bash_builder(output_file, cores):
+def bash_builder(output_file, cores, working_directory, singularity_prefix=None):
     '''
     Generates a bash script for running the SPARCS pipeline
     '''
@@ -122,6 +128,12 @@ def bash_builder(output_file, cores):
 
     output.write(header)
     output.write("echo 'Running SPARCS...'\n\n")
-    output.write(f"snakemake -s workflow/sparcs.smk --cores {cores} --use-conda --conda-frontend conda\n")
-    output.close()
 
+    # Start building the snakemake command:
+    command = f"snakemake -s workflow/sparcs.smk --cores {cores} --use-singularity --singularity-args ' -B {working_directory} ' "
+    if singularity_prefix is not None:
+        command += f"--singularity-prefix {singularity_prefix} "
+    
+
+    output.write(f"snakemake -s workflow/sparcs.smk --cores {cores} --use-singularity \n")
+    output.close()
