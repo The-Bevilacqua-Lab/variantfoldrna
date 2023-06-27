@@ -20,7 +20,7 @@ Next, download the yeast genome and gene file from Ensembl.
 .. code:: bash
 
     wget http://ftp.ensemblgenomes.org/pub/fungi/release-55/fasta/saccharomyces_cerevisiae/dna/Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa.gz
-    wget ftp://ftp.ensemblgenomes.org/pub/fungi/release-55/gtf/saccharomyces_cerevisiae/Saccharomyces_cerevisiae.R64-1-1.55.gtf.gz
+    wget https://ftp.ensembl.org/pub/release-109/gff3/saccharomyces_cerevisiae/Saccharomyces_cerevisiae.R64-1-1.109.gff3.gz
     
 
 Unzip the files and move them to the yeast_data folder
@@ -28,7 +28,7 @@ Unzip the files and move them to the yeast_data folder
 .. code:: bash
 
     gunzip Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa.gz && mv Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa yeast_data/
-    gunzip Saccharomyces_cerevisiae.R64-1-1.55.gtf.gz && mv Saccharomyces_cerevisiae.R64-1-1.55.gtf yeast_data/
+    gunzip Saccharomyces_cerevisiae.R64-1-1.109.gff3.gz && mv Saccharomyces_cerevisiae.R64-1-1.109.gff3 yeast_data/
 
 Next, download the variants from Ensembl. We will just use a small subset of the variants for this example. 
 
@@ -49,7 +49,7 @@ First, change directories to the SPARCS folder. Then, copy the config file to th
 .. code:: bash
     
     cd yeast_data
-    sparcs
+    sparcs --vcf saccharomyces_cerevisiae.1000.vcf --ref-genome Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa --gff Saccharomyces_cerevisiae.R64-1-1.109.gff3
     cd sparcs_pipeline
     bash sparcs.sh
 
