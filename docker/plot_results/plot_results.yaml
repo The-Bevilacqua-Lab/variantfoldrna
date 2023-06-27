@@ -1,0 +1,12 @@
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.9
+  - viennarna=2.5.1
+  - pip:
+    - plotly
+    - pandas
+    - numpy
+    - dashbio
+    - dash
