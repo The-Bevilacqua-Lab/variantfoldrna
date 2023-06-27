@@ -195,7 +195,7 @@ def main():
     # -- end copying files -- #
 
     # Check to to see if the user has a VCF file, a GTF file, and a FASTA file in the current directory
-    inputted_files = {"VCF": None, "GFF": None, "FASTA": None}
+    inputted_files = {"VCF": None, "GFF3": None, "FASTA": None}
     if args.vcf:
         inputted_files["VCF"] = os.path.abspath(args.vcf)
     if args.gff:
@@ -289,7 +289,7 @@ def main():
     )
 
     # Generate the sparcs.sh file
-    bash_builder(f"{output_dir}/sparcs.sh", args.cores)
+    bash_builder(f"{output_dir}/sparcs.sh", args.cores, args.working_directory)
 
     prGreen("All Done!\n")
     prCyan("To run the SPARCS pipeline, run the following commands:")
