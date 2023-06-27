@@ -28,16 +28,19 @@ def main():
         "--vcf",
         dest="vcf",
         help="Absolute ath to VCF file (If not specified, will check the current directory",
+        required=True,
     )
     parser.add_argument(
         "--gff",
         dest="gff",
         help="Absolute path to GFF file (If not specified, will check the current directory",
+        required=True,
     )
     parser.add_argument(
         "--ref-genome",
         dest="fasta",
         help="Absolute path to the reference genome file (If not specified, will check the current directory",
+        required=True,
     )
     parser.add_argument(
         "--out-dir",
@@ -122,7 +125,7 @@ def main():
     args = parser.parse_args()
 
     # Make sure that, if the user inputs RNAsnp, that the flanking length is a multiple of 50, >= 100, and <= 800
-    if args.ribosnitch_tool.lower() == "RNAsnp":
+    if args.ribosnitch_tool.lower() == "rnasnp":
         if args.ribosnitch_flank < 100 or args.ribosnitch_flank > 800:
             prRed("Error: RNAsnp requires the flanking length to be >= 100 and <= 800")
             sys.exit(1)
@@ -208,11 +211,11 @@ def main():
     # Check to to see if the user has a VCF file, a GTF file, and a FASTA file in the current directory
     inputted_files = {"VCF": None, "GFF3": None, "FASTA": None}
     if args.vcf:
-        inputted_files["VCF"] = os.path.abspath(args.vcf)
+        inputted_files["VCF"] = args.vcf
     if args.gff:
-        inputted_files["GFF3"] = os.path.abspath(args.gff)
+        inputted_files["GFF3"] = args.gff
     if args.fasta:
-        inputted_files["FASTA"] = os.path.abspath(args.fasta)
+        inputted_files["FASTA"] = args.fasta
 
     # The user has specified at least one of the files, so we will
     # let the user know what files they have specified
@@ -225,36 +228,7 @@ def main():
     # The user did not specify all of the files, so we will check to see
     # if the files are in the current directory
     if len([x for x in inputted_files.values() if x != None]) != 3:
-        prGreen("\n")
-        prGreen("Checking for files in the current directory...")
-
-        # Create an empty file to store the found files
-        files_found = []
-        for file_type, file_path in inputted_files.items():
-            if file_path == None:
-                for file in os.listdir(location):
-                    if file.endswith(file_type.lower() + ".gz") or file.endswith(file_type.lower()):
-                        inputted_files[file_type] = os.path.abspath(file)
-                        files_found.append(
-                            "   - {}: {}".format(file_type, inputted_files[file_type])
-                        )
-                        break
-                    elif file.endswith(".fa") or file.endswith(".fa.gz"):
-                        inputted_files["FASTA"] = os.path.abspath(file)
-                        files_found.append(
-                            "   - {}: {}".format(file_type, inputted_files[file_type])
-                        )
-                        break
-
-        if len(files_found) == 0:
-            prYellow(
-                "\nWarning: No files found in the current directory! You will need to manually edit the config.yaml file to specify the paths to the files."
-            )
-
-        else:
-            prGreen("Found the following files in the current directory:")
-            for file_found in files_found:
-                prGreen(file_found)
+        prRed("Error: Not all of the necessary files were specified")
 
     # Create the config.yaml file
     if inputted_files["VCF"] == None:
