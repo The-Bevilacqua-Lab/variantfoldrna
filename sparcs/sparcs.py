@@ -13,6 +13,7 @@ import argparse
 import os
 import subprocess
 import sys
+import shutil
 try:
     from .sparcs_utils import *
 except:
@@ -27,16 +28,19 @@ def main():
         "--vcf",
         dest="vcf",
         help="Absolute ath to VCF file (If not specified, will check the current directory",
+        required=True,
     )
     parser.add_argument(
-        "--gtf",
-        dest="gtf",
-        help="Absolute path to GTF file (If not specified, will check the current directory",
+        "--gff",
+        dest="gff",
+        help="Absolute path to GFF file (If not specified, will check the current directory",
+        required=True,
     )
     parser.add_argument(
-        "--ref",
+        "--ref-genome",
         dest="fasta",
         help="Absolute path to the reference genome file (If not specified, will check the current directory",
+        required=True,
     )
     parser.add_argument(
         "--out-dir",
@@ -44,6 +48,19 @@ def main():
         help="Path to output directory (If not specified, will create a new directory named 'sparcs_output' in the current directory",
         default="sparcs_pipeline",
     )
+    parser.add_argument(
+        "--spliced",
+        action='store_true', 
+        help='Used the spliced form of transcripts'
+        
+        )
+
+    parser.add_argument(
+        "--canonical",
+        action='store_true', 
+        help='Used only the canonical transcripts'
+        
+        )
 
     parser.add_argument(
         "--chunks",
@@ -72,35 +89,49 @@ def main():
         help="Flanking length for RiboSNitch prediction (Default: 40)",
         default=40,
     )
+    parser.add_argument("--sinularity-prefix", dest="singularity_prefix", help="Path to directory with singularity images", default=None)
     parser.add_argument(
         "--temperature",
         dest="temperature",
         help="Temperature for structural prediction (Default: 37.0)",
         default=37.0,
     )
-
     parser.add_argument(
         "--temp-step",
         dest="temp_step",
         help="Temperature step for structural prediction (Default: 5)",
         default=5,
     )
-
     parser.add_argument(
         "--minwindow",
         dest="minwindow",
         help="Minimum window size for Riprap (Default: 3)",
         default=3,
     )
-
     parser.add_argument(
-        "--scramble",
-        dest="scramble",
-        help="Whether to scramble the sequences before doing the riboSNitch prediction (Default: False)",
-        default=3,
+        "--singularity-path",
+        dest="singularity",
+        help="Path to directory that holds the singularity containers"
     )
 
+    parser.add_argument(
+        "--force",
+        action='store_true', 
+        help='Create the output directory even if it already exists'
+        
+        )
+
+    # Parse the command line arguments
     args = parser.parse_args()
+
+    # Make sure that, if the user inputs RNAsnp, that the flanking length is a multiple of 50, >= 100, and <= 800
+    if args.ribosnitch_tool.lower() == "rnasnp":
+        if args.ribosnitch_flank < 100 or args.ribosnitch_flank > 800:
+            prRed("Error: RNAsnp requires the flanking length to be >= 100 and <= 800")
+            sys.exit(1)
+        if args.ribosnitch_flank % 50 != 0:
+            prRed("Error: RNAsnp requires the flanking length to be a multiple of 50")
+            sys.exit(1)
 
     # Get the location of where this file is stored. We will use this
     # to copy the necessary files to the output directory
@@ -124,6 +155,9 @@ def main():
 
     # Try to create the output directory
     try:
+        if args.force:
+            if os.path.exists(output_dir):
+                shutil.rmtree(output_dir)
         os.mkdir(output_dir)
     except:
         prRed("Error: Could not create output directory: {}".format(output_dir))
@@ -175,13 +209,13 @@ def main():
     # -- end copying files -- #
 
     # Check to to see if the user has a VCF file, a GTF file, and a FASTA file in the current directory
-    inputted_files = {"VCF": None, "GTF": None, "FASTA": None}
+    inputted_files = {"VCF": None, "GFF3": None, "FASTA": None}
     if args.vcf:
-        inputted_files["VCF"] = args.vcf
-    if args.gtf:
-        inputted_files["GTF"] = args.gtf
+        inputted_files["VCF"] = os.path.abspath(args.vcf)
+    if args.gff:
+        inputted_files["GFF3"] = os.path.abspath(args.gff)
     if args.fasta:
-        inputted_files["FASTA"] = args.fasta
+        inputted_files["FASTA"] = os.path.abspath(args.fasta)
 
     # The user has specified at least one of the files, so we will
     # let the user know what files they have specified
@@ -194,35 +228,7 @@ def main():
     # The user did not specify all of the files, so we will check to see
     # if the files are in the current directory
     if len([x for x in inputted_files.values() if x != None]) != 3:
-        prGreen("\n")
-        prGreen("Checking for files in the current directory...")
-
-        files_found = []
-        for file_type, file_path in inputted_files.items():
-            if file_path == None:
-                for file in os.listdir(location):
-                    if file.endswith(file_type.lower() + ".gz") or file.endswith(file_type.lower()):
-                        inputted_files[file_type] = os.path.join(location, file)
-                        files_found.append(
-                            "   - {}: {}".format(file_type, inputted_files[file_type])
-                        )
-                        break
-                    elif file.endswith(".fa") or file.endswith(".fa.gz"):
-                        inputted_files["FASTA"] = os.path.join(location, file)
-                        files_found.append(
-                            "   - {}: {}".format(file_type, inputted_files[file_type])
-                        )
-                        break
-
-        if len(files_found) == 0:
-            prYellow(
-                "\nWarning: No files found in the current directory! You will need to manually edit the config.yaml file to specify the paths to the files."
-            )
-
-        else:
-            prGreen("Found the following files in the current directory:")
-            for file_found in files_found:
-                prGreen(file_found)
+        prRed("Error: Not all of the necessary files were specified")
 
     # Create the config.yaml file
     if inputted_files["VCF"] == None:
@@ -230,10 +236,10 @@ def main():
     else:
         vcf_file = inputted_files["VCF"]
 
-    if inputted_files["GTF"] == None:
-        gtf_file = "NA"
+    if inputted_files["GFF3"] == None:
+        gff_file = "NA"
     else:
-        gtf_file = inputted_files["GTF"]
+        gff_file = inputted_files["GFF3"]
 
     if inputted_files["FASTA"] == None:
         ref_genome = "NA"
@@ -254,7 +260,7 @@ def main():
         f'{output_dir}/workflow/config.yaml',
         "/".join(output_dir.split("/")[:-1]),
         vcf_file,
-        gtf_file,
+        gff_file,
         ref_genome,
         output_dir.split("/")[-1],
         args.ribosnitch_flank,
@@ -264,11 +270,11 @@ def main():
         args.structure_pred_tool,
         args.minwindow,
         args.temp_step, 
-        args.scramble,
+        args.canonical,
     )
 
     # Generate the sparcs.sh file
-    bash_builder(f"{output_dir}/sparcs.sh", args.cores)
+    bash_builder(f"{output_dir}/sparcs.sh", args.cores, args.out)
 
     prGreen("All Done!\n")
     prCyan("To run the SPARCS pipeline, run the following commands:")
