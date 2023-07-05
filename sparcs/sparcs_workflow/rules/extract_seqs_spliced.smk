@@ -60,7 +60,7 @@ rule create_json_from_gffread_table:
     singularity:
         "docker://kjkirven/process_seq"
     shell:
-        f"python3 scripts/create_json_from_gffread_table.py --table {{input}} --o {{output}}"
+        f"python3 workflow/scripts/create_json_from_gffread_table.py --table {{input}} --o {{output}}"
 
 rule extract_cdna_from_gff_with_gffread:
     # Extract the cDNA sequences from the GFF file
@@ -97,7 +97,7 @@ rule extract_sequences:
     singularity:
         "docker://kjkirven/process_seq"
     shell:
-        f"python3 scripts/get_spliced_read_data.py --vcf {{input.vcf}} --ref-seqs {{input.cdna}} --flank {{params.flank}} --gffread {{input.database}} --cds-pos {{input.cds_pos}} --o {{output.seqs}}"
+        f"python3 workflow/scripts/get_spliced_read_data.py --vcf {{input.vcf}} --ref-seqs {{input.cdna}} --flank {{params.flank}} --gffread {{input.database}} --cds-pos {{input.cds_pos}} --o {{output.seqs}}"
 
 rule combine_extracted_sequences:
     # Combine the extracted sequences into one file
@@ -117,4 +117,4 @@ rule remove_duplicates:
     singularity:
         "docker://kjkirven/process_seq"
     shell:
-        f"python3 scripts/remove_duplicates.py -i {{input}} -o {{output}}"
+        f"python3 workflow/scripts/remove_duplicates.py -i {{input}} -o {{output}}"

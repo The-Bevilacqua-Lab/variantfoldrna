@@ -74,7 +74,7 @@ rule create_json_from_gffread_table:
     singularity:
         "docker://kjkirven/process_seq"
     shell:
-        f"python3 scripts/create_json_from_gffread_table.py --table {{input}} --o {{output}}"
+        f"python3 workflow/scripts/create_json_from_gffread_table.py --table {{input}} --o {{output}}"
 
 rule extract_sequences:
     # Extract the sequences flanking the SNP
@@ -89,7 +89,7 @@ rule extract_sequences:
     singularity:
         "docker://kjkirven/process_seq"
     shell:
-        f"python3 scripts/get_read_data.py --vcf {{input.vcf}} --gffread {{input.database}} --ref-genome {{params.ref_genome}} --flank {{params.flank}} --o {{output.seqs}}"
+        f"python3 workflow/scripts/get_read_data.py --vcf {{input.vcf}} --gffread {{input.database}} --ref-genome {{params.ref_genome}} --flank {{params.flank}} --o {{output.seqs}}"
 
 
 rule combine_extracted_sequences:
@@ -110,4 +110,4 @@ rule remove_duplicates:
     singularity:
         "docker://kjkirven/process_seq"
     shell:
-        f"python3 scripts/remove_duplicates.py -i {{input}} -o {{output}}"
+        f"python3 workflow/scripts/remove_duplicates.py -i {{input}} -o {{output}}"

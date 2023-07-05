@@ -32,7 +32,7 @@ rule run_remurna:
     log:
         f"{config['working_directory']}/{config['out_name']}/logs/ribosnitch_prediction/chunk_{{i}}_riboSNitch_{{temp_deg}}.log",
     shell:
-        f"python3 scripts/remurna_wrapper.py --i {{input}} --o {{output.ribo}} --temp {{params}} --flank {config['flank_len']}"
+        f"python3 workflow/scripts/remurna_wrapper.py --i {{input}} --o {{output.ribo}} --temp {{params}} --flank {config['flank_len']}"
 
 
 rule combine_ribosnitch_results:

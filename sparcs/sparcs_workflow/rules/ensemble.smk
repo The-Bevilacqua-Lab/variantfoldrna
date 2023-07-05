@@ -21,7 +21,7 @@ rule run_get_ensemble_properties:
     log:
         f"{config['working_directory']}/{config['out_name']}/logs/ribosnitch_prediction/chunk_{{i}}_riboSNitch_{{temp_deg}}.log",
     shell:
-        f"python3 scripts/delta_ensemble_stats.py --i {{input}} --o {{output.ribo}} --temp {{params}} --tool-type {{ribosnitch_prediction_tool}}"
+        f"python3 workflow/scripts/delta_ensemble_stats.py --i {{input}} --o {{output.ribo}} --temp {{params}} --tool-type {{ribosnitch_prediction_tool}}"
 
 rule combine_ribosnitch_results:
     # Combine the results of riboSNitch prediction into one file
