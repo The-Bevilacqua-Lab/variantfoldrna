@@ -197,7 +197,7 @@ if __name__ == "__main__":
                             alt = reference
                             flank = flank_left + ref + flank_right
                             fn.write(
-                                f'{chrom}\t{position}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\tMATCHED_ALT\t{predictions.iloc[i]["Consequence"]}\t{predictions.iloc[i]["STRAND"]}\n'
+                                f'{chrom}\t{predictions.iloc[i]["POS"]}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\tMATCHED_ALT\t{predictions.iloc[i]["Consequence"]}\t{predictions.iloc[i]["STRAND"]}\n'
                             )
 
                         # Check to see if the SNP matches the reference allele
@@ -206,7 +206,7 @@ if __name__ == "__main__":
                             alt = alternative
                             flank = flank_left + ref + flank_right
                             fn.write(
-                                f'{chrom}\t{position}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\tMATCHED_REF\t{predictions.iloc[i]["Consequence"]}\t{predictions.iloc[i]["STRAND"]}\n'
+                                f'{chrom}\t{predictions.iloc[i]["POS"]}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\tMATCHED_REF\t{predictions.iloc[i]["Consequence"]}\t{predictions.iloc[i]["STRAND"]}\n'
                             )
 
                         # If the SNP does not match the reference or alternative allele, then we skip it
@@ -214,7 +214,7 @@ if __name__ == "__main__":
                             ref = alternative
                             alt = reference
                             no_match.write(
-                                f'{chrom}\t{position}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\n'
+                                f'{chrom}\t{predictions.iloc[i]["POS"]}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\n'
                             )
 
                             print(seq, ref, alt, strand)
