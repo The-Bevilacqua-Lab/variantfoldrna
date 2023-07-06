@@ -102,7 +102,7 @@ if __name__ == "__main__":
         end = transcript_data[predictions.iloc[i][feature]][2]
 
         chrom = predictions.iloc[i]["#Location"].split(":")[0]
-        chrom_position = int(predictions.iloc[i]["#Location"].split(":")[1])
+        position = int(predictions.iloc[i]["#Location"].split(":")[1])
 
         # Check to make sure it is not within a certain distance from the 5' and 3' ends of the transcript
         if five_prime_test(
@@ -165,7 +165,7 @@ if __name__ == "__main__":
                 alt = reference
                 flank = flank_left + ref + flank_right
                 fn.write(
-                    f'{chrom}\t{chrom_position}\t{position}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\tMATCHED_ALT\t{predictions.iloc[i]["Consequence"]}\t{predictions.iloc[i]["STRAND"]}\n'
+                    f'{chrom}\t{position}\t{position}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\tMATCHED_ALT\t{predictions.iloc[i]["Consequence"]}\t{predictions.iloc[i]["STRAND"]}\n'
                 )
 
             # Check to see if the SNP matches the reference allele
@@ -174,7 +174,7 @@ if __name__ == "__main__":
                 alt = alternative
                 flank = flank_left + ref + flank_right
                 fn.write(
-                    f'{chrom}\t{chrom_position}\t{position}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\tMATCHED_REF\t{predictions.iloc[i]["Consequence"]}\t{predictions.iloc[i]["STRAND"]}\n'
+                    f'{chrom}\t{position}\t{position}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\tMATCHED_REF\t{predictions.iloc[i]["Consequence"]}\t{predictions.iloc[i]["STRAND"]}\n'
                 )
 
             # If the SNP does not match the reference or alternative allele, then we skip it
@@ -182,7 +182,7 @@ if __name__ == "__main__":
                 ref = alternative
                 alt = reference
                 no_match.write(
-                    f'{chrom}\t{chrom_position}\t{position}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\n'
+                    f'{chrom}\t{position}\t{position}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\n'
                 )
 
     fn.close()
