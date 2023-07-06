@@ -37,7 +37,6 @@ include: "rules/chunk.smk"
 include: "rules/vep.smk"
 include: "rules/plot.smk"
 include: "rules/vcf_header.smk"
-include: "rules/scramble.smk"
 
 # Load the rules for the appropriate prediction tool
 if config["ribosnitch_prediction_tool"].lower() == "snpfold":
