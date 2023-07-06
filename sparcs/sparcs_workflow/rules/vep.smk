@@ -5,7 +5,7 @@
 # Path to the config file
 configfile: srcdir("../config.yaml")
 
-kind = "gff3"
+kind = "gff"
 gff_file = config['gff_file']
 
 # Check to see if the user only wants to use the canonical transcripts:
