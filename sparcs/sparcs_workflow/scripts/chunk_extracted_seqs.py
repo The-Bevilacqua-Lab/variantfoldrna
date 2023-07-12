@@ -1,13 +1,12 @@
 ################################################################################
-# Break up VCF files into smaller ones so that they are easier to work with
+# Split the file of extracted sequences into chunks
 #
 # Author: Kobie Kirven
 # Assmann and Bevilacqua Labs
 # The Penn State University
 ################################################################################
 
-from email import header
-import subprocess
+# -- Imports -- #
 import argparse
 import os
 
@@ -17,6 +16,7 @@ import os
 
 
 def split_file_by_line(filename, n):
+    """Split a file into n chunks by line"""
     n = int(n)
     with open(filename, "r") as f:
         chunk_size = sum(1 for line in f) // n
@@ -46,24 +46,9 @@ if __name__ == "__main__":
     if not os.path.exists(f"{args.dir}/extracted_seqs_chunks/"):
         os.system(f"mkdir -p {args.dir}/extracted_seqs_chunks/")
 
+    # Split the extracted sequences into chunks
     for i, chunk in enumerate(split_file_by_line(args.input, args.chunk)):
         with open(
             f"{args.dir}/extracted_seqs_chunks/extracted_flank_snp_{i+1}.txt", "w"
         ) as f:
             f.writelines(chunk)
-
-    # # Split the VCF file up into smaller files
-    # in_file = open(args.input, "r")
-    # for i in range(1, int(args.chunk)):
-    #     fn = open(f"{args.dir}/extracted_seqs_chunks/extracted_flank_snp_{i}.txt", "w")
-    #     for g in range(chunk_len):
-    #         fn.write(in_file.readline())
-    #     fn.close()
-
-    # # Write the last chunk to the output file
-    # fn = open(
-    #     f"{args.dir}/extracted_seqs_chunks/extracted_flank_snp_{int(args.chunk)}.txt", "w"
-    # )
-    # for line in in_file:
-    #     fn.write(line)
-    # fn.close()
