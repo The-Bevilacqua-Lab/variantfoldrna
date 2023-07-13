@@ -13,7 +13,7 @@ rule get_top_n_percent:
     input:
         f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/combined_ribosnitch_prediction_{{temp_deg}}.txt",
     output:
-        f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/combined_ribosnitch_prediction_top_{config['top_n_percent']}_{temp}.txt"
+        f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/top_{config['top_n_percent']}_percent_{{temp_deg}}.txt"
     shell:
-        f"sort -k 12 -nr {{input}} |  head -n $(($(wc -l < {{input}}) * {config['top_n_percent']} / 100)) {{input}} > {{output}}"
+        f"python3 workflow/scripts/get_top_n_percent.py --input {{input}} --output {{output}} --top-n-percent {config['top_n_percent']}"
 
