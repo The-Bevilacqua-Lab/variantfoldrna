@@ -28,7 +28,6 @@ def test_get_vcf_len():
     for i in range(1,100):
         vcf_file = tempfile.NamedTemporaryFile(suffix=".vcf", delete=False)
         vcf_file.close()
-        os.system(f"cat {vcf_file.name}")
 
         # Create the dummy vcf file
         generate_dummy_vcf(i, vcf_file.name)
@@ -67,7 +66,7 @@ def test_split_file_by_line():
     # Create temporary files for testing
     vcf_file = tempfile.NamedTemporaryFile(suffix=".vcf", delete=False)
     vcf_file.close()
-    print(vcf_file.name)
+
     # Create the dummy vcf file
     generate_dummy_vcf(100, vcf_file.name)
 
@@ -80,6 +79,7 @@ def test_split_file_by_line():
         header.write("##fileformat=VCFv4.2\n")
         header.write("##fileDate=20190805\n")
         header.close()
+
 
         # Split the file into chunks
         chunk_vcf(vcf_file.name, num_chunks, "test_chunkfile", header.name)
@@ -97,9 +97,9 @@ def test_split_file_by_line():
         # Check to make sure the total number of lines in the chunks is equal to the number of lines in the original file
         total_lines = 0
         for f in test_files:
-            os.system(f"gunzip {f}.gz")
-            with open(f) as f:
-                total_lines += sum(1 for line in f if line.startswith("#") == False)
+            with gzip.open(f) as f:
+                total_lines += sum(1 for line in f if line.startswith(b"#") == False)
+                # total_lines += sum(1 for line in f if line.startswith("#") == False)
         
         assert total_lines == 100
 
@@ -134,9 +134,8 @@ def test_split_file_by_line():
         # Check to make sure the total number of lines in the chunks is equal to the number of lines in the original file
         total_lines = 0
         for f in test_files:
-            os.system(f"gunzip {f}.gz")
-            with open(f) as f:
-                total_lines += sum(1 for line in f if line.startswith("#") == False)
+             with gzip.open(f) as f:
+                total_lines += sum(1 for line in f if line.startswith(b"#") == False)
         
         assert total_lines == 100
 

@@ -16,18 +16,30 @@ import subprocess
 
 #  --  Functions --   #
 def prGreen(skk):
+    """
+    Print in green
+    """
     print("\033[92m {}\033[00m".format(skk))
 
 
 def prCyan(skk):
+    """
+    Print in cyan
+    """
     print("\033[96m {}\033[00m".format(skk))
 
 
 def prYellow(skk):
+    """
+    Print in yellow
+    """
     print("\033[93m {}\033[00m".format(skk))
 
 
 def prRed(skk):
+    """
+    Print in red
+    """
     print("\033[91m {}\033[00m".format(skk))
 
 
@@ -54,16 +66,21 @@ def get_vcf_len(file_name, gzip_file=False):
         return total
 
 
-def is_gzipped(file_name):
-    """
-    Check to see if a file is gzipped or not
-    """
-    with open(file_name, "rb") as f:
-        return f.read(2) == b"\x1f\x8b"
-
+def is_gzipped(file_path):
+    with open(file_path, 'rb') as f:
+        # Check the first two bytes for the GZIP magic number
+        lines = f.read(2)
+        print(str(lines))
+        if lines == b'\x1f\x8b':
+            return True
+        else:
+            return False
 
 def create_output_dir(dir_name):
-    # Make a directory to store the VCF chunks
+    """
+    Create the output directory if it does not exist
+    to hold the VCF chunks
+    """
     if not os.path.exists(f"{dir_name}/vcf_chunks/"):
         try:
             os.system(f"mkdir -p {dir_name}/vcf_chunks/")
@@ -73,6 +90,9 @@ def create_output_dir(dir_name):
 
 
 def split_file_by_line(filename, n):
+    """
+    Split a file into n chunks by line
+    """
     gzip_file = is_gzipped(filename)
     if gzip_file:
         f = gzip.open(filename, "rb")
@@ -103,18 +123,28 @@ def split_file_by_line(filename, n):
 
 
 def chunk_vcf(vcf_file, chunks, prefix, header):
-    header = gzip.open(header, "rb")
+    """
+    Chunk the VCF file
+    """
+    print(f"Chunking {vcf_file} into {chunks} chunks")
+    gzip_header = is_gzipped(header)
+    if gzip_header:
+        header = gzip.open(header, "rb")
+    else:
+        header = open(header)
     for i, chunk in enumerate(split_file_by_line(vcf_file, chunks)):
         with gzip.open(f"{prefix}_{i+1}.vcf.gz", "w") as f:
             header.seek(0)
             for line in header:
-                f.write(line)
+                if gzip_header:
+                    f.write(line)
+                else:
+                    f.write(line.encode())
             for line in chunk:
                 f.write(line.encode())
 
     f.close()
     header.close()
-    # os.system(f"gzip {prefix}_{i}.vcf")
 
 
 # -- main --   #
