@@ -2,6 +2,8 @@
 # Functions for the SPARCS command line tool
 #####################################################################
 
+import os
+
 # Functions for printing to the command line in different colors
 def prGreen(skk): print("\033[92m {}\033[00m" .format(skk))
 def prCyan(skk): print("\033[96m {}\033[00m" .format(skk))
@@ -10,7 +12,7 @@ def prRed(skk): print("\033[91m {}\033[00m" .format(skk))
 
 def config_builder(output_file, working_directory, vcf_file, gff_file, 
                    ref_genome, output_dir, flank, chunks, temperature,
-                   ribo_tool, structure_tool, riprap_min_window, temp_step, spliced="TRUE", canonical="TRUE"):
+                   ribo_tool, structure_tool, riprap_min_window, temp_step, spliced="TRUE", canonical="TRUE", top_n_percent=0.05):
     '''
     Generates a config file for running the SPARCS pipeline
     '''
@@ -107,6 +109,12 @@ def config_builder(output_file, working_directory, vcf_file, gff_file,
 #############################################################''')
     output.write(f"\nstructure_prediction_tool: {structure_tool}\n\n")
 
+    output.write('''#############################################################
+# top_n_percent: The top n percent to define as riboSNitches
+#                (default = 0.05)
+#############################################################''')
+    output.write(f"\ntop_n_percent: {top_n_percent}\n\n")
+
     output.write('''# -- ADVANCED PARAMETERS -- #
 #############################################################
 # riprap_min_window: Minimum window size for RipRap
@@ -130,10 +138,10 @@ def bash_builder(output_file, cores, working_directory, singularity_prefix=None)
     output.write("echo 'Running SPARCS...'\n\n")
 
     # Start building the snakemake command:
-    command = f"snakemake -s workflow/sparcs.smk --cores {cores} --use-singularity --singularity-args ' -B {working_directory} ' "
+    command = f"snakemake -s workflow/sparcs.smk --cores {cores} --use-singularity --singularity-args ' -B {os.path.abspath(working_directory)}' "
     if singularity_prefix is not None:
         command += f"--singularity-prefix {singularity_prefix} "
     
-
-    output.write(f"snakemake -s workflow/sparcs.smk --cores {cores} --use-singularity \n")
+    # Write the command to the bash script
+    output.write(command + "\n\n")
     output.close()
