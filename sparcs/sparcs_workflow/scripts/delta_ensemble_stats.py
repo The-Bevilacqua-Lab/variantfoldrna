@@ -112,18 +112,19 @@ if __name__ == "__main__":
                 line = line.split("\t")
 
                 # Check to make sure we don't have any indels
-                if not len(line[2]) == 1 or not len(line[3]) == 1:
+                if not len(line[3]) == 1 or not len(line[4]) == 1:
                     continue
 
                 # Change the reference and alternative alleles
-                if line[2] == "T":
-                    line[2] = "U"
                 if line[3] == "T":
                     line[3] = "U"
+                if line[4] == "T":
+                    line[4] = "U"
+
 
                 # Get the sequence and the mutation
-                ref = str(line[4]) + str(line[2]) + str(line[5])
-                alt = str(line[4]) + str(line[3]) + str(line[5])
+                ref = str(line[5]) + str(line[3]) + str(line[6])
+                alt = str(line[5]) + str(line[4]) + str(line[6])
 
                 if args.type_tool.lower() == "delta_ensemble_diversity":
                     # Get the delta ensemble diversity
