@@ -82,21 +82,19 @@ if __name__ == "__main__":
         if not line.startswith("#"):
             line = line.split("\t")
 
-            # Make sure we don't have any indels:
-            if not len(line[2]) == 1 or not len(line[3]) == 1:
+            # Check to make sure we don't have any indels
+            if not len(line[3]) == 1 or not len(line[4]) == 1:
                 continue
 
             # Change the reference and alternative alleles
-            if line[2] == "T":
-                line[2] = "U"
             if line[3] == "T":
                 line[3] = "U"
+            if line[4] == "T":
+                line[4] = "U"
 
-            # Get the mutation
-            seq = str(line[4]) + str(line[2]) + str(line[5])
-            mutation = "{0}{1}{2}".format(
-                str(line[2]), str(int(args.flank) + 1), str(line[3])
-            )
+            # Get the sequence and the mutation
+            seq = str(line[5]) + str(line[3]) + str(line[6])
+            mutation = f"{line[3]}{int(args.flank) + 1}{line[4]}"
 
             # Get the path:
             path = os.path.dirname(os.path.realpath(__file__))
