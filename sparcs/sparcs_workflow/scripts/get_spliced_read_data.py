@@ -175,9 +175,6 @@ if __name__ == "__main__":
                     seq = get_cdna(position, int(args.flank), genes, predictions.iloc[i][feature])
             
                     if seq:
-                        # Get the complement of the sequence if it is on the negative strand
-                        if strand == "-1":
-                            seq = compelement_dna(seq)
                         snp_seq = seq[int(args.flank)]
 
                         # Get the flanking sequence
