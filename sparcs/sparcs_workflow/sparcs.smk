@@ -12,6 +12,13 @@
 import os
 import subprocess
 
+# -- funcitons -- #
+def prCyan(skk):
+    """
+    Print in cyan
+    """
+    print("\033[96m {}\033[00m".format(skk))
+
 # Get the location of this file:
 location = os.getcwd()
 
@@ -32,11 +39,12 @@ path = "/".join(path)
 configfile: srcdir("config.yaml")
 
 
-# Import Rules
+# -- Import common rules -- #
 include: "rules/chunk.smk"
 include: "rules/vep.smk"
 include: "rules/plot.smk"
 include: "rules/vcf_header.smk"
+include: "rules/get_top_percent.smk"
 
 # Load the rules for the appropriate prediction tool
 if config["ribosnitch_prediction_tool"].lower() == "snpfold":
@@ -60,24 +68,31 @@ elif config["ribosnitch_prediction_tool"].lower() == "delta_ensemble_diversity" 
     include: "rules/ensemble.smk"
 
 
+########################################################
+# If the user would like the spliced cDNA, include the 
+# appropriate rules
+########################################################
+
 if config['spliced'] == True:
     include: "rules/extract_seqs_spliced.smk"
 
 else:
     include: "rules/extract_seqs.smk"
 
-def prCyan(skk):
-    """
-    Print in cyan
-    """
-    print("\033[96m {}\033[00m".format(skk))
-
+###########################################################
+# If the user would like to perform riboSNitch prediction 
+# over a range of temperatures, adjust the output 
+# accordingly
+###########################################################
 if "@" in str(config["temperature"]):
     start_stop = str(config["temperature"]).split("@")
     temperature_range = range(int(start_stop[0]), int(start_stop[1]) + 1, int(config['temp_step']))
 else:
     temperature_range = [config["temperature"]]
 
+#############################################
+# Create the final input list
+#############################################
 final_input = []
 for temp in temperature_range:
     final_input.append(
@@ -86,10 +101,12 @@ for temp in temperature_range:
     final_input.append(
         f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/combined_ribosnitch_prediction_hist_{temp}.png"
     )
-    # if config["top_n_percent"]:
-    #     final_input.append(
-    #         f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/combined_ribosnitch_prediction_top_{config['top_n_percent']}_{temp}.txt"
-    #     )
+    if config["top_n_percent"]:
+        final_input.append(
+            f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/top_{config['top_n_percent']}_percent_{temp}.txt",
+        )
+        final_input.append(
+        f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/bottom_{config['top_n_percent']}_percent_{temp}.txt")
 
 # Let the user know what files we are creating
 prCyan("Creating the following files:")
