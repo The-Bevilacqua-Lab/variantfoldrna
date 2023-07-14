@@ -75,8 +75,8 @@ if __name__ == "__main__":
                 # Change the reference and alternative alleles
                 if line[3] == "T":
                     line[3] = "U"
-                if line[3] == "T":
-                    line[3] = "U"
+                if line[4] == "T":
+                    line[4] = "U"
 
                 # Get the sequence and the mutation
                 seq = str(line[5]) + str(line[3]) + str(line[6])
