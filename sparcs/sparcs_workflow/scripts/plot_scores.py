@@ -25,9 +25,12 @@ if __name__ == "__main__":
     # Read in the input data
     data = pd.read_csv(args.in_file, sep="\t")
 
+    # Remove the rows with errors
+    data = data[data["Score"] != "Error"]
+
     # Plot the scores
-    plt.style.use("grayscale")
-    plt.hist(data["Score"], color="royalblue")
+    plt.style.use('ggplot')
+    plt.hist(data["Score"], color="royalblue", bins=20)
 
     # Check to see which tool was used and update the plot accordingly
     if args.tool.upper() == "SNPFOLD":
