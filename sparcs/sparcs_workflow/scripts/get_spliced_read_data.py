@@ -182,8 +182,12 @@ if __name__ == "__main__":
                         flank_right = seq[int(args.flank) + 1:]
 
                         # Get the reference and alternative alleles
-                        reference = predictions.iloc[i]["REF_ALLELE"]
-                        alternative = predictions.iloc[i]["Allele"]
+                        if strand == "-1":
+                            reference =  compelement_dna(predictions.iloc[i]["REF_ALLELE"])
+                            alternative =  compelement_dna(predictions.iloc[i]["Allele"])
+                        else:
+                            reference =  predictions.iloc[i]["REF_ALLELE"]
+                            alternative =  predictions.iloc[i]["Allele"]
 
                         # Get the chromosome
                         chrom = predictions.iloc[i]["#Location"].split(":")[0]
