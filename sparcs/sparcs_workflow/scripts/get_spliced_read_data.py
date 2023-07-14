@@ -18,6 +18,7 @@ import sys
 from pyfaidx import Fasta
 import subprocess
 from mutalyzer_hgvs_parser import to_model
+import os 
 
 # ----- Functions ------#
 
@@ -64,7 +65,11 @@ def get_cdna(hgvs, flank, genes, transcript):
     try:
         length = len(genes[f"transcript:{transcript}"][0:].seq)
     except:
-        return None
+        try:
+            length = len(genes[f"{transcript}"][0:].seq)
+        
+        except:
+            return None
 
     # Check to make sure it is not too close to the 5' or 3' ends
     if five_prime_test(hgvs, 1, flank) and three_prime_test(hgvs, length, flank):
@@ -110,7 +115,10 @@ if __name__ == "__main__":
     cds_dict = get_cdna_pos_dict(args.cds_pos)
 
     # Get the transcripts
-    genes = Fasta(args.ref)
+    if os.path.isfile(args.ref + ".fai"):
+        genes = Fasta(args.ref, build_index=False)
+    else:
+        genes = Fasta(args.ref)
 
     # Open the output files 
     fn = open(args.output, "w")
