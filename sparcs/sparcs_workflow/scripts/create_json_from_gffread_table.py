@@ -10,8 +10,6 @@
 import argparse
 import json
 
-
-
 # ----- Functions ------#
 def gffread_table_to_json(gffread_table):
     """
