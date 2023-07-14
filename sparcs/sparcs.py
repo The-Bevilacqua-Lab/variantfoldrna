@@ -84,7 +84,7 @@ def main():
         default = "SNPfold",
     )
     parser.add_argument(
-        "--ribosnitch-flank",
+        "--flank",
         dest="ribosnitch_flank",
         help="Flanking length for RiboSNitch prediction (Default: 40)",
         default=40,
@@ -126,10 +126,10 @@ def main():
 
     # Make sure that, if the user inputs RNAsnp, that the flanking length is a multiple of 50, >= 100, and <= 800
     if args.ribosnitch_tool.lower() == "rnasnp":
-        if args.ribosnitch_flank < 100 or args.ribosnitch_flank > 800:
+        if int(args.ribosnitch_flank) < 100 or int(args.ribosnitch_flank) > 800:
             prRed("Error: RNAsnp requires the flanking length to be >= 100 and <= 800")
             sys.exit(1)
-        if args.ribosnitch_flank % 50 != 0:
+        if int(args.ribosnitch_flank) % 50 != 0:
             prRed("Error: RNAsnp requires the flanking length to be a multiple of 50")
             sys.exit(1)
 
@@ -143,6 +143,7 @@ def main():
     # Get the location of where this file is being ran. We will use this to 
     # create the output directory
     location = os.getcwd()
+    location = os.path.abspath(location)
 
     # Get the location of the output directory
     if args.out:
@@ -211,11 +212,11 @@ def main():
     # Check to to see if the user has a VCF file, a GTF file, and a FASTA file in the current directory
     inputted_files = {"VCF": None, "GFF3": None, "FASTA": None}
     if args.vcf:
-        inputted_files["VCF"] = os.path.abspath(args.vcf)
+        inputted_files["VCF"] = os.path.abspath(os.path.expanduser(args.vcf))
     if args.gff:
-        inputted_files["GFF3"] = os.path.abspath(args.gff)
+        inputted_files["GFF3"] = os.path.abspath(os.path.expanduser(args.gff))
     if args.fasta:
-        inputted_files["FASTA"] = os.path.abspath(args.fasta)
+        inputted_files["FASTA"] = os.path.abspath(os.path.expanduser(args.fasta))
 
     # The user has specified at least one of the files, so we will
     # let the user know what files they have specified
@@ -274,7 +275,7 @@ def main():
     )
 
     # Generate the sparcs.sh file
-    bash_builder(f"{output_dir}/sparcs.sh", args.cores, args.out)
+    bash_builder(f"{output_dir}/sparcs.sh", args.cores, args.out, args.singularity)
 
     prGreen("All Done!\n")
     prCyan("To run the SPARCS pipeline, run the following commands:")
