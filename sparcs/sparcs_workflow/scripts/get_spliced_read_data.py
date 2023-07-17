@@ -146,6 +146,10 @@ if __name__ == "__main__":
             or len(predictions.iloc[i]["Allele"]) > 1
             or predictions.iloc[i]["Allele"] == "-" 
             or predictions.iloc[i]["REF_ALLELE"] == "-"
+            or predictions.iloc[i]["Allele"] == 'N'
+            or predictions.iloc[i]["REF_ALLELE"] == 'N'
+            or 'intron_variant' in predictions.iloc[i]["Consequence"]
+            or 'splice_acceptor_variant' in  predictions.iloc[i]["Consequence"]
         ):
             continue
 
