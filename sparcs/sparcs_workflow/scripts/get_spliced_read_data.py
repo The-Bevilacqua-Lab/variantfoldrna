@@ -149,6 +149,7 @@ if __name__ == "__main__":
             or predictions.iloc[i]["Allele"] == 'N'
             or predictions.iloc[i]["REF_ALLELE"] == 'N'
             or 'intron_variant' in predictions.iloc[i]["Consequence"]
+            or predictions.iloc[i]["Consequence"] == 'intron_variant'
             or 'splice_acceptor_variant' in  predictions.iloc[i]["Consequence"]
         ):
             continue
