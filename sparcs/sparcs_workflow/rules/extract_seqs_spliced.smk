@@ -62,6 +62,18 @@ rule create_json_from_gffread_table:
     shell:
         f"python3 workflow/scripts/create_json_from_gffread_table.py --table {{input}} --o {{output}}"
 
+rule create_fadix_index:
+    # Create a fadix index
+    input:
+        index = f"{config['working_directory']}/{config['out_name']}/temp/cdna.fa",
+    output:
+        cdna_index = f"{config['working_directory']}/{config['out_name']}/temp/cdna.fa.fai",
+    singularity:
+        "docker://kjkirven/process_seq"
+    shell:
+        "samtools faidx {input}"
+        
+
 rule extract_cdna_from_gff_with_gffread:
     # Extract the cDNA sequences from the GFF file
     input:
@@ -89,6 +101,7 @@ rule extract_spliced_sequences:
         vcf=f"{config['working_directory']}/{config['out_name']}/temp/annotated_vcf_chunks_effects/vcf_no_header_{{i}}_annotated_one_per_line.txt",
         cds_pos=f"{config['working_directory']}/{config['out_name']}/temp/cdna_pos.txt",
         cdna = f"{config['working_directory']}/{config['out_name']}/temp/cdna.fa",
+        cdna_index = f"{config['working_directory']}/{config['out_name']}/temp/cdna.fa.fai",
         database=f"{config['working_directory']}/{config['out_name']}/temp/gffread_table.json",
     params:
         flank=config["flank_len"],

@@ -115,10 +115,7 @@ if __name__ == "__main__":
     cds_dict = get_cdna_pos_dict(args.cds_pos)
 
     # Get the transcripts
-    if os.path.isfile(args.ref + ".fai"):
-        genes = Fasta(args.ref, build_index=False)
-    else:
-        genes = Fasta(args.ref)
+    genes = Fasta(args.ref, build_index=False)
 
     # Open the output files 
     fn = open(args.output, "w")
