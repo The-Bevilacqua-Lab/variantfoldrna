@@ -28,11 +28,11 @@ rule tabix_annotation:
     input:
         annotation = f"{config['working_directory']}/{config['out_name']}/temp/annotation.sorted.{kind}.gz"
     output:
-        f"{config['working_directory']}/{config['out_name']}/temp/annotation.sorted.{kind}.gz.tbi"
+        f"{config['working_directory']}/{config['out_name']}/temp/annotation.sorted.{kind}.gz.csi"
     singularity:
         "docker://ensemblorg/ensembl-vep:release_100.2"
     shell:
-        "tabix -p gff {input.annotation}"
+        "tabix --csi -p gff {input.annotation}"
 
 rule seperate_multi_vars:
     # Seperate multi-allelic variants
@@ -45,7 +45,7 @@ rule seperate_multi_vars:
     singularity:
         "docker://kjkirven/snpeff"
     shell:
-        "vt decompose -s {input.vcf} 2> {log} | bgzip > {output} 2> {log} && tabix -p vcf {output} 2> {log}"
+        "vt decompose -s {input.vcf} 2> {log} | bgzip > {output} 2> {log} && tabix --csi -p vcf {output} 2> {log}"
 
 
 rule normalize:
@@ -68,7 +68,7 @@ rule vep:
         vcf=f"{config['working_directory']}/{config['out_name']}/temp/vcf_chunks/vcf_no_header_{{i}}_normalized.vcf",
         annotation=f"{config['working_directory']}/{config['out_name']}/temp/annotation.sorted.{kind}.gz",
         fasta = config["ref_genome"],
-        tbi = f"{config['working_directory']}/{config['out_name']}/temp/annotation.sorted.{kind}.gz.tbi"
+        tbi = f"{config['working_directory']}/{config['out_name']}/temp/annotation.sorted.{kind}.gz.csi"
     output:
         f"{config['working_directory']}/{config['out_name']}/temp/annotated_vcf_chunks_effects/vcf_no_header_{{i}}_annotated_one_per_line.txt",
     params:
