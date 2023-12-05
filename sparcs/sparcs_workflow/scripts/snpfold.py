@@ -84,7 +84,7 @@ def get_pearson(list1, list2):
     """
     Calculate the Pearson correlation coefficient between two lists
     """
-    return np.corrcoef(list1, list2)[0][1]
+    return round(np.corrcoef(list1, list2)[0][1],3)
 
 
 if __name__ == "__main__":

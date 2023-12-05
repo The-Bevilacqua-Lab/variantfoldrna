@@ -12,7 +12,7 @@ def prRed(skk): print("\033[91m {}\033[00m" .format(skk))
 
 def config_builder(output_file, working_directory, vcf_file, gff_file, 
                    ref_genome, output_dir, flank, chunks, temperature,
-                   ribo_tool, structure_tool, riprap_min_window, temp_step, spliced="TRUE", canonical="TRUE", top_n_percent=0.05):
+                   ribo_tool, structure_tool, riprap_min_window, temp_step, spliced="TRUE", canonical="TRUE", top_n_percent=0.05, subset_size=100000):
     '''
     Generates a config file for running the SPARCS pipeline
     '''
@@ -95,6 +95,11 @@ def config_builder(output_file, working_directory, vcf_file, gff_file,
 # temp_step - Temperature step for RNA structure prediction
 #############################################################''')
     output.write(f"\ntemp_step: {temp_step}\n\n")
+
+    output.write('''#############################################################
+                 # subset_size - Number of variants to use for the null model )
+#############################################################''')
+    output.write(f"\nsubset_size: {subset_size}\n\n")
 
     output.write('''#############################################################
 # ribosnitch_prediction_tool: Tool to use for predicting

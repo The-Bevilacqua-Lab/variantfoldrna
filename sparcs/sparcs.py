@@ -71,6 +71,14 @@ def main():
     parser.add_argument(
         "--cores", dest="cores", help="Number of cores to use (Default: 1)", default=1
     )
+
+    parser.add_argument(
+        "--null-model-total",
+        dest="null_model_total",
+        help="Total number of SNPs to generate for the null model (Default: 100000)",
+        default=100000,
+    )
+
     parser.add_argument(
         "--structure-pred-tool",
         dest="structure_pred_tool",
@@ -272,6 +280,7 @@ def main():
         args.minwindow,
         args.temp_step, 
         args.canonical,
+        args.null_model_total,
     )
 
     # Generate the sparcs.sh file
