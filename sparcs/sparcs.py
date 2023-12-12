@@ -128,6 +128,51 @@ def main():
         help='Create the output directory even if it already exists'
         
         )
+    
+    parser.add_argument(
+        "--cluster",
+        action='store_true',
+        help='flag to indicate that the pipeline will be run on a cluster'
+    )
+
+    parser.add_argument(
+        "--cluster-info",
+        dest="cluster_info",
+        help="Info for jobs to be submitted to the cluster. "
+
+    )
+
+    parser.add_argument(
+        "--jobs",
+        dest="jobs",
+        help="Number of jobs to be submitted to the cluster. ",
+        default=10
+    )
+
+    parser.add_argument(
+        "--null-only",
+        action='store_true',
+        help='Only the riboSNitch predictions for building the null distribution. '
+    )
+
+    parser.add_argument(
+        "--rbsn-only",
+        action='store_true',
+        help='Only the riboSNitch predictions, no null distribution. '
+    )
+
+    parser.add_argument(
+        "--top-n-percent",
+        dest="top_n_percent",
+        help="The top n percent to define as riboSNitches (default = 0.05)",
+        default=0.05
+    )
+
+    parser.add_argument(
+        "--shuffle-null",
+        action='store_true',
+        help='Use shuffling approach to generate null distribution.'
+    )
 
     # Parse the command line arguments
     args = parser.parse_args()
@@ -263,7 +308,30 @@ def main():
     prGreen("\n")
     prGreen("Generating the necessary files for the SPARCS pipeline...")
 
+    if args.null_only:
+        null_only = "TRUE"
+    else:
+        null_only = "FALSE"
+    
+    if args.rbsn_only:
+        rbsn_only = "TRUE"
+    else:
+        rbsn_only = "FALSE"
 
+    if args.spliced:
+        spliced = "TRUE"
+    else:
+        spliced = "FALSE"
+    
+    if args.canonical:
+        canonical = "TRUE"
+    else:
+        canonical = "FALSE"
+
+    if args.shuffle_null:
+        shuffle_null = "TRUE"
+    else:
+        shuffle_null = "FALSE"
     # Generate the config.yaml file
     config_builder(
         f'{output_dir}/workflow/config.yaml',
@@ -279,13 +347,18 @@ def main():
         args.structure_pred_tool,
         args.minwindow,
         args.temp_step, 
-        args.canonical,
+        spliced,
+        canonical,
+        args.top_n_percent,
         args.null_model_total,
+        null_only,
+        rbsn_only,
+        shuffle_null
     )
 
     # Generate the sparcs.sh file
-    bash_builder(f"{output_dir}/sparcs.sh", args.cores, args.out, args.singularity)
-
+    bash_builder(f"{output_dir}/sparcs.sh", args.cores, args.out, args.singularity, args.cluster, args.cluster_info, args.jobs)
+    print(args.null_only)
     prGreen("All Done!\n")
     prCyan("To run the SPARCS pipeline, run the following commands:")
     prCyan("   cd {}".format(output_dir))

@@ -12,7 +12,8 @@ def prRed(skk): print("\033[91m {}\033[00m" .format(skk))
 
 def config_builder(output_file, working_directory, vcf_file, gff_file, 
                    ref_genome, output_dir, flank, chunks, temperature,
-                   ribo_tool, structure_tool, riprap_min_window, temp_step, spliced="TRUE", canonical="TRUE", top_n_percent=0.05, subset_size=100000):
+                   ribo_tool, structure_tool, riprap_min_window, temp_step, spliced, canonical, top_n_percent, subset_size,
+                   null_only, rbsn_only, shuffle_null):
     '''
     Generates a config file for running the SPARCS pipeline
     '''
@@ -102,6 +103,22 @@ def config_builder(output_file, working_directory, vcf_file, gff_file,
     output.write(f"\nsubset_size: {subset_size}\n\n")
 
     output.write('''#############################################################
+# shuffle_null - Boolen whether to shuffle the REF and ALT alleles
+#                for the null model
+#############################################################''')
+    output.write(f"\nshuffle_null: {shuffle_null}\n\n")
+    
+    output.write('''#############################################################
+# null_only - Boolen whether to only run the null model
+#############################################################''')
+    output.write(f"\nnull_only: {null_only}\n\n")
+
+    output.write('''#############################################################
+# rbsn_only - Boolen whether to only run the riboSNitch model
+#############################################################''')
+    output.write(f"\nrbsn_only: {rbsn_only}\n\n")
+
+    output.write('''#############################################################
 # ribosnitch_prediction_tool: Tool to use for predicting
 #                             riboSNitches 
 #                            (SNPfold or Riprap)  
@@ -130,7 +147,7 @@ def config_builder(output_file, working_directory, vcf_file, gff_file,
 
 
 # Create a bash script to run the SPARCS pipeline
-def bash_builder(output_file, cores, working_directory, singularity_prefix=None):
+def bash_builder(output_file, cores, working_directory, singularity_prefix=None, cluster=False, cluster_info=None, jobs=None):
     '''
     Generates a bash script for running the SPARCS pipeline
     '''
@@ -143,10 +160,14 @@ def bash_builder(output_file, cores, working_directory, singularity_prefix=None)
     output.write("echo 'Running SPARCS...'\n\n")
 
     # Start building the snakemake command:
-    command = f"snakemake -s workflow/sparcs.smk --cores {cores} --use-singularity --singularity-args ' -B {os.path.abspath(working_directory)}' "
+    command = f"snakemake -s workflow/sparcs.smk --cores {cores} --use-singularity --singularity-args ' -B {os.path.abspath(working_directory)}' --latency-wait 200 --rerun-incomplete "
     if singularity_prefix is not None:
-        command += f"--singularity-prefix {singularity_prefix} "
+        command += f" --singularity-prefix {singularity_prefix} "
     
+    if cluster:
+        command += f" --cluster '{cluster_info}' "
+        command += f" -j {jobs} "
+
     # Write the command to the bash script
     output.write(command + "\n\n")
     output.close()
