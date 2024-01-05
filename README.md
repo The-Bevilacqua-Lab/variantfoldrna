@@ -3,10 +3,6 @@
 
 <img src="static/mutafoldrna_logo.png">
 
-<h1>
-Snakemake Pipeline for Ribosnitch prediCtion 
-</h1>
-
-SPARCS is a [Snakemake](https://snakemake.readthedocs.io/en/stable/) pipeline for predicting riboSNitches transcriptome-wide
+MutaFoldRNA is a [Snakemake](https://snakemake.readthedocs.io/en/stable/) pipeline for predicting riboSNitches transcriptome-wide
 
 Documentation: https://sparcs.readthedocs.io
