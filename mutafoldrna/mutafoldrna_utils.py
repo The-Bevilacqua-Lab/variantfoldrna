@@ -147,7 +147,7 @@ def config_builder(output_file, working_directory, vcf_file, gff_file,
 
 
 # Create a bash script to run the SPARCS pipeline
-def bash_builder(output_file, cores, working_directory, singularity_prefix=None, cluster=False, cluster_info=None, jobs=None):
+def bash_builder(output_file, cores, working_directory, singularity_prefix=None, singularity_bind=None,  cluster=False, cluster_info=None, jobs=None):
     '''
     Generates a bash script for running the SPARCS pipeline
     '''
@@ -160,7 +160,11 @@ def bash_builder(output_file, cores, working_directory, singularity_prefix=None,
     output.write("echo 'Running SPARCS...'\n\n")
 
     # Start building the snakemake command:
-    command = f"snakemake -s workflow/sparcs.smk --cores {cores} --use-singularity --singularity-args ' -B {os.path.abspath(working_directory)}' --latency-wait 200 --rerun-incomplete "
+    if singularity_bind is not None:
+        command = f"snakemake -s workflow/mutafoldrna.smk --cores {cores} --use-singularity --singularity-args ' -B {singularity_bind}' --latency-wait 200 --rerun-incomplete "
+    else:
+        command = f"snakemake -s workflow/mutafoldrna.smk --cores {cores} --use-singularity --singularity-args ' -B {os.path.abspath(working_directory)}' --latency-wait 200 --rerun-incomplete "
+    
     if singularity_prefix is not None:
         command += f" --singularity-prefix {singularity_prefix} "
     

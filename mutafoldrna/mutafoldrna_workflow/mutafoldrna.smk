@@ -45,7 +45,7 @@ include: "rules/vep.smk"
 include: "rules/plot.smk"
 include: "rules/vcf_header.smk"
 include: "rules/get_top_percent.smk"
-include: "rules/neutral_background.smk"
+include: "rules/all_possible_snps.smk"
 
 # Load the rules for the appropriate prediction tool
 if config["ribosnitch_prediction_tool"].lower() == "snpfold":
@@ -96,23 +96,45 @@ else:
 #############################################
 final_input = []
 for temp in temperature_range:
-    final_input.append(
-        f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/combined_ribosnitch_prediction_{temp}.txt"
-    )
-    final_input.append(
-        f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/combined_ribosnitch_prediction_hist_{temp}.png"
-    )
-
-    final_input.append(
-        f"{config['working_directory']}/{config['out_name']}/results/null_model/combined_ribosnitch_prediction_null_{temp}.txt"
-    )
-
-    if config["top_n_percent"]:
+    # If the user just wants the riboSNitch predictions without the null predictions
+    if config['rbsn_only'] == True:
         final_input.append(
-            f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/top_{config['top_n_percent']}_percent_{temp}.txt",
+            f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/combined_ribosnitch_prediction_{temp}.txt"
         )
         final_input.append(
-        f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/bottom_{config['top_n_percent']}_percent_{temp}.txt")
+            f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/combined_ribosnitch_prediction_hist_{temp}.png"
+        )
+        if config["top_n_percent"]:
+            final_input.append(
+                f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/top_{config['top_n_percent']}_percent_{temp}.txt",
+            )
+            final_input.append(
+            f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/bottom_{config['top_n_percent']}_percent_{temp}.txt")
+
+    # If the user just wants the null predictions without the riboSNitch predictions for the natural variants
+    elif config['null_only'] == True:
+        final_input.append(f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions_null/combined_ribosnitch_prediction_{temp}.txt")
+
+
+    # If the user wants both the riboSNitch predictions and the null predictions
+    else:
+        final_input.append(
+            f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/combined_ribosnitch_prediction_{temp}.txt"
+        )
+        final_input.append(
+            f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/combined_ribosnitch_prediction_hist_{temp}.png"
+        )
+
+        if config["top_n_percent"]:
+            final_input.append(
+                f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/top_{config['top_n_percent']}_percent_{temp}.txt",
+            )
+            final_input.append(
+            f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/bottom_{config['top_n_percent']}_percent_{temp}.txt")
+
+        final_input.append(f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions_null/combined_ribosnitch_prediction_{temp}.txt")
+
+    
 
 # Let the user know what files we are creating
 prCyan("Creating the following files:")

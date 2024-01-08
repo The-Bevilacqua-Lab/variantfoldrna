@@ -97,7 +97,7 @@ def main():
         help="Flanking length for RiboSNitch prediction (Default: 40)",
         default=40,
     )
-    parser.add_argument("--sinularity-prefix", dest="singularity_prefix", help="Path to directory with singularity images", default=None)
+    parser.add_argument("--singularity-bind", dest="singularity_bind", help="Path to directory to bind to singularity", default=None)
     parser.add_argument(
         "--temperature",
         dest="temperature",
@@ -306,7 +306,7 @@ def main():
     
     # Let the user know that we are generating the necessary files
     prGreen("\n")
-    prGreen("Generating the necessary files for the SPARCS pipeline...")
+    prGreen("Generating the necessary files for the MutaFoldRNA pipeline...")
 
     if args.null_only:
         null_only = "TRUE"
@@ -357,13 +357,13 @@ def main():
     )
 
     # Generate the mutafoldrna.sh file
-    bash_builder(f"{output_dir}/mutafoldrna.sh", args.cores, args.out, args.singularity, args.cluster, args.cluster_info, args.jobs)
-    print(args.null_only)
+    bash_builder(f"{output_dir}/mutafoldrna.sh", args.cores, args.out, args.singularity, args. singularity_bind, args.cluster, args.cluster_info, args.jobs)
+  
     prGreen("All Done!\n")
-    prCyan("To run the SPARCS pipeline, run the following commands:")
+    prCyan("To run the MutaFoldRNA pipeline, run the following commands:")
     prCyan("   cd {}".format(output_dir))
     prCyan("   bash mutafoldrna.sh\n")
-    prCyan("\n Thank you for using SPARCS!")
+    prCyan("\n Thank you for using MutaFoldRNA!")
 
 if __name__ == "__main__":
     main()
