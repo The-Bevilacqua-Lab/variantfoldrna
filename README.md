@@ -34,7 +34,7 @@ The three inputs needed to run MutaFoldRNA are a reference genome in FASTA forma
 ```bash
 cwd=$(pwd)
 mutafoldrna \
-    --ref-genome ${cwd}/test_data/Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa  \
+    --ref-genome ${cwd}/test_data/yeast_ref_genome.fa  \
     --gff ${cwd}/test_data/yeast_gene_model.gff3 \
     --vcf test_data/saccharomyces_cerevisiae_subset.vcf \
     --flank 50 \
@@ -46,3 +46,19 @@ mutafoldrna \
     --spliced \
     --rbsn-only
 ```
+
+This command will generate a directory called 'yeast_ribosnitches' that contains all of the files needed to run the pipeline. For running the pipeline, simply change into the directory and run the following command:
+
+```bash
+bash mutafoldrna.sh
+```
+
+Once the pipeline finishes running, you should see a folder titled 'results'. Inside the results directory will be another directory titled 'ribosnitch_predictions'. This folder contains several files, but the most important one is 'combined_ribosnitch_predictions_37.0.txt'. Here, the 37.0 refers to the temperature at which we folded the RNA for the riboSNitch predictions. Here is what the first few lines of the file should look like:
+
+```
+Chrom   Pos     Transcript_pos  Ref     Alt     Flank_left      Flank_right     Gene    Match   Type    Strand  Score
+I       396     62      C       G       TAACACACACGTGCTTACCCTACCACTTTATACCACCACCACATGCCATA      TCACCCTCACTTGTATACTGATTTTACGTACGCACACGGATGCTACAGTA      YAL069W_mRNA   MATCHED_REF     missense_variant        1       0.867
+I       397     63      U       C       AACACACACGTGCTTACCCTACCACTTTATACCACCACCACATGCCATAC      CACCCTCACTTGTATACTGATTTTACGTACGCACACGGATGCTACAGTAT      YAL069W_mRNA   MATCHED_REF     synonymous_variant      1       0.992
+```
+
+You can see that there is a lot going here. Each row is a riboSNitch prediction for each variant. The first few columns are the chromosome, position on the chromosome, the position in the transcript, the reference allele, the alternative allele, the sequence 5' of the variant, the sequence 3' of the varaint, the gene name, whether the reference genome matchhed the the reference allele in the VCF file, the class of mutation as identified by VEP, whether the variant was on the positive or negative strand, and the score from the riboSNitch prediction tool we used. This file is tab-seperated and can easily be imported into R or excel for further analysis. 
