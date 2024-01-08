@@ -14,11 +14,18 @@ rule add_possible_alts:
     output:
         vcf=f"{config['working_directory']}/{config['out_name']}/temp/vcf_chunks_null/vcf_no_header_{{i}}_normalized_possible_alts.vcf",
     log:
-        f"{config['working_directory']}/{config['out_name']}/logs/add_possible_alts.log"
+        f"{config['working_directory']}/{config['out_name']}/logs/add_possible_alts_{{i}}.log"
     singularity:
         "docker://kjkirven/process_seq"
     shell:
         "python3 workflow/scripts/generate_all_mutations.py --input {input} --output {output}"
+
+rule create_vep_other_alts_dir:
+    # Create the directory for the VEP annotations for the generated alternative alleles
+    output:
+        directory(f"{config['working_directory']}/{config['out_name']}/temp/vep_chunks_null_annotated")
+    shell:
+        "mkdir -p {output}"
 
 rule vep_other_alts:
     # Run VEP on the VCF file and output a TAB file with the annotations
@@ -26,7 +33,8 @@ rule vep_other_alts:
         vcf=f"{config['working_directory']}/{config['out_name']}/temp/vcf_chunks_null/vcf_no_header_{{i}}_normalized_possible_alts.vcf",
         annotation=f"{config['working_directory']}/{config['out_name']}/temp/annotation.sorted.{kind}.gz",
         fasta = config["ref_genome"],
-        tbi = f"{config['working_directory']}/{config['out_name']}/temp/annotation.sorted.{kind}.gz.csi"
+        tbi = f"{config['working_directory']}/{config['out_name']}/temp/annotation.sorted.{kind}.gz.csi",
+        dir = f"{config['working_directory']}/{config['out_name']}/temp/vep_chunks_null_annotated",
     output:
         f"{config['working_directory']}/{config['out_name']}/temp/vcf_chunks_null_annotated/vcf_no_header_{{i}}_annotated_one_per_line.txt"
     params:
@@ -134,4 +142,4 @@ rule combine_ribosnitch_results_generated_alts:
     log:
         f"{config['working_directory']}/{config['out_name']}/logs/combine_ribosnitch_results_null_{{temp_deg}}.log",
     shell:
-        "echo    'Chrom	Pos	Transcript_pos	Ref	Alt	Flank_left	Flank_right	Gene	Match	Type	Strand	Score' > {output} && cat {input} >> {output}"
+        "echo    'Chrom Pos     Transcript_pos  Ref     Alt     Flank_left      Flank_right     Gene    Match   Type    Strand  Score' > {output} && cat {input} >> {output}"
