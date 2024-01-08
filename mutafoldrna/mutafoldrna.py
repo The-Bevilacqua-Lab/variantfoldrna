@@ -1,5 +1,5 @@
 ###########################################################################
-# Main file for running the SPARCS pipeline. This acts a wrapper that
+# Main file for running the mutafoldrna pipeline. This acts a wrapper that
 # will automatically create everything needed to run the Snakemake
 # pipeline without having to worry about the details.
 #
@@ -15,15 +15,15 @@ import subprocess
 import sys
 import shutil
 try:
-    from .sparcs_utils import *
+    from .mutafoldrna_utils import *
 except:
-    from sparcs_utils import *
+    from mutafoldrna_utils import *
 
 
 def main():
 
     # Parse the command line arguments
-    parser = argparse.ArgumentParser(description="Run the SPARCS pipeline")
+    parser = argparse.ArgumentParser(description="Run the mutafoldrna pipeline")
     parser.add_argument(
         "--vcf",
         dest="vcf",
@@ -45,8 +45,8 @@ def main():
     parser.add_argument(
         "--out-dir",
         dest="out",
-        help="Path to output directory (If not specified, will create a new directory named 'sparcs_output' in the current directory",
-        default="sparcs_pipeline",
+        help="Path to output directory (If not specified, will create a new directory named 'mutafoldrna_output' in the current directory",
+        default="mutafoldrna_pipeline",
     )
     parser.add_argument(
         "--spliced",
@@ -202,9 +202,9 @@ def main():
     if args.out:
         output_dir = args.out
     else:
-        output_dir = os.path.join(location, "sparcs_pipeline")
+        output_dir = os.path.join(location, "mutafoldrna_pipeline")
         prYellow(
-            "Output directory not specified, so will create a new directory named 'sparcs_pipeline' in the current directory"
+            "Output directory not specified, so will create a new directory named 'mutafoldrna_pipeline' in the current directory"
         )
 
     # Try to create the output directory
@@ -231,7 +231,7 @@ def main():
         prRed("Error: Could not copy the workflow directory to the output directory")
         sys.exit(1)
     try:
-        subprocess.call("cp -r {}/sparcs_workflow/scripts {}/workflow".format(file_location, output_dir), shell=True)
+        subprocess.call("cp -r {}/mutafoldrna_workflow/scripts {}/workflow".format(file_location, output_dir), shell=True)
     except:
         prRed("Error: Could not copy the scripts directory to the output directory")
         sys.exit(1)
@@ -239,7 +239,7 @@ def main():
     # Copy the Snakefile
     try:
         subprocess.call(
-            "cp {}/sparcs_workflow/sparcs.smk {}/workflow".format(file_location, output_dir), shell=True
+            "cp {}/mutafoldrna_workflow/mutafoldrna.smk {}/workflow".format(file_location, output_dir), shell=True
         )
     except:
         prRed("Error: Could not copy the Snakefile to the output directory")
@@ -247,7 +247,7 @@ def main():
 
     # Copy the envs directory
     try:
-        subprocess.call("cp -r {}/sparcs_workflow/envs {}/workflow".format(file_location, output_dir), shell=True)
+        subprocess.call("cp -r {}/mutafoldrna_workflow/envs {}/workflow".format(file_location, output_dir), shell=True)
 
     except:
         prRed("Error: Could not copy the envs directory to the output directory")
@@ -255,7 +255,7 @@ def main():
 
     # Copy the rules directory
     try:
-        subprocess.call("cp -r {}/sparcs_workflow/rules {}/workflow".format(file_location, output_dir), shell=True)
+        subprocess.call("cp -r {}/mutafoldrna_workflow/rules {}/workflow".format(file_location, output_dir), shell=True)
     except:
         prRed("Error: Could not copy the rules directory to the output directory")
         sys.exit(1)
@@ -356,13 +356,13 @@ def main():
         shuffle_null
     )
 
-    # Generate the sparcs.sh file
-    bash_builder(f"{output_dir}/sparcs.sh", args.cores, args.out, args.singularity, args.cluster, args.cluster_info, args.jobs)
+    # Generate the mutafoldrna.sh file
+    bash_builder(f"{output_dir}/mutafoldrna.sh", args.cores, args.out, args.singularity, args.cluster, args.cluster_info, args.jobs)
     print(args.null_only)
     prGreen("All Done!\n")
     prCyan("To run the SPARCS pipeline, run the following commands:")
     prCyan("   cd {}".format(output_dir))
-    prCyan("   bash sparcs.sh\n")
+    prCyan("   bash mutafoldrna.sh\n")
     prCyan("\n Thank you for using SPARCS!")
 
 if __name__ == "__main__":

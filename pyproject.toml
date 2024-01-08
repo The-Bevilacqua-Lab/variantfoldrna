@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "sparcs"
+name = "mutafoldrna"
 version = "0.0.1"
 authors = [
   { name="Kobie Kirven", email="kjk6173@psu.edu" },
@@ -22,13 +22,13 @@ classifiers = [
 
 # Add entry points for the command line interface
 [project.scripts]
-sparcs = "sparcs.sparcs:main"
+mutafoldrna = "mutafoldrna.mutafoldrna:main"
 
 [tool.hatch.build]
 include = [
-  "sparcs/*/*/*",
-  "sparcs/sparcs_workflow/sparcs.smk",
-  "sparcs/__init__.py",
-  "sparcs/sparcs.py",
-  "sparcs/sparcs_utils.py"
+  "mutafoldrna/*/*/*",
+  "mutafoldrna/mutafoldrna_workflow/mutafoldrna.smk",
+  "mutafoldrna/__init__.py",
+  "mutafoldrna/mutafoldrna.py",
+  "mutafoldrna/mutafoldrna_utils.py"
 ]
