@@ -37,6 +37,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Break up VCF file")
     parser.add_argument("--input", dest="input", help="input file")
     parser.add_argument("--dir", dest="dir", help="working directory")
+    parser.add_argument("--null", dest="null", help="null file", default=False, action="store_true")
     parser.add_argument(
         "--chunk-total", dest="chunk", help="The number of files to chop the input into"
     )
@@ -45,10 +46,16 @@ if __name__ == "__main__":
     # Make a directory to store the VCF chunks
     if not os.path.exists(f"{args.dir}/extracted_seqs_chunks/"):
         os.system(f"mkdir -p {args.dir}/extracted_seqs_chunks/")
+    if not os.path.exists(f"{args.dir}/extracted_sequences_null/"):
+        os.system(f"mkdir -p {args.dir}/extracted_sequences_null/")
 
+    if args.null:
+        filename =  f"{args.dir}/extracted_sequences_null/extracted_seqs_null_unique_chunk_"
+    else:
+        filename = f"{args.dir}/extracted_seqs_chunks/extracted_flank_snp_"
     # Split the extracted sequences into chunks
     for i, chunk in enumerate(split_file_by_line(args.input, args.chunk)):
         with open(
-            f"{args.dir}/extracted_seqs_chunks/extracted_flank_snp_{i+1}.txt", "w"
+            filename + f"{i+1}.txt", "w"
         ) as f:
             f.writelines(chunk)
