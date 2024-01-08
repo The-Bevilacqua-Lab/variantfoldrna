@@ -12,7 +12,7 @@ gff_file = config['gff_file']
 if config["canonical"] == True:
     gff_file = f"{config['working_directory']}/{config['out_name']}/temp/canonical_transcripts.gff3"
 else:
-    gff_file = annotation
+    gff_file = gff_file
 
 rule sort_gene_model:
     input:
