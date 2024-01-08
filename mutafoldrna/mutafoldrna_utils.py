@@ -15,14 +15,14 @@ def config_builder(output_file, working_directory, vcf_file, gff_file,
                    ribo_tool, structure_tool, riprap_min_window, temp_step, spliced, canonical, top_n_percent, subset_size,
                    null_only, rbsn_only, shuffle_null):
     '''
-    Generates a config file for running the SPARCS pipeline
+    Generates a config file for running the MutaFoldRNA pipeline
     '''
     output = open(output_file, "w")
     header = '''#=======================================================================
 #                       Configuration File
 # ---------------------------------------------------------------------
 # This file contains all of the user-specified parameters for running 
-# the SPARCS pipeline.
+# the MutaFoldRNA pipeline.
 #  
 # Replace each of the values to the right of the colon for each 
 # parameters with the appropriate value.
@@ -149,15 +149,15 @@ def config_builder(output_file, working_directory, vcf_file, gff_file,
 # Create a bash script to run the SPARCS pipeline
 def bash_builder(output_file, cores, working_directory, singularity_prefix=None, singularity_bind=None,  cluster=False, cluster_info=None, jobs=None):
     '''
-    Generates a bash script for running the SPARCS pipeline
+    Generates a bash script for running the MutaFoldRNA pipeline
     '''
     output = open(output_file, "w")
     header = '''#!/bin/bash
 
-# This script runs the SPARCS pipeline\n\n'''
+# This script runs the MutaFoldRNA pipeline\n\n'''
 
     output.write(header)
-    output.write("echo 'Running SPARCS...'\n\n")
+    output.write("echo 'Running MutaFoldRNA...'\n\n")
 
     # Start building the snakemake command:
     if singularity_bind is not None:
