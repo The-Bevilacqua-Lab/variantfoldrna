@@ -87,16 +87,30 @@ mutafoldrna \
 
 Like before, you should see a `results` directory. Inside the results directory will be another directory titled `ribosnitch_predictions_null`. This folder contans a file titled `combined_ribosnitch_predictions_37.0.txt`. This file is formatted the same as the previous file, except it contains riboSNitch predictions for all possible variants at positions where we observed natural variants.
 
+### Predicting riboSNitches at different temperatures
+The MutaFoldRNA pipeline has functionality for generating riboSNitch predictions over a range of temperatures. This could be useful for studying riboSNitches that are temperature sensitive. To do this, we need to specify a minimum temperature, a maximum temperature, and a temperature step. The minimum and maximum temperatures should be seperated by an '@' symbol. The temperature step is the amount to increase the temperature by at each step. Here is an example of what the command would look like:  
+
+```bash
+cwd=$(pwd)
+mutafoldrna \
+    --ref-genome ${cwd}/test_data/yeast_ref_genome.fa  \
+    --gff ${cwd}/test_data/yeast_gene_model.gff3 \
+    --vcf test_data/saccharomyces_cerevisiae_subset.vcf \
+    --flank 50 \
+    --singularity-path ${cwd}/singularity_envs \
+    --singularity-bind ${cwd}/test_data \
+    --ribosnitch-tool SNPfold \
+    --out-dir yeast_ribosnitches \
+    --canonical \
+    --spliced \
+    --rbsn-only \
+    --temperature 10@40 \
+    --temp-step 5
+```
+The results folder will contain a subfolder called `ribosnitch_predictions`. Inside of the `ribosnitch_predictions` contains mutiple files, one for each temperature. The file names are formatted as `combined_ribosnitch_predictions_<temperature>.txt`.
 
 ## Command Line Options
 ```
-usage: mutafoldrna [-h] --vcf VCF --gff GFF --ref-genome FASTA [--out-dir OUT] [--spliced] [--canonical] [--chunks CHUNKS] [--cores CORES]
-                   [--null-model-total NULL_MODEL_TOTAL] [--structure-pred-tool STRUCTURE_PRED_TOOL] [--ribosnitch-tool RIBOSNITCH_TOOL]
-                   [--flank RIBOSNITCH_FLANK] [--singularity-bind SINGULARITY_BIND] [--temperature TEMPERATURE] [--temp-step TEMP_STEP]
-                   [--minwindow MINWINDOW] [--singularity-path SINGULARITY] [--force] [--cluster] [--cluster-info CLUSTER_INFO] [--jobs JOBS] [--null-only]
-                   [--rbsn-only] [--top-n-percent TOP_N_PERCENT] [--shuffle-null]
-mutafoldrna: error: the following arguments are required: --vcf, --gff, --ref-genome
-(base) kjk6173@E1-052972:/data/Data3/kobie/mutafoldrna/yeast_ribosnitches/results/ribosnitch_predictions_null$ mutafoldrna -h
 usage: mutafoldrna [-h] --vcf VCF --gff GFF --ref-genome FASTA [--out-dir OUT] [--spliced] [--canonical] [--chunks CHUNKS] [--cores CORES]
                    [--null-model-total NULL_MODEL_TOTAL] [--structure-pred-tool STRUCTURE_PRED_TOOL] [--ribosnitch-tool RIBOSNITCH_TOOL]
                    [--flank RIBOSNITCH_FLANK] [--singularity-bind SINGULARITY_BIND] [--temperature TEMPERATURE] [--temp-step TEMP_STEP]
