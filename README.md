@@ -10,6 +10,7 @@ MutaFoldRNA is a [Snakemake](https://snakemake.readthedocs.io/en/stable/) pipeli
 - [Quickstart Guide](#quickstart-guide)
   - [Predicting riboSNitches for natural variants](#predicting-ribosnitches-from-natural-variants)
   - [Predicting riboSNitches for synthetic variants](#predicting-ribosnitches-from-synthetic-variants)
+  - [Predicting riboSNitches at different temperatures](#predicting-ribosnitches-at-different-temperatures)
 - [Command Line Options](#command-line-options)
 
 ## Installation 
@@ -50,6 +51,7 @@ mutafoldrna \
     --rbsn-only
 ```
 
+
 This command will generate a directory called 'yeast_ribosnitches' that contains all of the files needed to run the pipeline. For running the pipeline, simply change into the directory and run the following command:
 
 ```bash
@@ -65,6 +67,23 @@ I       397     63      U       C       AACACACACGTGCTTACCCTACCACTTTATACCACCACCA
 ```
 
 You can see that there is a lot going here. Each row is a riboSNitch prediction for each variant. The first few columns are the chromosome, position on the chromosome, the position in the transcript, the reference allele, the alternative allele, the sequence 5' of the variant, the sequence 3' of the varaint, the gene name, whether the reference genome matchhed the the reference allele in the VCF file, the class of mutation as identified by VEP, whether the variant was on the positive or negative strand, and the score from the riboSNitch prediction tool we used. This file is tab-seperated and can easily be imported into R or excel for further analysis. 
+
+
+<details>
+<summary>Issues with singularity</summary>
+<br>
+If you encounter an issue with the singularity images where you do not have enough space to build them, you can download the images using the following command:
+
+```bash
+wget -o ${cwd}/singularity_envs.tar.gz https://sourceforge.net/projects/mutafoldrna-containers/files/latest/download -P ${cwd}
+```
+
+Then, you can extract the images using the following command:
+
+```bash
+tar -xzf ${cwd}/singularity_envs.tar.gz -C ${cwd}
+```
+</details>
 
 ### Predicting riboSNitches for synthetic variants
 If you are interested in sudying the other possible variants at positions where you observe natural variants, you can do that easily with MutaFoldRNA. The command is going to look very similar to the one used in the previous example, except this time we will substitute the ```--rbsn-only``` flag for the ```--null-only``` flag. This will generate riboSNitch predictions for all possible variants at positions where we observed natural variants. Here is what the command would look like:
