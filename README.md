@@ -12,6 +12,7 @@ MutaFoldRNA is a [Snakemake](https://snakemake.readthedocs.io/en/stable/) pipeli
   - [Predicting riboSNitches for synthetic variants](#predicting-ribosnitches-from-synthetic-variants)
   - [Predicting riboSNitches at different temperatures](#predicting-ribosnitches-at-different-temperatures)
 - [Command Line Options](#command-line-options)
+- [Trouble Shooting](#trouble-shooting)
 
 ## Installation 
 There are only two dependenceis for MutaFoldRNA: [Snakemake](https://snakemake.readthedocs.io/en/stable/) and [singularity](https://sylabs.io/guides/3.7/user-guide/quick_start.html#quick-installation-steps). 
@@ -177,3 +178,10 @@ optional arguments:
                         The top n percent to define as riboSNitches (default = 0.05)
   --shuffle-null        Use shuffling approach to generate null distribution.
   ```
+
+## Trouble Shooting
+If you encounter any issues with MutaFoldRNA, please open an issue on the github page. 
+
+### FAQ:
+- **Q:** I am getting an error with the normalize rule where it says one of the ID lines is too long and it is not a valid VCF file. What is going on?
+  - **A:** For some reason, bcftools does not like the ID columns for some VCF files. To fix this, you can use the `remove_id.py` script located in the `test_data` folder. This script will replace the ID column with a '.'. 
