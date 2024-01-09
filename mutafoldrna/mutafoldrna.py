@@ -73,13 +73,6 @@ def main():
     )
 
     parser.add_argument(
-        "--null-model-total",
-        dest="null_model_total",
-        help="Total number of SNPs to generate for the null model (Default: 100000)",
-        default=100000,
-    )
-
-    parser.add_argument(
         "--structure-pred-tool",
         dest="structure_pred_tool",
         help="Structure prediction tool to use (RNAfold or RNAstructure, Default: RNAfold)",
@@ -166,12 +159,6 @@ def main():
         dest="top_n_percent",
         help="The top n percent to define as riboSNitches (default = 0.05)",
         default=0.05
-    )
-
-    parser.add_argument(
-        "--shuffle-null",
-        action='store_true',
-        help='Use shuffling approach to generate null distribution.'
     )
 
     # Parse the command line arguments
@@ -328,10 +315,6 @@ def main():
     else:
         canonical = "FALSE"
 
-    if args.shuffle_null:
-        shuffle_null = "TRUE"
-    else:
-        shuffle_null = "FALSE"
     # Generate the config.yaml file
     config_builder(
         f'{output_dir}/workflow/config.yaml',
@@ -353,7 +336,6 @@ def main():
         args.null_model_total,
         null_only,
         rbsn_only,
-        shuffle_null
     )
 
     # Generate the mutafoldrna.sh file

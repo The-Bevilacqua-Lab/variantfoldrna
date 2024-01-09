@@ -13,7 +13,7 @@ def prRed(skk): print("\033[91m {}\033[00m" .format(skk))
 def config_builder(output_file, working_directory, vcf_file, gff_file, 
                    ref_genome, output_dir, flank, chunks, temperature,
                    ribo_tool, structure_tool, riprap_min_window, temp_step, spliced, canonical, top_n_percent, subset_size,
-                   null_only, rbsn_only, shuffle_null):
+                   null_only, rbsn_only):
     '''
     Generates a config file for running the MutaFoldRNA pipeline
     '''
