@@ -149,8 +149,6 @@ optional arguments:
   --canonical           Used only the canonical transcripts
   --chunks CHUNKS       Number of chunks to split the VCF file into (Default: 10)
   --cores CORES         Number of cores to use (Default: 1)
-  --null-model-total NULL_MODEL_TOTAL
-                        Total number of SNPs to generate for the null model (Default: 100000)
   --structure-pred-tool STRUCTURE_PRED_TOOL
                         Structure prediction tool to use (RNAfold or RNAstructure, Default: RNAfold)
   --ribosnitch-tool RIBOSNITCH_TOOL
@@ -176,7 +174,6 @@ optional arguments:
   --rbsn-only           Only the riboSNitch predictions, no null distribution.
   --top-n-percent TOP_N_PERCENT
                         The top n percent to define as riboSNitches (default = 0.05)
-  --shuffle-null        Use shuffling approach to generate null distribution.
   ```
 
 ## Trouble Shooting
