@@ -96,17 +96,6 @@ def config_builder(output_file, working_directory, vcf_file, gff_file,
 # temp_step - Temperature step for RNA structure prediction
 #############################################################''')
     output.write(f"\ntemp_step: {temp_step}\n\n")
-
-    output.write('''#############################################################
-                 # subset_size - Number of variants to use for the null model )
-#############################################################''')
-    output.write(f"\nsubset_size: {subset_size}\n\n")
-
-    output.write('''#############################################################
-# shuffle_null - Boolen whether to shuffle the REF and ALT alleles
-#                for the null model
-#############################################################''')
-    output.write(f"\nshuffle_null: {shuffle_null}\n\n")
     
     output.write('''#############################################################
 # null_only - Boolen whether to only run the null model
