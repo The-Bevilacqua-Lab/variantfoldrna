@@ -333,7 +333,6 @@ def main():
         spliced,
         canonical,
         args.top_n_percent,
-        args.null_model_total,
         null_only,
         rbsn_only,
     )
