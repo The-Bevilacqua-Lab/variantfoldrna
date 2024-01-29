@@ -156,6 +156,10 @@ if __name__ == "__main__":
 
         # Get the hgvs of the SNP
         hgvs = f'{predictions.iloc[i]["HGVSc"]}'
+
+        if len(hgvs.split(":")) > 2:
+            hgvs = ":".join(hgvs.split(":")[1:])
+
         model = get_hgvs(hgvs)
 
         if model:
