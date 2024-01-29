@@ -158,7 +158,11 @@ if __name__ == "__main__":
         hgvs = f'{predictions.iloc[i]["HGVSc"]}'
 
         if len(hgvs.split(":")) > 2:
-            hgvs = ":".join(hgvs.split(":")[1:])
+            if "lnc" in hgvs:
+                hgvs_list = hgvs.split(":")
+                hgvs = hgvs_list[0] + ":" + hgvs_list[-1]
+            else:
+                hgvs = ":".join(hgvs.split(":")[1:])
 
         model = get_hgvs(hgvs)
 
