@@ -44,7 +44,7 @@ rule vep_other_alts:
     log:
         f"{config['working_directory']}/{config['out_name']}/logs/vep_null/vcf_no_header_{{i}}_annotated_one_per_line.log"
     shell:
-        f'vep -i {{input.vcf}} --{kind} {{input.annotation}} --fasta {{input.fasta}} -o {{params}} --force_overwrite --tab --fields "Location,REF_ALLELE,Allele,Consequence,Feature,cDNA_position,HGVSc,STRAND,CANONICAL" --hgvs --show_ref_allele --canonical 2> {{log}}   && cat {{params}} | grep -v "##" | grep -v "stream_gene_variant" | grep -v "intergenic" > {{output}}'
+        f'vep -i {{input.vcf}} --{kind} {{input.annotation}} --fasta {{input.fasta}} -o {{params}} --force_overwrite --tab --fields "Location,REF_ALLELE,Allele,Consequence,Feature,cDNA_position,HGVSc,STRAND,CANONICAL" --hgvs --show_ref_allele --canonical 2> {{log}}   && cat {{params}} | grep -v "##" | grep -v "stream_gene_variant" | grep -v "intergenic" | grep -v "coding_sequence_variant" > {{output}}'
 
 rule extract_spliced_sequences_generated_alts:
     # Extract the sequences flanking the SNP for the generated alternative alleles
