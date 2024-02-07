@@ -1,9 +1,10 @@
 ########################################################################################################################
-# Rules for running generating all possible SNPs for the covered positions in the VCF file. 
+# Rules for running generating all possible SNPs for the covered positions in the VCF file.
 #
 # Author: Kobie Kirven
 # Assmann and Bevilacqua Labs -- Penn State University
 ########################################################################################################################
+
 
 rule add_possible_alts:
     # Add possible alternative alleles to the VCF file
@@ -14,45 +15,50 @@ rule add_possible_alts:
     output:
         vcf=f"{config['working_directory']}/{config['out_name']}/temp/vcf_chunks_null/vcf_no_header_{{i}}_normalized_possible_alts.vcf",
     log:
-        f"{config['working_directory']}/{config['out_name']}/logs/add_possible_alts_{{i}}.log"
+        f"{config['working_directory']}/{config['out_name']}/logs/add_possible_alts_{{i}}.log",
     singularity:
         "docker://kjkirven/process_seq"
     shell:
         "python3 workflow/scripts/generate_all_mutations.py --input {input} --output {output}"
 
+
 rule create_vep_other_alts_dir:
     # Create the directory for the VEP annotations for the generated alternative alleles
     output:
-        directory(f"{config['working_directory']}/{config['out_name']}/temp/vep_chunks_null_annotated")
+        directory(
+            f"{config['working_directory']}/{config['out_name']}/temp/vep_chunks_null_annotated"
+        ),
     shell:
         "mkdir -p {output}"
+
 
 rule vep_other_alts:
     # Run VEP on the VCF file and output a TAB file with the annotations
     input:
         vcf=f"{config['working_directory']}/{config['out_name']}/temp/vcf_chunks_null/vcf_no_header_{{i}}_normalized_possible_alts.vcf",
         annotation=f"{config['working_directory']}/{config['out_name']}/temp/annotation.sorted.{kind}.gz",
-        fasta = config["ref_genome"],
-        tbi = f"{config['working_directory']}/{config['out_name']}/temp/annotation.sorted.{kind}.gz.csi",
-        dir = f"{config['working_directory']}/{config['out_name']}/temp/vep_chunks_null_annotated",
+        fasta=config["ref_genome"],
+        tbi=f"{config['working_directory']}/{config['out_name']}/temp/annotation.sorted.{kind}.gz.csi",
+        dir=f"{config['working_directory']}/{config['out_name']}/temp/vep_chunks_null_annotated",
     output:
-        f"{config['working_directory']}/{config['out_name']}/temp/vcf_chunks_null_annotated/vcf_no_header_{{i}}_annotated_one_per_line.txt"
+        f"{config['working_directory']}/{config['out_name']}/temp/vcf_chunks_null_annotated/vcf_no_header_{{i}}_annotated_one_per_line.txt",
     params:
-        f"{config['working_directory']}/{config['out_name']}/temp/vep_chunks_null_annotated/vcf_no_header_{{i}}_annotated_one_per_line_temp.txt"
+        f"{config['working_directory']}/{config['out_name']}/temp/vep_chunks_null_annotated/vcf_no_header_{{i}}_annotated_one_per_line_temp.txt",
     singularity:
         "docker://ensemblorg/ensembl-vep:release_100.2"
     log:
-        f"{config['working_directory']}/{config['out_name']}/logs/vep_null/vcf_no_header_{{i}}_annotated_one_per_line.log"
+        f"{config['working_directory']}/{config['out_name']}/logs/vep_null/vcf_no_header_{{i}}_annotated_one_per_line.log",
     shell:
         f'vep -i {{input.vcf}} --{kind} {{input.annotation}} --fasta {{input.fasta}} -o {{params}} --force_overwrite --tab --fields "Location,REF_ALLELE,Allele,Consequence,Feature,cDNA_position,HGVSc,STRAND,CANONICAL" --hgvs --show_ref_allele --canonical 2> {{log}}   && cat {{params}} | grep -v "##" | grep -v "stream_gene_variant" | grep -v "intergenic" | grep -v "coding_sequence_variant" > {{output}}'
+
 
 rule extract_spliced_sequences_generated_alts:
     # Extract the sequences flanking the SNP for the generated alternative alleles
     input:
         vcf=f"{config['working_directory']}/{config['out_name']}/temp/vcf_chunks_null_annotated/vcf_no_header_{{i}}_annotated_one_per_line.txt",
         cds_pos=f"{config['working_directory']}/{config['out_name']}/temp/cdna_pos.txt",
-        cdna = f"{config['working_directory']}/{config['out_name']}/temp/cdna.fa",
-        cdna_index = f"{config['working_directory']}/{config['out_name']}/temp/cdna.fa.fai",
+        cdna=f"{config['working_directory']}/{config['out_name']}/temp/cdna.fa",
+        cdna_index=f"{config['working_directory']}/{config['out_name']}/temp/cdna.fa.fai",
         database=f"{config['working_directory']}/{config['out_name']}/temp/gffread_table.json",
     message:
         "Extracting the sequences flanking the SNP for the generated alternative alleles ..."
@@ -65,38 +71,42 @@ rule extract_spliced_sequences_generated_alts:
     shell:
         f"python3 workflow/scripts/get_spliced_read_data.py --vcf {{input.vcf}} --ref-seqs {{input.cdna}} --flank {{params.flank}} --gffread {{input.database}} --cds-pos {{input.cds_pos}} --o {{output.seqs}}"
 
+
 rule combine_extracted_sequences_generated_alts:
     # Combine the extracted sequences into one file
     input:
         expand(
             f"{config['working_directory']}/{config['out_name']}/temp/extracted_sequences_null/extracted_seqs_null_{{i}}.txt",
-            i=range(1, config["chunks"] + 1)),
+            i=range(1, config["chunks"] + 1),
+        ),
     message:
         "Combining the extracted sequences for the generated alternative alleles into one file ..."
     output:
-        f"{config['working_directory']}/{config['out_name']}/temp/extracted_sequences_null/extracted_seqs_null.txt"
+        f"{config['working_directory']}/{config['out_name']}/temp/extracted_sequences_null/extracted_seqs_null.txt",
     singularity:
         "docker://kjkirven/process_seq"
     shell:
         "cat {input} > {output}"
 
+
 rule remove_duplicates_generated_alts:
     # Remove duplicates from the extracted sequences for the generated alternative alleles
     input:
-        f"{config['working_directory']}/{config['out_name']}/temp/extracted_sequences_null/extracted_seqs_null.txt"
-    message:    
+        f"{config['working_directory']}/{config['out_name']}/temp/extracted_sequences_null/extracted_seqs_null.txt",
+    message:
         "Removing duplicates from the extracted sequences for the generated alternative alleles ..."
     output:
-        f"{config['working_directory']}/{config['out_name']}/temp/extracted_sequences_null/extracted_seqs_null_unique.txt"
+        f"{config['working_directory']}/{config['out_name']}/temp/extracted_sequences_null/extracted_seqs_null_unique.txt",
     singularity:
         "docker://kjkirven/process_seq"
     shell:
         f"python3 workflow/scripts/remove_duplicates.py -i {{input}} -o {{output}}"
 
+
 rule chunk_extracted_sequences_generated_alts:
     # Chunk the extracted sequences:
     input:
-        f"{config['working_directory']}/{config['out_name']}/temp/extracted_sequences_null/extracted_seqs_null_unique.txt" 
+        f"{config['working_directory']}/{config['out_name']}/temp/extracted_sequences_null/extracted_seqs_null_unique.txt",
     message:
         "Chunking the extracted sequences for the generated alternative alleles ..."
     output:
@@ -108,6 +118,7 @@ rule chunk_extracted_sequences_generated_alts:
         "docker://kjkirven/process_seq"
     shell:
         f"python3 workflow/scripts/chunk_extracted_seqs.py --input {{input}} --dir {config['working_directory']}/{config['out_name']}/temp --chunk-total {config['chunks']} --null"
+
 
 rule run_snpfold_generated_alts:
     # Perform the riboSNitch analysis with SNPFold for null datasets
