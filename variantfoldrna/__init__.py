@@ -1,1 +1,1 @@
-from .mutafoldrna_utils import *
+from .variantfoldrna_utils import *
