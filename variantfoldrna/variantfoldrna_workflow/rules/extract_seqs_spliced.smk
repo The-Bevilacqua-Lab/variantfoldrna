@@ -110,7 +110,7 @@ rule extract_spliced_sequences:
     singularity:
         "docker://kjkirven/process_seq"
     shell:
-        f"python3 workflow/scripts/get_spliced_read_data.py --vcf {{input.vcf}} --ref-seqs {{input.cdna}} --flank {{params.flank}} --gffread {{input.database}} --cds-pos {{input.cds_pos}} --o {{output.seqs}}"
+        f"workflow/bin/get_spliced_read_data -vcf {{input.vcf}} -ref-seqs {{input.cdna}} -flank {{params.flank}} -gffread {{input.database}} -cds-pos {{input.cds_pos}} --o {{output.seqs}}"
 
 rule combine_extracted_sequences:
     # Combine the extracted sequences into one file
