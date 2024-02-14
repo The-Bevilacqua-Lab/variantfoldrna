@@ -12,6 +12,7 @@ import argparse
 import os
 import subprocess
 
+
 # -- Functions -- #
 def transcribe_rna(seq):
     """
@@ -33,10 +34,11 @@ def run_snpfold(seq, path, temp, mutation):
     Run SNPfold on the sequence.
     """
     results = subprocess.run(
-        ["python3", f"{path}/snpfold.py", "-T", temp, "-seq", seq, "-mut", mutation],
+        [f"{path}/snpfold", "-T", temp, "-seq", seq, "-mut", mutation],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )
+    print(results).stdout.decode("utf-8")
     try:
         return float(results.stdout.decode("utf-8"))
     except:
@@ -47,7 +49,7 @@ if __name__ == "__main__":
 
     # Get the path to the sparcs directory
     path = os.path.dirname(os.path.realpath(__file__))
-
+    path = "../bin"
     # Parse the arguments
     parser = argparse.ArgumentParser(description="Determine RiboSNitches")
     parser.add_argument("--i", dest="in_file", help="Input File")
@@ -88,6 +90,7 @@ if __name__ == "__main__":
                 # Write the results to the output file
                 try:
                     previous = "\t".join(line).strip("\n")
+                    results = '\t'.join(results.split(","))
                     outfile.write(f"{previous}\t{results}\n")
                 except:
                     error.write("\t".join(line) + "\n")
