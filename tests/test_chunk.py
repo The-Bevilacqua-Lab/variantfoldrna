@@ -63,12 +63,18 @@ class TestPipeline(unittest.TestCase):
                 10,
                 "NA",
                 "NA",
-                "NA"
+                "NA",
+                "NA", 
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
             )
 
             # Run the snakemake pipeline
             run_snakemake(
-                snakefile=f"{workflow_path}/workflow/sparcs.rules",
+                snakefile=f"{workflow_path}/workflow/variantfoldrna.smk",
                 extra_args=targets,
             )
 
@@ -138,12 +144,18 @@ class TestPipeline(unittest.TestCase):
                 10,
                 "NA",
                 "NA",
-                "NA"
+                "NA",
+                "NA", 
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
             )
 
             # Run the snakemake pipeline
             run_snakemake(
-                snakefile=f"{workflow_path}/workflow/sparcs.rules",
+                snakefile=f"{workflow_path}/workflow/variantfoldrna.smk",
                 extra_args=targets,
             )
 
@@ -192,24 +204,30 @@ class TestPipeline(unittest.TestCase):
 
         # Create the config file to be used for the test
         config_builder(
-            f"{workflow_path}/workflow/config.yaml",
-            working_dir,
-            vcf_file,
-            "NA",
-            "NA",
-            out_name,
-            10,
-            4,
-            10,
-            "NA",
-            "NA",
-            "NA"
-        )
+                f"{workflow_path}/workflow/config.yaml",
+                working_dir,
+                vcf_file,
+                "NA",
+                "NA",
+                out_name,
+                10,
+                chunk_size,
+                10,
+                "NA",
+                "NA",
+                "NA",
+                "NA", 
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+            )
 
         # Run the snakemake pipeline
         with self.assertRaises(SystemExit):
             run_snakemake(
-                snakefile=f"{workflow_path}/workflow/sparcs.rules",
+                snakefile=f"{workflow_path}/workflow/variantfoldrna.smk",
                 extra_args=targets,
             )
 
@@ -262,6 +280,21 @@ class TestPipeline(unittest.TestCase):
             out_name = "chunk_test"
             chunk_size = chunk
 
+            # config_builder(
+            #     f"{workflow_path}/workflow/config.yaml",
+            #     working_dir,
+            #     vcf_file,
+            #     "NA",
+            #     "NA",
+            #     out_name,
+            #     10,
+            #     chunk_size,
+            #     10,
+            #     "NA",
+            #     "NA",
+            #     "NA"
+            # )
+
             config_builder(
                 f"{workflow_path}/workflow/config.yaml",
                 working_dir,
@@ -274,12 +307,18 @@ class TestPipeline(unittest.TestCase):
                 10,
                 "NA",
                 "NA",
-                "NA"
+                "NA",
+                "NA", 
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
             )
 
             # Run the snakemake pipeline
             run_snakemake(
-                snakefile=f"{workflow_path}/workflow/sparcs.rules",
+                snakefile=f"{workflow_path}/workflow/variantfoldrna.smk",
                 extra_args=targets,
             )
 

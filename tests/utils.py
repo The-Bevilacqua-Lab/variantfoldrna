@@ -43,18 +43,19 @@ def run_snakemake(
         print(f"Error in snakemake invocation:", file=sys.stderr)
         sys.exit(1)
 
-def config_builder(output_file, working_directory, vcf_file, gtf_file, 
+def config_builder(output_file, working_directory, vcf_file, gff_file, 
                    ref_genome, output_dir, flank, chunks, temperature,
-                   ribo_tool, structure_tool, riprap_min_window):
+                   ribo_tool, structure_tool, riprap_min_window, temp_step, spliced, canonical, variant_class,
+                   null_only, rbsn_only): 
     '''
-    Generates a config file for running the SPARCS pipeline
+    Generates a config file for running the VariantFoldRNA pipeline
     '''
     output = open(output_file, "w")
     header = '''#=======================================================================
 #                       Configuration File
 # ---------------------------------------------------------------------
 # This file contains all of the user-specified parameters for running 
-# the SPARCS pipeline.
+# the VariantFoldRNA pipeline.
 #  
 # Replace each of the values to the right of the colon for each 
 # parameters with the appropriate value.
@@ -76,9 +77,9 @@ def config_builder(output_file, working_directory, vcf_file, gtf_file,
     output.write(f"vcf_file: {vcf_file}\n\n")
 
     output.write('''#############################################################
-# gtf_file - Gene model (must be in GTF format)
+# gff_file - Gene model (must be in GFF format)
 #############################################################\n''')
-    output.write(f"gtf_file: {gtf_file}\n\n")
+    output.write(f"gff_file: {gff_file}\n\n")
 
     output.write('''#############################################################
 # ref_genome - Reference genome in FASTA format 
@@ -103,6 +104,18 @@ def config_builder(output_file, working_directory, vcf_file, gtf_file,
     output.write(f"flank_len: {flank}\n\n")
 
     output.write('''#############################################################
+# spliced - Boolen whether to use the spliced or unspliced transcripts
+# for riboSNitch prediction 
+#############################################################\n''')
+    output.write(f"spliced: {spliced}\n\n")
+
+    output.write('''#############################################################
+# Canonical - Boolen whether to use the canonical form of the transcripts
+# for riboSNitch prediction 
+#############################################################\n''')
+    output.write(f"canonical: {canonical}\n\n")
+
+    output.write('''#############################################################
 # Chunks - The number of splits of the input files 
 #############################################################\n''')
     output.write(f"chunks: {chunks}\n\n")
@@ -111,6 +124,21 @@ def config_builder(output_file, working_directory, vcf_file, gtf_file,
 # temperature - Temperature for RNA structure prediction
 #############################################################''')
     output.write(f"\ntemperature: {temperature}\n\n")
+
+    output.write('''#############################################################
+# temp_step - Temperature step for RNA structure prediction
+#############################################################''')
+    output.write(f"\ntemp_step: {temp_step}\n\n")
+    
+    output.write('''#############################################################
+# null_only - Boolen whether to only run the null model
+#############################################################''')
+    output.write(f"\nnull_only: {null_only}\n\n")
+
+    output.write('''#############################################################
+# rbsn_only - Boolen whether to only run the riboSNitch model
+#############################################################''')
+    output.write(f"\nrbsn_only: {rbsn_only}\n\n")
 
     output.write('''#############################################################
 # ribosnitch_prediction_tool: Tool to use for predicting
@@ -125,11 +153,17 @@ def config_builder(output_file, working_directory, vcf_file, gtf_file,
 #############################################################''')
     output.write(f"\nstructure_prediction_tool: {structure_tool}\n\n")
 
+    output.write('''#############################################################
+# variant_class : Only run the riboSNitch prediction on these variants
+#############################################################''')
+    output.write(f"\nvariant_class: {variant_class}\n\n")
+
     output.write('''# -- ADVANCED PARAMETERS -- #
 #############################################################
 # riprap_min_window: Minimum window size for RipRap
 #############################################################''')
     output.write(f"\nriprap_min_window: {riprap_min_window}\n\n")
+    
     output.close()
 
 
@@ -140,14 +174,14 @@ def add_workflow():
     # Make sure that we have the pipeline in our current directory for testing
     if not os.path.exists(f"{workflow_path}/tests/workflow"):
         try:
-            os.system(f" rm -rf {workflow_path}/tests/sparcs_workflow")
+            os.system(f" rm -rf {workflow_path}/tests/variantfoldrna_workflow")
         except:
             pass
-        os.system(f"cp -r {workflow_path}/sparcs/sparcs_workflow {workflow_path}/tests && mv {workflow_path}/tests/sparcs_workflow {workflow_path}/tests/workflow")
+        os.system(f"cp -r {workflow_path}/variantfoldrna/variantfoldrna_workflow {workflow_path}/tests && mv {workflow_path}/tests/variantfoldrna_workflow {workflow_path}/tests/workflow")
     else:
         os.system("rm -rf {workflow_path}/tests/workflow")
-        os.system(f" rm -rf {workflow_path}/tests/sparcs_workflow")
-        os.system(f"cp -r {workflow_path}/sparcs/sparcs_workflow {workflow_path}/tests && mv {workflow_path}/tests/sparcs_workflow {workflow_path}/tests/workflow")
+        os.system(f" rm -rf {workflow_path}/tests/variantfoldrna_workflow")
+        os.system(f"cp -r {workflow_path}/variantfoldrna/variantfoldrna_workflow {workflow_path}/tests && mv {workflow_path}/tests/variantfoldrna_workflow {workflow_path}/tests/workflow")
 
 def remove_workflow():
     workflow_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
