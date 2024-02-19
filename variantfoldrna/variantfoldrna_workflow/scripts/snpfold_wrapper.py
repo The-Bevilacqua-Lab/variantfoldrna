@@ -34,13 +34,12 @@ def run_snpfold(seq, path, temp, mutation):
     Run SNPfold on the sequence.
     """
     results = subprocess.run(
-        [f"{path}/snpfold", "-T", temp, "-seq", seq, "-mut", mutation],
+        [f"{path}/../bin/snpfold", "-T", temp, "-seq", seq, "-mut", mutation],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-    )
-    print(results).stdout.decode("utf-8")
+    )   
     try:
-        return float(results.stdout.decode("utf-8"))
+        return results.stdout.decode("utf-8")
     except:
         return "Error"
 
@@ -49,7 +48,7 @@ if __name__ == "__main__":
 
     # Get the path to the sparcs directory
     path = os.path.dirname(os.path.realpath(__file__))
-    path = "../bin"
+    # path = "../bin"
     # Parse the arguments
     parser = argparse.ArgumentParser(description="Determine RiboSNitches")
     parser.add_argument("--i", dest="in_file", help="Input File")
