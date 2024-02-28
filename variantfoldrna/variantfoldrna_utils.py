@@ -13,7 +13,7 @@ def prRed(skk): print("\033[91m {}\033[00m" .format(skk))
 def config_builder(output_file, working_directory, vcf_file, gff_file, 
                    ref_genome, output_dir, flank, chunks, temperature,
                    ribo_tool, structure_tool, riprap_min_window, temp_step, spliced, canonical, variant_class,
-                   null_only, rbsn_only): 
+                    other_alts_only, rbsn_only, null_only, null_size, null_seqs_only): 
     '''
     Generates a config file for running the VariantFoldRNA pipeline
     '''
@@ -103,9 +103,24 @@ def config_builder(output_file, working_directory, vcf_file, gff_file,
     output.write(f"\nnull_only: {null_only}\n\n")
 
     output.write('''#############################################################
+# other alts ony - Boolen whether to only run the other alts model
+#############################################################''')
+    output.write(f"\nother_alts_only: {null_only}\n\n")
+
+    output.write('''#############################################################
 # rbsn_only - Boolen whether to only run the riboSNitch model
 #############################################################''')
     output.write(f"\nrbsn_only: {rbsn_only}\n\n")
+
+    output.write('''#############################################################
+# null_size - The size of the null distribution
+#############################################################''')
+    output.write(f"\nnull_size: {null_size}\n\n")
+
+    output.write('''#############################################################
+# null_seqs_only - Boolean of just get the null sequences 
+#############################################################''')
+    output.write(f"\nnull_seqs_only: {null_seqs_only}\n\n")
 
     output.write('''#############################################################
 # ribosnitch_prediction_tool: Tool to use for predicting

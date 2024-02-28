@@ -45,8 +45,8 @@ def main():
     parser.add_argument(
         "--out-dir",
         dest="out",
-        help="Path to output directory (If not specified, will create a new directory named 'mutafoldrna_output' in the current directory",
-        default="mutafoldrna_pipeline",
+        help="Path to output directory (If not specified, will create a new directory named 'variantfoldrna_output' in the current directory",
+        default="variantfoldrna_pipeline",
     )
     parser.add_argument(
         "--spliced",
@@ -149,6 +149,12 @@ def main():
     )
 
     parser.add_argument(
+        "--other-alts-only",
+        action='store_true',
+        help='Only run the pipeline for variants that are not the reference allele'
+    )
+
+    parser.add_argument(
         "--null-only",
         action='store_true',
         help='Only the riboSNitch predictions for building the null distribution. '
@@ -160,7 +166,16 @@ def main():
         help='Only the riboSNitch predictions, no null distribution. '
     )
 
+    parser.add_argument(
+        "--null-size",
+        help='Number of null predictions to make. '
+    )
 
+    parser.add_argument(
+        "--null-seqs-only",
+        action='store_true',
+        help='Only get the sequences for the null background without making predictions. '
+    )
 
     # Parse the command line arguments
     args = parser.parse_args()
@@ -190,9 +205,9 @@ def main():
     if args.out:
         output_dir = args.out
     else:
-        output_dir = os.path.join(location, "mutafoldrna_pipeline")
+        output_dir = os.path.join(location, "variantfoldrna_pipeline")
         prYellow(
-            "Output directory not specified, so will create a new directory named 'mutafoldrna_pipeline' in the current directory"
+            "Output directory not specified, so will create a new directory named 'variantfoldrna_pipeline' in the current directory"
         )
 
     # Try to create the output directory
@@ -219,7 +234,7 @@ def main():
         prRed("Error: Could not copy the workflow directory to the output directory")
         sys.exit(1)
     try:
-        subprocess.call("cp -r {}/mutafoldrna_workflow/scripts {}/workflow".format(file_location, output_dir), shell=True)
+        subprocess.call("cp -r {}/variantfoldrna_workflow/scripts {}/workflow".format(file_location, output_dir), shell=True)
     except:
         prRed("Error: Could not copy the scripts directory to the output directory")
         sys.exit(1)
@@ -227,7 +242,7 @@ def main():
     # Copy the Snakefile
     try:
         subprocess.call(
-            "cp {}/mutafoldrna_workflow/variantfoldrna.smk {}/workflow".format(file_location, output_dir), shell=True
+            "cp {}/variantfoldrna_workflow/variantfoldrna.smk {}/workflow".format(file_location, output_dir), shell=True
         )
     except:
         prRed("Error: Could not copy the Snakefile to the output directory")
@@ -235,15 +250,23 @@ def main():
 
     # Copy the envs directory
     try:
-        subprocess.call("cp -r {}/mutafoldrna_workflow/envs {}/workflow".format(file_location, output_dir), shell=True)
+        subprocess.call("cp -r {}/variantfoldrna_workflow/envs {}/workflow".format(file_location, output_dir), shell=True)
 
     except:
         prRed("Error: Could not copy the envs directory to the output directory")
         sys.exit(1)
 
+    # Copy the envs directory
+    try:
+        subprocess.call("cp -r {}/variantfoldrna_workflow/bin {}/workflow".format(file_location, output_dir), shell=True)
+
+    except:
+        prRed("Error: Could not copy the bin directory to the output directory")
+        sys.exit(1)
+
     # Copy the rules directory
     try:
-        subprocess.call("cp -r {}/mutafoldrna_workflow/rules {}/workflow".format(file_location, output_dir), shell=True)
+        subprocess.call("cp -r {}/variantfoldrna_workflow/rules {}/workflow".format(file_location, output_dir), shell=True)
     except:
         prRed("Error: Could not copy the rules directory to the output directory")
         sys.exit(1)
@@ -301,6 +324,11 @@ def main():
     else:
         null_only = "FALSE"
     
+    if args.other_alts_only:
+        other_alts_only = "TRUE"
+    else:
+        other_alts_only = "FALSE"
+    
     if args.rbsn_only:
         rbsn_only = "TRUE"
     else:
@@ -315,6 +343,16 @@ def main():
         canonical = "TRUE"
     else:
         canonical = "FALSE"
+    
+    if args.null_size:
+        null_size = args.null_size
+    else:
+        null_size = 100
+
+    if args.null_seqs_only:
+        null_seqs_only = "TRUE"
+    else:
+        null_seqs_only = "FALSE"
 
     # Generate the config.yaml file
     config_builder(
@@ -334,8 +372,11 @@ def main():
         spliced,
         canonical,
         args.variant_class,
-        null_only,
+        other_alts_only,
         rbsn_only,
+        null_only,
+        null_size,
+        null_seqs_only
     )
 
     # Generate the viriantfoldrna.sh file
