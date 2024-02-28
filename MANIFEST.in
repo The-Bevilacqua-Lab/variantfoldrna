@@ -1,6 +1,6 @@
-include sparcs/sparcs_worfklow/envs/*
-include sparcs/sparcs_worfklow/rules/*
-include sparcs/sparcs_worfklow/scripts/*
-include sparcs/sparcs_worfklow/sparcs.smk
-include sparcs/sparcs.py
-include sparcs/sparcs_utils.py
+include variantfoldrna/variantfoldrna_worfklow/envs/*
+include variantfoldrna/variantfoldrna_worfklow/rules/*
+include variantfoldrna/variantfoldrna_worfklow/scripts/*
+include variantfoldrna/variantfoldrna_worfklow/variantfoldrna.smk
+include variantfoldrna/variantfoldrna.py
+include variantfoldrna/variantfoldrna_utils.py
