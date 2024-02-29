@@ -13,7 +13,7 @@ def prRed(skk): print("\033[91m {}\033[00m" .format(skk))
 def config_builder(output_file, working_directory, vcf_file, gff_file, 
                    ref_genome, output_dir, flank, chunks, temperature,
                    ribo_tool, structure_tool, riprap_min_window, temp_step, spliced, canonical, variant_class,
-                    other_alts_only, rbsn_only, null_only, null_size, null_seqs_only): 
+                    other_alts_only, rbsn_only, null_only, null_size, null_seqs_only, from_csv): 
     '''
     Generates a config file for running the VariantFoldRNA pipeline
     '''
@@ -139,6 +139,11 @@ def config_builder(output_file, working_directory, vcf_file, gff_file,
 # variant_class : Only run the riboSNitch prediction on these variants
 #############################################################''')
     output.write(f"\nvariant_class: {variant_class}\n\n")
+
+    output.write('''#############################################################
+# from_csv: If the input is a csv file
+#############################################################''')
+    output.write(f"\nfrom_csv: {from_csv}\n\n")
 
     output.write('''# -- ADVANCED PARAMETERS -- #
 #############################################################

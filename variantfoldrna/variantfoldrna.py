@@ -28,19 +28,16 @@ def main():
         "--vcf",
         dest="vcf",
         help="Absolute ath to VCF file (If not specified, will check the current directory",
-        required=True,
     )
     parser.add_argument(
         "--gff",
         dest="gff",
         help="Absolute path to GFF file (If not specified, will check the current directory",
-        required=True,
     )
     parser.add_argument(
         "--ref-genome",
         dest="fasta",
         help="Absolute path to the reference genome file (If not specified, will check the current directory",
-        required=True,
     )
     parser.add_argument(
         "--out-dir",
@@ -177,6 +174,11 @@ def main():
         help='Only get the sequences for the null background without making predictions. '
     )
 
+    parser.add_argument(
+        "--from-csv",
+        help = 'Use the sequences and SNPs in the CSV.'
+    )
+
     # Parse the command line arguments
     args = parser.parse_args()
 
@@ -272,52 +274,62 @@ def main():
         sys.exit(1)
 
     # -- end copying files -- #
-
-    # Check to to see if the user has a VCF file, a GTF file, and a FASTA file in the current directory
-    inputted_files = {"VCF": None, "GFF3": None, "FASTA": None}
-    if args.vcf:
-        inputted_files["VCF"] = os.path.abspath(os.path.expanduser(args.vcf))
-    if args.gff:
-        inputted_files["GFF3"] = os.path.abspath(os.path.expanduser(args.gff))
-    if args.fasta:
-        inputted_files["FASTA"] = os.path.abspath(os.path.expanduser(args.fasta))
-
-    # The user has specified at least one of the files, so we will
-    # let the user know what files they have specified
-    if len([x for x in inputted_files.values() if x != None]) > 0:
-        prGreen("Specified files include: ")
-        for file_type, file_path in inputted_files.items():
-            if file_path:
-                prGreen("   - {}: {}".format(file_type, file_path))
-
-    # The user did not specify all of the files, so we will check to see
-    # if the files are in the current directory
-    if len([x for x in inputted_files.values() if x != None]) != 3:
-        prRed("Error: Not all of the necessary files were specified")
-
-    # Create the config.yaml file
-    if inputted_files["VCF"] == None:
-        vcf_file = "NA"
+    if args.from_csv:
+        prGreen(f"From CSV option Selected: {args.from_csv}")
+    
     else:
-        vcf_file = inputted_files["VCF"]
+        # Check to to see if the user has a VCF file, a GTF file, and a FASTA file in the current directory
+        inputted_files = {"VCF": None, "GFF3": None, "FASTA": None}
+        if args.vcf:
+            inputted_files["VCF"] = os.path.abspath(os.path.expanduser(args.vcf))
+        if args.gff:
+            inputted_files["GFF3"] = os.path.abspath(os.path.expanduser(args.gff))
+        if args.fasta:
+            inputted_files["FASTA"] = os.path.abspath(os.path.expanduser(args.fasta))
 
-    if inputted_files["GFF3"] == None:
-        gff_file = "NA"
-    else:
-        gff_file = inputted_files["GFF3"]
+        # The user has specified at least one of the files, so we will
+        # let the user know what files they have specified
+        if len([x for x in inputted_files.values() if x != None]) > 0:
+            prGreen("Specified files include: ")
+            for file_type, file_path in inputted_files.items():
+                if file_path:
+                    prGreen("   - {}: {}".format(file_type, file_path))
 
-    if inputted_files["FASTA"] == None:
-        ref_genome = "NA"
-    else:
-        ref_genome = inputted_files["FASTA"]
+        # The user did not specify all of the files, so we will check to see
+        # if the files are in the current directory
+        if len([x for x in inputted_files.values() if x != None]) != 3:
+            prRed("Error: Not all of the necessary files were specified")
 
-    if output_dir.endswith("/"):
-        output_dir = output_dir[:-1]
+        # Create the config.yaml file
+        if inputted_files["VCF"] == None:
+            vcf_file = "NA"
+        else:
+            vcf_file = inputted_files["VCF"]
+
+        if inputted_files["GFF3"] == None:
+            gff_file = "NA"
+        else:
+            gff_file = inputted_files["GFF3"]
+
+        if inputted_files["FASTA"] == None:
+            ref_genome = "NA"
+        else:
+            ref_genome = inputted_files["FASTA"]
+
+        if output_dir.endswith("/"):
+            output_dir = output_dir[:-1]
 
     
     # Let the user know that we are generating the necessary files
     prGreen("\n")
     prGreen("Generating the necessary files for the variantfoldrna pipeline...")
+
+    if not args.vcf:
+        vcf_file = "NA"
+    if not args.gff:
+        gff_file = "NA"
+    if not args.fasta:
+        ref_genome = "NA"
 
     if args.null_only:
         null_only = "TRUE"
@@ -354,6 +366,11 @@ def main():
     else:
         null_seqs_only = "FALSE"
 
+    if args.from_csv:
+        from_csv = args.from_csv
+    else:
+        from_csv = "NA"
+
     # Generate the config.yaml file
     config_builder(
         f'{output_dir}/workflow/config.yaml',
@@ -376,7 +393,8 @@ def main():
         rbsn_only,
         null_only,
         null_size,
-        null_seqs_only
+        null_seqs_only,
+        from_csv
     )
 
     # Generate the viriantfoldrna.sh file
