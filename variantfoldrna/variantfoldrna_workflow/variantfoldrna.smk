@@ -42,12 +42,13 @@ configfile: srcdir("config.yaml")
 
 
 # -- Import common rules -- #
-include: "rules/chunk.smk"
-include: "rules/vep.smk"
-# include: "rules/plot.smk"
-include: "rules/vcf_header.smk"
-# include: "rules/get_top_percent.smk"
-include: "rules/neutral_background.smk"
+if config['from_csv'] == "NA":
+    include: "rules/chunk.smk"
+    include: "rules/vep.smk"
+    # include: "rules/plot.smk"
+    include: "rules/vcf_header.smk"
+    # include: "rules/get_top_percent.smk"
+    include: "rules/neutral_background.smk"
 
 # Load the rules for the appropriate prediction tool
 if config["ribosnitch_prediction_tool"].lower() == "snpfold":
@@ -103,7 +104,11 @@ else:
 #############################################
 final_input = []
 
-if config['null_seqs_only'] == False:
+if config['from_csv'] != "NA":
+    for temp in temperature_range:
+        final_input.append(f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions_csv/combined_ribosnitch_prediction_{temp}.txt")
+
+elif config['null_seqs_only'] == False:
     for temp in temperature_range:
         # If the user just wants the riboSNitch predictions without the null predictions
         if config["rbsn_only"] == True:
@@ -117,7 +122,7 @@ if config['null_seqs_only'] == False:
                 f"{config['working_directory']}/{config['out_name']}/results/null_model/combined_ribosnitch_prediction_null_{temp}.txt"
             )
 
-        elif conig['other_alts_only'] == True:
+        elif config['other_alts_only'] == True:
             final_input.append(
                 f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions_other_alts/combined_ribosnitch_prediction_{temp}.txt"
             )
@@ -142,6 +147,7 @@ prCyan("\t-" + "\n\t-".join(final_input))
 #######################
 #  --  Pipeline  --   #
 #######################
+
 rule all:
     input:
         final_input,
