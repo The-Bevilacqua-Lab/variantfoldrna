@@ -188,7 +188,8 @@ func getCDNA(transcriptID string, flankLength int, seqPath string, cdsPos string
 
 	// print("samtools", "faidx", seqPath, fmt.Sprintf("transcript:%s:%d-%d", transcriptID, pos-flankLength, pos+flankLength))
 	// println(fmt.Sprintf("%s:%s:%d-%d", transcriptPrefix, transcriptID, pos-flankLength, pos+flankLength))
-	cmd := exec.Command("samtools", "faidx", seqPath, fmt.Sprintf("%s:%s:%d-%d", transcriptPrefix, transcriptID, pos-flankLength, pos+flankLength))
+	// print(fmt.Sprintf("%s:%s:%d-%d", transcriptPrefix, transcriptID, pos-flankLength, pos+flankLength))
+	cmd := exec.Command("samtools", "faidx", seqPath, fmt.Sprintf("%s%s:%d-%d", transcriptPrefix, transcriptID, pos-flankLength, pos+flankLength))
 	output, _ := cmd.CombinedOutput()
 
 	if len(output) == 1 {
@@ -202,7 +203,7 @@ func getCDNA(transcriptID string, flankLength int, seqPath string, cdsPos string
 	joinedSeq := strings.Join(sequence, "")
 
 	// Chck to see if the extracted sequence is less than twice the flank length + 1
-	if len(joinedSeq) < (2*flankLength+1) || strings.Contains(joinedSeq, "transcript") || strings.Contains(joinedSeq, "transcript"){
+	if len(joinedSeq) < (2*flankLength+1) {
 		return ""
 	}
 

@@ -62,6 +62,11 @@ rule normalize:
     shell:
         "bcftools norm --check-ref s --fasta-ref {input.ref} --output-type v -o {output} {input.vcf} 2> {log}"
 
+if config['variant_class'] != "None":
+    grep_command = f" grep -v '##' | grep -v 'stream_gene_variant' | grep -v 'intergenic' | grep -v 'coding_sequence_variant' | grep {config['variant_class']} ",
+else:
+    grep_command = f" grep -v '##' | grep -v 'stream_gene_variant' | grep -v 'intergenic' | grep -v 'coding_sequence_variant' "
+
 rule vep:
     # Run VEP on the VCF file and output a TAB file with the annotations
     input:
@@ -72,12 +77,11 @@ rule vep:
     output:
         f"{config['working_directory']}/{config['out_name']}/temp/annotated_vcf_chunks_effects/vcf_no_header_{{i}}_annotated_one_per_line.txt",
     params:
-        f"{config['working_directory']}/{config['out_name']}/temp/annotated_vcf_chunks_effects/vcf_no_header_{{i}}_annotated_one_per_line_temp.txt",
+        output = f"{config['working_directory']}/{config['out_name']}/temp/annotated_vcf_chunks_effects/vcf_no_header_{{i}}_annotated_one_per_line_temp.txt",
+        grep_command = f"{grep_command}"
     singularity:
         "docker://ensemblorg/ensembl-vep:release_100.2"
     log:
         f"{config['working_directory']}/{config['out_name']}/logs/vep/vcf_no_header_{{i}}_annotated_one_per_line.log"
     shell:
-        f'vep -i {{input.vcf}} --{kind} {{input.annotation}} --fasta {{input.fasta}} -o {{params}} --force_overwrite --tab --fields "Location,REF_ALLELE,Allele,Consequence,Feature,cDNA_position,HGVSc,STRAND,CANONICAL" --hgvs --show_ref_allele --canonical 2> {{log}}   && cat {{params}} | grep -v "##" | grep -v "stream_gene_variant" | grep -v "intergenic" | grep -v "coding_sequence_variant" > {{output}}'
-
-
+        f'vep -i {{input.vcf}} --{kind} {{input.annotation}} --fasta {{input.fasta}} -o {{params.output}} --force_overwrite --tab --fields "Location,REF_ALLELE,Allele,Consequence,Feature,cDNA_position,HGVSc,STRAND,CANONICAL" --hgvs --show_ref_allele --canonical 2> {{log}}   && cat {{params.output}} | {{params.grep_command}}  > {{output}}'
