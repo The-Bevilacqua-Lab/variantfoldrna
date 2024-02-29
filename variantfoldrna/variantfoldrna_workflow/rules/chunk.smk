@@ -43,4 +43,4 @@ rule chunk_extracted_sequences:
     singularity:
         "docker://kjkirven/process_seq"
     shell:
-        f"workflow/bin/chunk_extracted_seqs -input {{input}} -dir {config['working_directory']}/{config['out_name']}/temp -chunk-total {config['chunks']}"
+        f"python3 workflow/scripts/chunk_extracted_seqs.py --input {{input}} --dir {config['working_directory']}/{config['out_name']}/temp --chunk-total {config['chunks']}"
