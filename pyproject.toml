@@ -17,7 +17,7 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-  "snakemake==7.25.4",
+  "snakemake==7.8.2",
   "pulp==2.7.0"
 ]
 
