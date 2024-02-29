@@ -42,8 +42,37 @@ rule combine_ribosnitch_results:
     log:
         f"{config['working_directory']}/{config['out_name']}/logs/combine_ribosnitch_results_{{temp_deg}}.log",
     shell:
-        "echo    'Chrom	Pos	Transcript_pos	Ref	Alt	Flank_left	Flank_right	Gene	Match	Type	Strand	Score' > {output} && cat {input} >> {output}"
+        "echo    'Chrom	Pos	Transcript_pos	Ref	Alt	Flank_left	Flank_right	Gene	Match	Type	Strand	Ref_dG	Alt_dG	Ref_ED	Alt_ED	Score' > {output} && cat {input} >> {output}"
 
+rule run_snpfold_from_csv:
+    # Perform the riboSNitch analysis with SNPFold
+    input:
+        f"{config['from_csv']}",
+    params:
+        f"{{temp_deg}}",
+    output:
+        ribo=f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions_csv/combined_ribosnitch_prediction_{{temp_deg}}.txt",
+    singularity:
+        "docker://kjkirven/snpfold:latest"
+    # log:
+    #     f"{config['working_directory']}/{config['out_name']}/logs/ribosnitch_prediction/chunk_{{i}}_riboSNitch_{{temp_deg}}.log",
+    shell:
+        f"python3 workflow/scripts/from_csv_snpfold.py --i {{input[0]}} --o {{output.ribo}} --temp {{params}}"
+
+
+# rule combine_ribosnitch_results_from_csv:
+#     # Combine the results of riboSNitch prediction into one file
+#     input:
+#         [
+#             f"{config['working_directory']}/{config['out_name']}/temp/ribosnitch_chunks_{{temp_deg}}/chunk_{i}_riboSNitch_{{temp_deg}}.txt"
+#             for i in range(1, config["chunks"] + 1)
+#         ],
+#     output:
+#         f"{config['working_directory']}/{config['out_name']}/results/ribosnitch_predictions/combined_ribosnitch_prediction_{{temp_deg}}.txt",
+#     log:
+#         f"{config['working_directory']}/{config['out_name']}/logs/combine_ribosnitch_results_{{temp_deg}}.log",
+#     shell:
+#         "echo    'Chrom	Pos	Transcript_pos	Ref	Alt	Flank_left	Flank_right	Gene	Match	Type	Strand	Ref_dG	Alt_dG	Ref_ED	Alt_ED	Score' > {output} && cat {input} >> {output}"
 
 # rule combine_ribosnitch_errors:
 #     # Combine the errors from riboSNitch prediction into one file
