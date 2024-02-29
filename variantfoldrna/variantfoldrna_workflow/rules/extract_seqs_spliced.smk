@@ -87,6 +87,17 @@ rule extract_cdna_from_gff_with_gffread:
     shell:
         f"gffread {{input.gff}} -g {{params.ref}} -w {{output}}"
 
+rule get_transcript_prefix:
+    # Get the prefix of the transcripts from the transcriptome 
+    input:
+        f"{config['working_directory']}/{config['out_name']}/temp/cdna.fa",
+    output:
+        f"{config['working_directory']}/{config['out_name']}/temp/transcript_prefix.txt",
+    singularity:
+        "docker://kjkirven/process_seq"
+    shell:
+        "python3 workflow/scripts/get_fa_prefix.py {input} {output}"
+
 rule get_cds_start:
     input:
         f"{config['working_directory']}/{config['out_name']}/temp/cdna.fa",
@@ -103,6 +114,7 @@ rule extract_spliced_sequences:
         cdna = f"{config['working_directory']}/{config['out_name']}/temp/cdna.fa",
         cdna_index = f"{config['working_directory']}/{config['out_name']}/temp/cdna.fa.fai",
         database=f"{config['working_directory']}/{config['out_name']}/temp/gffread_table.json",
+        transcript_prefix=f"{config['working_directory']}/{config['out_name']}/temp/transcript_prefix.txt",
     params:
         flank=config["flank_len"],
     output:
@@ -110,7 +122,7 @@ rule extract_spliced_sequences:
     singularity:
         "docker://kjkirven/process_seq"
     shell:
-        f"workflow/bin/get_spliced_read_data -vcf {{input.vcf}} -ref-seqs {{input.cdna}} -flank {{params.flank}} -gffread {{input.database}} -cds-pos {{input.cds_pos}} --o {{output.seqs}}"
+        f"workflow/bin/get_spliced_read_data -vcf {{input.vcf}} -ref-seqs {{input.cdna}} -flank {{params.flank}} -gffread {{input.database}} -cds-pos {{input.cds_pos}} --o {{output.seqs}} --transcript-prefix {{input.transcript_prefix}}"
 
 rule combine_extracted_sequences:
     # Combine the extracted sequences into one file
