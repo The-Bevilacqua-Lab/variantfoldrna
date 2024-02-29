@@ -76,6 +76,21 @@ rule complement_gene_model:
     shell:
         "bedtools complement -i {input.gff_file} -g {input.ref} > {output}"
 
+
+rule trim_intergenic_regions:
+    # trim the intergenic regions to avoid promoters 
+    input:
+        gene_model = f"{config['working_directory']}/{config['out_name']}/temp/gene_model_complement.bed"
+    output:
+        f"{config['working_directory']}/{config['out_name']}/temp/gene_model_complement_trimmed.bed"
+    log:
+        f"{config['working_directory']}/{config['out_name']}/logs/trim_intergenic_regions.log"
+    singularity:
+        "docker://kjkirven/process_seq"
+    shell:
+        "python3 workflow/scripts/trim_intergenic_regions.py --input {input.gene_model} --output {output}"
+
+
 rule bgzip_vcf:
     params:
         vcf_file = config["vcf_file"]
@@ -88,9 +103,30 @@ rule bgzip_vcf:
     shell:
         "bgzip {params.vcf_file} && tabix -p vcf {params.vcf_file}.gz"
 
+# rule null_separate:
+#     # Seperate multi-allelic variants
+#     input:
+#         vcf=f"{config['vcf_file']}.gz",
+#     output:
+#         f"{config['working_directory']}/{config['out_name']}/temp//vcf_normalized_seperated.vcf.gz",
+#     singularity:
+#         "docker://kjkirven/snpeff"
+#     shell:
+#         "vt decompose -s {input.vcf} > {output}"
+
+# rule change_compression:
+#     input:
+#         vcf=f"{config['working_directory']}/{config['out_name']}/temp//vcf_normalized_seperated.vcf.gz",
+#     output:
+#         f"{config['working_directory']}/{config['out_name']}/temp//vcf_normalized_seperated.vcf.bgz",
+#     singularity:
+#         "docker://kjkirven/snpeff"
+#     shell:
+#         "gzip -d -c {input.vcf} > {output} && tabix -p vcf {output} "
+
 rule intersect_vcf_with_gene_model:
     input:
-        gene_model = f"{config['working_directory']}/{config['out_name']}/temp/gene_model_complement.bed",
+        gene_model = f"{config['working_directory']}/{config['out_name']}/temp/gene_model_complement_trimmed.bed",
         vcf_file = f"{config['vcf_file']}.gz"
     output:
         f"{config['working_directory']}/{config['out_name']}/temp/intergenic_variants.vcf"
@@ -101,24 +137,24 @@ rule intersect_vcf_with_gene_model:
     shell:
         "bcftools view -R {input.gene_model} {input.vcf_file} > {output}"
 
-rule get_random_subset_of_variants:
-    input:
-        vcf_file = f"{config['working_directory']}/{config['out_name']}/temp/intergenic_variants.vcf"
-    output:
-        f"{config['working_directory']}/{config['out_name']}/temp/intergenic_variants_subset.vcf"
-    params:
-        subset_size = config["subset_size"]
-    log:
-        f"{config['working_directory']}/{config['out_name']}/logs/get_random_subset_of_variants.log"
-    singularity:
-        "docker://kjkirven/snpeff"
-    shell:  
-        "python3 workflow/scripts/get_random_subset_vcf.py --vcf {input.vcf_file} --output {output} --subset-size {params.subset_size}"
+# rule get_random_subset_of_variants:
+#     input:
+#         vcf_file = f"{config['working_directory']}/{config['out_name']}/temp/intergenic_variants.vcf"
+#     output:
+#         f"{config['working_directory']}/{config['out_name']}/temp/intergenic_variants_subset.vcf"
+#     params:
+#         subset_size = config["null_size"]
+#     log:
+#         f"{config['working_directory']}/{config['out_name']}/logs/get_random_subset_of_variants.log"
+#     singularity:
+#         "docker://kjkirven/snpeff"
+#     shell:  
+#         "python3 workflow/scripts/get_random_subset_vcf.py --vcf {input.vcf_file} --output {output} --subset-size {params.subset_size}"
 
 rule extract_flank_sequences_null:
     input:
         ref = config["ref_genome"],
-        vcf_file = f"{config['working_directory']}/{config['out_name']}/temp/intergenic_variants_subset.vcf"
+        vcf_file = f"{config['working_directory']}/{config['out_name']}/temp/intergenic_variants.vcf"
     output:
         f"{config['working_directory']}/{config['out_name']}/temp/intergenic_flank_seq.txt"
     log:
@@ -140,7 +176,7 @@ rule chunk_extracted_sequences_null:
     singularity:
         "docker://kjkirven/process_seq"
     shell:
-        f"python3 workflow/scripts/chunk_extracted_seqs.py --input {{input}} --dir {config['working_directory']}/{config['out_name']}/temp/null --chunk-total {config['chunks']}"
+        f"python3 workflow/scripts/chunk_extracted_seqs.py --input {{input}} --dir {config['working_directory']}/{config['out_name']}/temp/null --chunk-total {config['chunks']} --null"
         
 rule run_snpfold_null:
     # Perform the riboSNitch analysis with SNPFold
