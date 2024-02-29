@@ -11,10 +11,10 @@ def get_fa_prefix(fasta_file):
         # Get the first sequence
         record = next(SeqIO.parse(handle, "fasta"))
         # Get the prefix
-        prefix = record.id.split(":")[0]
+        prefix = record.id.split(":")[0] + ":"
 
-        # if len(record.id.split(":")) == 1:
-        #     prefix = ""
+        if len(record.id.split(":")) == 1:
+            prefix = ""
             
     # Return the prefix
     return prefix
