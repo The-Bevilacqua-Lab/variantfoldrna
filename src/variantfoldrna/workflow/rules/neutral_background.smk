@@ -22,9 +22,9 @@ rule get_bedtools_genome_file:
     params:
         ref=config["ref_genome"]
     output:
-        f"{config['working_directory']}/temp/genome_bedtools_file.txt"
+        f"{config['tmp_dir']}/temp/genome_bedtools_file.txt"
     log:
-        f"{config['working_directory']}/logs/get_bedtools_genome_file.log"
+        f"{config['tmp_dir']}/logs/get_bedtools_genome_file.log"
     singularity:
         "docker://kjkirven/process_seq"
     shell:
@@ -34,9 +34,9 @@ rule convert_gff_to_bed:
     input:
         gff = config["gff"]
     output:
-        f"{config['working_directory']}/temp/gene_model.bed"
+        f"{config['tmp_dir']}/temp/gene_model.bed"
     log:
-        f"{config['working_directory']}/logs/convert_gff_to_bed.log"
+        f"{config['tmp_dir']}/logs/convert_gff_to_bed.log"
     singularity:
         "docker://quay.io/biocontainers/agat:1.0.0--pl5321hdfd78af_0"
     shell:
@@ -44,11 +44,11 @@ rule convert_gff_to_bed:
 
 rule sort_gene_model_null:
     input:
-        gene_model = f"{config['working_directory']}/temp/gene_model.bed"
+        gene_model = f"{config['tmp_dir']}/temp/gene_model.bed"
     output:
-        f"{config['working_directory']}/temp/gene_model_sorted.bed"
+        f"{config['tmp_dir']}/temp/gene_model_sorted.bed"
     log:
-        f"{config['working_directory']}/logs/sort_gene_model.log"
+        f"{config['tmp_dir']}/logs/sort_gene_model.log"
     singularity:
         "docker://quay.io/staphb/bedtools"
     shell:
@@ -56,11 +56,11 @@ rule sort_gene_model_null:
 
 rule sort_genome_file:
     input:
-        ref = f"{config['working_directory']}/temp/genome_bedtools_file.txt"
+        ref = f"{config['tmp_dir']}/temp/genome_bedtools_file.txt"
     output:
-        f"{config['working_directory']}/temp/genome_bedtools_file_sorted.txt"
+        f"{config['tmp_dir']}/temp/genome_bedtools_file_sorted.txt"
     log:
-        f"{config['working_directory']}/logs/sort_genome_file.log"
+        f"{config['tmp_dir']}/logs/sort_genome_file.log"
     singularity:
         "docker://quay.io/staphb/bedtools"
     shell:
@@ -68,12 +68,12 @@ rule sort_genome_file:
 
 rule complement_gene_model:
     input:
-        ref = f"{config['working_directory']}/temp/genome_bedtools_file_sorted.txt",
-        gff = f"{config['working_directory']}/temp/gene_model_sorted.bed"
+        ref = f"{config['tmp_dir']}/temp/genome_bedtools_file_sorted.txt",
+        gff = f"{config['tmp_dir']}/temp/gene_model_sorted.bed"
     output:
-        f"{config['working_directory']}/temp/gene_model_complement.bed"
+        f"{config['tmp_dir']}/temp/gene_model_complement.bed"
     log:
-        f"{config['working_directory']}/logs/complement_gene_model.log"
+        f"{config['tmp_dir']}/logs/complement_gene_model.log"
     singularity:
         "docker://quay.io/staphb/bedtools"
     shell:
@@ -83,11 +83,11 @@ rule complement_gene_model:
 rule trim_intergenic_regions:
     # trim the intergenic regions to avoid promoters 
     input:
-        gene_model = f"{config['working_directory']}/temp/gene_model_complement.bed"
+        gene_model = f"{config['tmp_dir']}/temp/gene_model_complement.bed"
     output:
-        f"{config['working_directory']}/temp/gene_model_complement_trimmed.bed"
+        f"{config['tmp_dir']}/temp/gene_model_complement_trimmed.bed"
     log:
-        f"{config['working_directory']}/logs/trim_intergenic_regions.log"
+        f"{config['tmp_dir']}/logs/trim_intergenic_regions.log"
     singularity:
         "docker://kjkirven/process_seq"
     shell:
@@ -97,11 +97,11 @@ rule trim_intergenic_regions:
 rule bgzip_vcf:
     params:
         vcf = config["vcf"],
-        bgzip = f"{config['working_directory']}/temp/bgzip_{config['vcf']}"
+        bgzip = f"{config['tmp_dir']}/temp/bgzip_{config['vcf']}"
     output:
-        f"{config['working_directory']}/temp/bgzip_{config['vcf']}.gz"
+        f"{config['tmp_dir']}/temp/bgzip_{config['vcf']}.gz"
     log:
-        f"{config['working_directory']}/logs/bgzip_vcf.log"
+        f"{config['tmp_dir']}/logs/bgzip_vcf.log"
     singularity:
         "docker://kjkirven/snpeff"
     shell:
@@ -109,12 +109,12 @@ rule bgzip_vcf:
 
 rule intersect_vcf_with_gene_model:
     input:
-        gene_model = f"{config['working_directory']}/temp/gene_model_complement_trimmed.bed",
-        vcf = f"{config['working_directory']}/temp/bgzip_{config['vcf']}.gz"
+        gene_model = f"{config['tmp_dir']}/temp/gene_model_complement_trimmed.bed",
+        vcf = f"{config['tmp_dir']}/temp/bgzip_{config['vcf']}.gz"
     output:
-        f"{config['working_directory']}/temp/intergenic_variants.vcf"
+        f"{config['tmp_dir']}/temp/intergenic_variants.vcf"
     log:
-        f"{config['working_directory']}/logs/intersect_vcf_with_gene_model.log"
+        f"{config['tmp_dir']}/logs/intersect_vcf_with_gene_model.log"
     singularity:
         "docker://kjkirven/snpeff"
     shell:
@@ -123,11 +123,11 @@ rule intersect_vcf_with_gene_model:
 rule extract_flank_sequences_null:
     input:
         ref = config["ref_genome"],
-        vcf = f"{config['working_directory']}/temp/intergenic_variants.vcf"
+        vcf = f"{config['tmp_dir']}/temp/intergenic_variants.vcf"
     output:
-        f"{config['working_directory']}/temp/intergenic_flank_seq.txt"
+        f"{config['tmp_dir']}/temp/intergenic_flank_seq.txt"
     log:
-        f"{config['working_directory']}/logs/extract_flank_sequences.log"
+        f"{config['tmp_dir']}/logs/extract_flank_sequences.log"
     singularity:
         "docker://kjkirven/process_seq"
     shell:
@@ -135,11 +135,11 @@ rule extract_flank_sequences_null:
 
 rule get_bakground_mutation_rate:
     input:
-        f"{config['working_directory']}/temp/intergenic_flank_seq.txt"
+        f"{config['tmp_dir']}/temp/intergenic_flank_seq.txt"
     output:
-        f"{config['working_directory']}/temp/background_mutation_rate.txt"
+        f"{config['tmp_dir']}/temp/background_mutation_rate.txt"
     log:
-        f"{config['working_directory']}/logs/get_background_mutation_rate.log"
+        f"{config['tmp_dir']}/logs/get_background_mutation_rate.log"
     singularity:
         "docker://kjkirven/process_seq"
     shell:
