@@ -1,3 +1,0 @@
-[console_scripts]
-sparcs = workflow.main:main
-
