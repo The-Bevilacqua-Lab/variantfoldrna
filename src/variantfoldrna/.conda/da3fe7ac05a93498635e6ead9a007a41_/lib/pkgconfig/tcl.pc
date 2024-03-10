@@ -1,0 +1,16 @@
+# tcl pkg-config source file
+
+prefix=/scratch/kjk6173/variantfoldrna/src/variantfoldrna/.conda/da3fe7ac05a93498635e6ead9a007a41_
+exec_prefix=/scratch/kjk6173/variantfoldrna/src/variantfoldrna/.conda/da3fe7ac05a93498635e6ead9a007a41_
+libdir=/scratch/kjk6173/variantfoldrna/src/variantfoldrna/.conda/da3fe7ac05a93498635e6ead9a007a41_/lib
+includedir=${prefix}/include
+libfile=libtcl8.6.so
+
+Name: Tool Command Language
+Description: Tcl is a powerful, easy-to-learn dynamic programming language, suitable for a wide range of uses.
+URL: https://www.tcl-lang.org/
+Version: 8.6.13
+Requires.private: zlib >= 1.2.3
+Libs: -L${libdir} -ltcl8.6 -ltclstub8.6
+Libs.private: -ldl -lz  -lpthread -lm
+Cflags: -I${includedir}

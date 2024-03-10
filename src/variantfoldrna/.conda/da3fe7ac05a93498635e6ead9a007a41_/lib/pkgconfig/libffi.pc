@@ -1,0 +1,11 @@
+prefix=/scratch/kjk6173/variantfoldrna/src/variantfoldrna/.conda/da3fe7ac05a93498635e6ead9a007a41_
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+toolexeclibdir=${libdir}
+includedir=/scratch/kjk6173/variantfoldrna/src/variantfoldrna/.conda/da3fe7ac05a93498635e6ead9a007a41_/include
+
+Name: libffi
+Description: Library supporting Foreign Function Interfaces
+Version: 3.4.2
+Libs: -L${toolexeclibdir} -lffi
+Cflags: -I${includedir}

@@ -1,0 +1,11 @@
+prefix=/scratch/kjk6173/variantfoldrna/src/variantfoldrna/.conda/da3fe7ac05a93498635e6ead9a007a41_
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: History
+Description: Gnu History library for managing previously-entered lines
+URL: http://tiswww.cwru.edu/php/chet/readline/rltop.html
+Version: 8.2
+Libs: -L${libdir} -lhistory
+Cflags: -I${includedir}

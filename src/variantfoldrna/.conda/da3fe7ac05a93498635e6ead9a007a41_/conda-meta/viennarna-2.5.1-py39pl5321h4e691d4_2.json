@@ -1,0 +1,2318 @@
+{
+  "build": "py39pl5321h4e691d4_2",
+  "build_number": 2,
+  "channel": "https://conda.anaconda.org/bioconda/linux-64",
+  "constrains": [],
+  "depends": [
+    "libgcc-ng >=12",
+    "libstdcxx-ng >=12",
+    "libzlib >=1.2.13,<1.3.0a0",
+    "perl >=5.32.1,<5.33.0a0 *_perl5",
+    "python >=3.9,<3.10.0a0",
+    "python_abi 3.9.* *_cp39"
+  ],
+  "extracted_package_dir": "/tmp/conda/4758f1dc-1770-41f3-9e86-d575e8567125/viennarna-2.5.1-py39pl5321h4e691d4_2",
+  "features": "",
+  "files": [
+    "bin/AnalyseDists",
+    "bin/AnalyseSeqs",
+    "bin/Kinfold",
+    "bin/RNA2Dfold",
+    "bin/RNALalifold",
+    "bin/RNALfold",
+    "bin/RNAPKplex",
+    "bin/RNAaliduplex",
+    "bin/RNAalifold",
+    "bin/RNAcofold",
+    "bin/RNAdistance",
+    "bin/RNAdos",
+    "bin/RNAduplex",
+    "bin/RNAeval",
+    "bin/RNAfold",
+    "bin/RNAforester",
+    "bin/RNAheat",
+    "bin/RNAinverse",
+    "bin/RNAlocmin",
+    "bin/RNAmultifold",
+    "bin/RNApaln",
+    "bin/RNAparconv",
+    "bin/RNApdist",
+    "bin/RNAplex",
+    "bin/RNAplfold",
+    "bin/RNAplot",
+    "bin/RNApvmin",
+    "bin/RNAsnoop",
+    "bin/RNAsubopt",
+    "bin/RNAup",
+    "bin/b2ct",
+    "bin/ct2db",
+    "bin/kinwalker",
+    "bin/popt",
+    "include/ViennaRNA/2Dfold.h",
+    "include/ViennaRNA/2Dpfold.h",
+    "include/ViennaRNA/LPfold.h",
+    "include/ViennaRNA/Lfold.h",
+    "include/ViennaRNA/MEA.h",
+    "include/ViennaRNA/PKplex.h",
+    "include/ViennaRNA/PS_dot.h",
+    "include/ViennaRNA/ProfileAln.h",
+    "include/ViennaRNA/RNAstruct.h",
+    "include/ViennaRNA/ali_plex.h",
+    "include/ViennaRNA/alifold.h",
+    "include/ViennaRNA/aln_util.h",
+    "include/ViennaRNA/alphabet.h",
+    "include/ViennaRNA/boltzmann_sampling.h",
+    "include/ViennaRNA/centroid.h",
+    "include/ViennaRNA/char_stream.h",
+    "include/ViennaRNA/cofold.h",
+    "include/ViennaRNA/combinatorics.h",
+    "include/ViennaRNA/commands.h",
+    "include/ViennaRNA/concentrations.h",
+    "include/ViennaRNA/constraints.h",
+    "include/ViennaRNA/constraints/SHAPE.h",
+    "include/ViennaRNA/constraints/basic.h",
+    "include/ViennaRNA/constraints/hard.h",
+    "include/ViennaRNA/constraints/ligand.h",
+    "include/ViennaRNA/constraints/soft.h",
+    "include/ViennaRNA/constraints_SHAPE.h",
+    "include/ViennaRNA/constraints_hard.h",
+    "include/ViennaRNA/constraints_ligand.h",
+    "include/ViennaRNA/constraints_soft.h",
+    "include/ViennaRNA/convert_epars.h",
+    "include/ViennaRNA/data_structures.h",
+    "include/ViennaRNA/datastructures/basic.h",
+    "include/ViennaRNA/datastructures/char_stream.h",
+    "include/ViennaRNA/datastructures/hash_tables.h",
+    "include/ViennaRNA/datastructures/heap.h",
+    "include/ViennaRNA/datastructures/lists.h",
+    "include/ViennaRNA/datastructures/stream_output.h",
+    "include/ViennaRNA/dist_vars.h",
+    "include/ViennaRNA/dp_matrices.h",
+    "include/ViennaRNA/duplex.h",
+    "include/ViennaRNA/edit_cost.h",
+    "include/ViennaRNA/energy_const.h",
+    "include/ViennaRNA/energy_par.h",
+    "include/ViennaRNA/equilibrium_probs.h",
+    "include/ViennaRNA/eval.h",
+    "include/ViennaRNA/exterior_loops.h",
+    "include/ViennaRNA/file_formats.h",
+    "include/ViennaRNA/file_formats_msa.h",
+    "include/ViennaRNA/file_utils.h",
+    "include/ViennaRNA/findpath.h",
+    "include/ViennaRNA/fold.h",
+    "include/ViennaRNA/fold_compound.h",
+    "include/ViennaRNA/fold_vars.h",
+    "include/ViennaRNA/gquad.h",
+    "include/ViennaRNA/grammar.h",
+    "include/ViennaRNA/hairpin_loops.h",
+    "include/ViennaRNA/heat_capacity.h",
+    "include/ViennaRNA/interior_loops.h",
+    "include/ViennaRNA/inverse.h",
+    "include/ViennaRNA/io/file_formats.h",
+    "include/ViennaRNA/io/file_formats_msa.h",
+    "include/ViennaRNA/io/utils.h",
+    "include/ViennaRNA/json.h",
+    "include/ViennaRNA/landscape/findpath.h",
+    "include/ViennaRNA/landscape/move.h",
+    "include/ViennaRNA/landscape/neighbor.h",
+    "include/ViennaRNA/landscape/paths.h",
+    "include/ViennaRNA/landscape/walk.h",
+    "include/ViennaRNA/loop_energies.h",
+    "include/ViennaRNA/loops/all.h",
+    "include/ViennaRNA/loops/external.h",
+    "include/ViennaRNA/loops/hairpin.h",
+    "include/ViennaRNA/loops/internal.h",
+    "include/ViennaRNA/loops/multibranch.h",
+    "include/ViennaRNA/mfe.h",
+    "include/ViennaRNA/mfe_window.h",
+    "include/ViennaRNA/mm.h",
+    "include/ViennaRNA/model.h",
+    "include/ViennaRNA/move_set.h",
+    "include/ViennaRNA/multibranch_loops.h",
+    "include/ViennaRNA/naview.h",
+    "include/ViennaRNA/neighbor.h",
+    "include/ViennaRNA/pair_mat.h",
+    "include/ViennaRNA/params.h",
+    "include/ViennaRNA/params/basic.h",
+    "include/ViennaRNA/params/constants.h",
+    "include/ViennaRNA/params/convert.h",
+    "include/ViennaRNA/params/default.h",
+    "include/ViennaRNA/params/io.h",
+    "include/ViennaRNA/part_func.h",
+    "include/ViennaRNA/part_func_co.h",
+    "include/ViennaRNA/part_func_up.h",
+    "include/ViennaRNA/part_func_window.h",
+    "include/ViennaRNA/perturbation_fold.h",
+    "include/ViennaRNA/pf_multifold.h",
+    "include/ViennaRNA/pk_plex.h",
+    "include/ViennaRNA/plex.h",
+    "include/ViennaRNA/plot_aln.h",
+    "include/ViennaRNA/plot_layouts.h",
+    "include/ViennaRNA/plot_structure.h",
+    "include/ViennaRNA/plot_utils.h",
+    "include/ViennaRNA/plotting/RNApuzzler/RNApuzzler.h",
+    "include/ViennaRNA/plotting/RNApuzzler/RNAturtle.h",
+    "include/ViennaRNA/plotting/alignments.h",
+    "include/ViennaRNA/plotting/layouts.h",
+    "include/ViennaRNA/plotting/naview/naview.h",
+    "include/ViennaRNA/plotting/probabilities.h",
+    "include/ViennaRNA/plotting/structures.h",
+    "include/ViennaRNA/plotting/utils.h",
+    "include/ViennaRNA/profiledist.h",
+    "include/ViennaRNA/read_epars.h",
+    "include/ViennaRNA/ribo.h",
+    "include/ViennaRNA/search/BoyerMoore.h",
+    "include/ViennaRNA/sequence.h",
+    "include/ViennaRNA/snofold.h",
+    "include/ViennaRNA/snoop.h",
+    "include/ViennaRNA/stream_output.h",
+    "include/ViennaRNA/string_utils.h",
+    "include/ViennaRNA/stringdist.h",
+    "include/ViennaRNA/structure_utils.h",
+    "include/ViennaRNA/structured_domains.h",
+    "include/ViennaRNA/subopt.h",
+    "include/ViennaRNA/subopt_zuker.h",
+    "include/ViennaRNA/svm.h",
+    "include/ViennaRNA/svm_utils.h",
+    "include/ViennaRNA/treedist.h",
+    "include/ViennaRNA/units.h",
+    "include/ViennaRNA/unstructured_domains.h",
+    "include/ViennaRNA/utils.h",
+    "include/ViennaRNA/utils/alignments.h",
+    "include/ViennaRNA/utils/basic.h",
+    "include/ViennaRNA/utils/cpu.h",
+    "include/ViennaRNA/utils/higher_order_functions.h",
+    "include/ViennaRNA/utils/strings.h",
+    "include/ViennaRNA/utils/structures.h",
+    "include/ViennaRNA/utils/svm.h",
+    "include/ViennaRNA/utils/units.h",
+    "include/ViennaRNA/vrna_config.h",
+    "include/ViennaRNA/walk.h",
+    "include/ViennaRNA/wrap_dlib.h",
+    "include/ViennaRNA/zscore.h",
+    "include/g2.h",
+    "include/g2_FIG.h",
+    "include/g2_PS.h",
+    "lib/libRNA.a",
+    "lib/libg2.a",
+    "lib/perl5/5.32/site_perl/auto/RNA/RNA.so",
+    "lib/perl5/site_perl/RNA.pm",
+    "lib/perl5/site_perl/RNA/Benchmark.pm",
+    "lib/perl5/site_perl/RNA/Design.pm",
+    "lib/perl5/site_perl/RNA/Files.pm",
+    "lib/perl5/site_perl/RNA/Params.pm",
+    "lib/perl5/site_perl/RNA/Reliability.pm",
+    "lib/perl5/site_perl/RNA/Utils.pm",
+    "lib/pkgconfig/RNAlib2.pc",
+    "lib/python3.9/site-packages/RNA/_RNA.cpython-39-x86_64-linux-gnu.so",
+    "lib/python3.9/site-packages/RNA/__init__.py",
+    "lib/python3.9/site-packages/RNA/__pycache__/__init__.cpython-39.pyc",
+    "share/ViennaRNA/2Dlandscape.R",
+    "share/ViennaRNA/2Dlandscape_mfe.gri",
+    "share/ViennaRNA/2Dlandscape_pf.gri",
+    "share/ViennaRNA/DoxygenLayout.xml",
+    "share/ViennaRNA/bin/RNAdesign.pl",
+    "share/ViennaRNA/bin/b2mt.pl",
+    "share/ViennaRNA/bin/cmount.pl",
+    "share/ViennaRNA/bin/coloraln.pl",
+    "share/ViennaRNA/bin/dpzoom.pl",
+    "share/ViennaRNA/bin/mountain.pl",
+    "share/ViennaRNA/bin/refold.pl",
+    "share/ViennaRNA/bin/relplot.pl",
+    "share/ViennaRNA/bin/rotate_ss.pl",
+    "share/ViennaRNA/bin/switch.pl",
+    "share/ViennaRNA/dna_mathews1999.par",
+    "share/ViennaRNA/dna_mathews2004.par",
+    "share/ViennaRNA/examples/callback_subopt.c",
+    "share/ViennaRNA/examples/data/alignment_clustal.aln",
+    "share/ViennaRNA/examples/data/alignment_fasta.fa",
+    "share/ViennaRNA/examples/data/alignment_maf.maf",
+    "share/ViennaRNA/examples/data/alignment_stockholm.stk",
+    "share/ViennaRNA/examples/example1.c",
+    "share/ViennaRNA/examples/example_old.c",
+    "share/ViennaRNA/examples/fold_compound_md.c",
+    "share/ViennaRNA/examples/fold_compound_mfe.c",
+    "share/ViennaRNA/examples/helloworld_mfe.c",
+    "share/ViennaRNA/examples/helloworld_mfe_comparative.c",
+    "share/ViennaRNA/examples/helloworld_probabilities.c",
+    "share/ViennaRNA/examples/perl5/helloworld_mfe.pl",
+    "share/ViennaRNA/examples/perl5/helloworld_mfe_comparative.pl",
+    "share/ViennaRNA/examples/perl5/helloworld_nondefault.pl",
+    "share/ViennaRNA/examples/perl5/maximum_matching.pl",
+    "share/ViennaRNA/examples/perl5/oo_example1.pl",
+    "share/ViennaRNA/examples/python/RNAfold_MEA.py",
+    "share/ViennaRNA/examples/python/__pycache__/RNAfold_MEA.cpython-39.pyc",
+    "share/ViennaRNA/examples/python/__pycache__/boltzmann_sampling.cpython-39.pyc",
+    "share/ViennaRNA/examples/python/__pycache__/helloworld_mfe.cpython-39.pyc",
+    "share/ViennaRNA/examples/python/__pycache__/helloworld_mfe_comparative.cpython-39.pyc",
+    "share/ViennaRNA/examples/python/__pycache__/helloworld_nondefault.cpython-39.pyc",
+    "share/ViennaRNA/examples/python/__pycache__/maximum_matching.cpython-39.pyc",
+    "share/ViennaRNA/examples/python/__pycache__/oo_example1.cpython-39.pyc",
+    "share/ViennaRNA/examples/python/__pycache__/subopt.cpython-39.pyc",
+    "share/ViennaRNA/examples/python/boltzmann_sampling.py",
+    "share/ViennaRNA/examples/python/helloworld_mfe.py",
+    "share/ViennaRNA/examples/python/helloworld_mfe_comparative.py",
+    "share/ViennaRNA/examples/python/helloworld_nondefault.py",
+    "share/ViennaRNA/examples/python/maximum_matching.py",
+    "share/ViennaRNA/examples/python/oo_example1.py",
+    "share/ViennaRNA/examples/python/subopt.py",
+    "share/ViennaRNA/examples/soft_constraints_up.c",
+    "share/ViennaRNA/rna_andronescu2007.par",
+    "share/ViennaRNA/rna_langdon2018.par",
+    "share/ViennaRNA/rna_misc_special_hairpins.par",
+    "share/ViennaRNA/rna_turner1999.par",
+    "share/ViennaRNA/rna_turner2004.par",
+    "share/ViennaRNA/viennarna.bib",
+    "share/info/RNAlib.info",
+    "share/man/man1/AnalyseDists.1",
+    "share/man/man1/AnalyseSeqs.1",
+    "share/man/man1/Kinfold.1",
+    "share/man/man1/RNA2Dfold.1",
+    "share/man/man1/RNALalifold.1",
+    "share/man/man1/RNALfold.1",
+    "share/man/man1/RNAPKplex.1",
+    "share/man/man1/RNAaliduplex.1",
+    "share/man/man1/RNAalifold.1",
+    "share/man/man1/RNAcofold.1",
+    "share/man/man1/RNAdistance.1",
+    "share/man/man1/RNAdos.1",
+    "share/man/man1/RNAduplex.1",
+    "share/man/man1/RNAeval.1",
+    "share/man/man1/RNAfold.1",
+    "share/man/man1/RNAforester.1",
+    "share/man/man1/RNAheat.1",
+    "share/man/man1/RNAinverse.1",
+    "share/man/man1/RNAlocmin.1",
+    "share/man/man1/RNAmultifold.1",
+    "share/man/man1/RNApaln.1",
+    "share/man/man1/RNAparconv.1",
+    "share/man/man1/RNApdist.1",
+    "share/man/man1/RNAplex.1",
+    "share/man/man1/RNAplfold.1",
+    "share/man/man1/RNAplot.1",
+    "share/man/man1/RNApvmin.1",
+    "share/man/man1/RNAsnoop.1",
+    "share/man/man1/RNAsubopt.1",
+    "share/man/man1/RNAup.1",
+    "share/man/man1/ct2db.1",
+    "share/man/man1/kinwalker.1"
+  ],
+  "fn": "viennarna-2.5.1-py39pl5321h4e691d4_2.tar.bz2",
+  "license": "custom",
+  "link": {
+    "source": "/tmp/conda/4758f1dc-1770-41f3-9e86-d575e8567125/viennarna-2.5.1-py39pl5321h4e691d4_2",
+    "type": 1
+  },
+  "md5": "c8c50cb53f07a0c6e62ac2c9364d5aed",
+  "name": "viennarna",
+  "package_tarball_full_path": "/tmp/conda/4758f1dc-1770-41f3-9e86-d575e8567125/viennarna-2.5.1-py39pl5321h4e691d4_2.tar.bz2",
+  "paths_data": {
+    "paths": [
+      {
+        "_path": "bin/AnalyseDists",
+        "path_type": "hardlink",
+        "sha256": "e899a9da2b78d9ecbf382b661935ccbb7cab67a591551e42f1252e2cd53c99e6",
+        "sha256_in_prefix": "e899a9da2b78d9ecbf382b661935ccbb7cab67a591551e42f1252e2cd53c99e6",
+        "size_in_bytes": 35264
+      },
+      {
+        "_path": "bin/AnalyseSeqs",
+        "path_type": "hardlink",
+        "sha256": "9def509f09c69bd9252981fac259999c7304d1757298b193542b6796caf9b73e",
+        "sha256_in_prefix": "9def509f09c69bd9252981fac259999c7304d1757298b193542b6796caf9b73e",
+        "size_in_bytes": 65360
+      },
+      {
+        "_path": "bin/Kinfold",
+        "path_type": "hardlink",
+        "sha256": "e59ce48333089b441ec6c0f2ad688b70650642da9f331a6391582c8de232c326",
+        "sha256_in_prefix": "e59ce48333089b441ec6c0f2ad688b70650642da9f331a6391582c8de232c326",
+        "size_in_bytes": 2621608
+      },
+      {
+        "_path": "bin/RNA2Dfold",
+        "path_type": "hardlink",
+        "sha256": "d8e5e23e6465afe90eaa21d16bd8b935d276ed280ba3174b9232a0b44f58c6c5",
+        "sha256_in_prefix": "d8e5e23e6465afe90eaa21d16bd8b935d276ed280ba3174b9232a0b44f58c6c5",
+        "size_in_bytes": 2755296
+      },
+      {
+        "_path": "bin/RNALalifold",
+        "path_type": "hardlink",
+        "sha256": "b70d310c220532863fe73f9879b09304ffe9e77344ca006745dfabcc0d9cf9c3",
+        "sha256_in_prefix": "b70d310c220532863fe73f9879b09304ffe9e77344ca006745dfabcc0d9cf9c3",
+        "size_in_bytes": 2802928
+      },
+      {
+        "_path": "bin/RNALfold",
+        "path_type": "hardlink",
+        "sha256": "46059d7e05bf88d801d660f1c2a089476a3cdfe0ddb25e4157b336cad3d8d25c",
+        "sha256_in_prefix": "46059d7e05bf88d801d660f1c2a089476a3cdfe0ddb25e4157b336cad3d8d25c",
+        "size_in_bytes": 2814760
+      },
+      {
+        "_path": "bin/RNAPKplex",
+        "path_type": "hardlink",
+        "sha256": "3e394c398288ccefb2bb04c744d63b5857c29b4ff4467b6f86a93410fd7c320f",
+        "sha256_in_prefix": "3e394c398288ccefb2bb04c744d63b5857c29b4ff4467b6f86a93410fd7c320f",
+        "size_in_bytes": 2796264
+      },
+      {
+        "_path": "bin/RNAaliduplex",
+        "path_type": "hardlink",
+        "sha256": "8de2284225f08cb882652ab132cbf3aaa76d7305655f8dcc6de2a147e93342bb",
+        "sha256_in_prefix": "8de2284225f08cb882652ab132cbf3aaa76d7305655f8dcc6de2a147e93342bb",
+        "size_in_bytes": 2280592
+      },
+      {
+        "_path": "bin/RNAalifold",
+        "path_type": "hardlink",
+        "sha256": "70d9c4681c8cb4d60e060cf5b6e0a9a2a720760a1bc18e2946715a0059bf7c08",
+        "sha256_in_prefix": "70d9c4681c8cb4d60e060cf5b6e0a9a2a720760a1bc18e2946715a0059bf7c08",
+        "size_in_bytes": 3134320
+      },
+      {
+        "_path": "bin/RNAcofold",
+        "path_type": "hardlink",
+        "sha256": "c4cb34a12d05962a4a604b2099bed2d201b5f436afb158c6d83c21221b2cfd12",
+        "sha256_in_prefix": "c4cb34a12d05962a4a604b2099bed2d201b5f436afb158c6d83c21221b2cfd12",
+        "size_in_bytes": 3019928
+      },
+      {
+        "_path": "bin/RNAdistance",
+        "path_type": "hardlink",
+        "sha256": "893225aa4a31c26e8cd78cd25e6ab04a4dda24278ce7c7e8d0371faeb054f567",
+        "sha256_in_prefix": "893225aa4a31c26e8cd78cd25e6ab04a4dda24278ce7c7e8d0371faeb054f567",
+        "size_in_bytes": 64768
+      },
+      {
+        "_path": "bin/RNAdos",
+        "path_type": "hardlink",
+        "sha256": "a93dcd558e9255639b5e737a83ac9cb998ac090b660ac36fc19f0773f9c3853e",
+        "sha256_in_prefix": "a93dcd558e9255639b5e737a83ac9cb998ac090b660ac36fc19f0773f9c3853e",
+        "size_in_bytes": 2571688
+      },
+      {
+        "_path": "bin/RNAduplex",
+        "path_type": "hardlink",
+        "sha256": "d9a5a4a0019a0fd1cb3f50c5ba018f6cb87a1156311f198ea7ee019b90ae6e7c",
+        "sha256_in_prefix": "d9a5a4a0019a0fd1cb3f50c5ba018f6cb87a1156311f198ea7ee019b90ae6e7c",
+        "size_in_bytes": 2272960
+      },
+      {
+        "_path": "bin/RNAeval",
+        "path_type": "hardlink",
+        "sha256": "3398cb414d88800724e11b4c4b470f60139cea9a6a5e5a6218b6a281ef42e1b6",
+        "sha256_in_prefix": "3398cb414d88800724e11b4c4b470f60139cea9a6a5e5a6218b6a281ef42e1b6",
+        "size_in_bytes": 2482464
+      },
+      {
+        "_path": "bin/RNAfold",
+        "path_type": "hardlink",
+        "sha256": "58b64181cb904fc2d84d5f2aced04a49abaea12590ad11879bd3246c544af158",
+        "sha256_in_prefix": "58b64181cb904fc2d84d5f2aced04a49abaea12590ad11879bd3246c544af158",
+        "size_in_bytes": 3115440
+      },
+      {
+        "_path": "bin/RNAforester",
+        "path_type": "hardlink",
+        "sha256": "0b80a2798791cb167da8ccd9669b786aeac32dcafb34237ed2b79ea2f44e331d",
+        "sha256_in_prefix": "0b80a2798791cb167da8ccd9669b786aeac32dcafb34237ed2b79ea2f44e331d",
+        "size_in_bytes": 703064
+      },
+      {
+        "_path": "bin/RNAheat",
+        "path_type": "hardlink",
+        "sha256": "1eec95fd8c5e19d2897d0090726fad0b79e37fbcd0190e4c79e414b6a27e0efe",
+        "sha256_in_prefix": "1eec95fd8c5e19d2897d0090726fad0b79e37fbcd0190e4c79e414b6a27e0efe",
+        "size_in_bytes": 2785568
+      },
+      {
+        "_path": "bin/RNAinverse",
+        "path_type": "hardlink",
+        "sha256": "650e9b1299e15f7409cd9b5c0f339d0ca15bd9f489ab3dd4e299b21e55a59bce",
+        "sha256_in_prefix": "650e9b1299e15f7409cd9b5c0f339d0ca15bd9f489ab3dd4e299b21e55a59bce",
+        "size_in_bytes": 2833440
+      },
+      {
+        "_path": "bin/RNAlocmin",
+        "path_type": "hardlink",
+        "sha256": "aee1375ed614fa93863ae669a9d315e46beee8e8fe209ee3242e57414e879cfb",
+        "sha256_in_prefix": "aee1375ed614fa93863ae669a9d315e46beee8e8fe209ee3242e57414e879cfb",
+        "size_in_bytes": 2596080
+      },
+      {
+        "_path": "bin/RNAmultifold",
+        "path_type": "hardlink",
+        "sha256": "935bffbf852299ef5a954e2493714dd1785dd96ca1173a42bc72a4a050a6af34",
+        "sha256_in_prefix": "935bffbf852299ef5a954e2493714dd1785dd96ca1173a42bc72a4a050a6af34",
+        "size_in_bytes": 2967968
+      },
+      {
+        "_path": "bin/RNApaln",
+        "path_type": "hardlink",
+        "sha256": "c7c7a8e75964bd5739c2cc8cb98dd7b1bd009bb261f0893adf39a0923b645371",
+        "sha256_in_prefix": "c7c7a8e75964bd5739c2cc8cb98dd7b1bd009bb261f0893adf39a0923b645371",
+        "size_in_bytes": 2824376
+      },
+      {
+        "_path": "bin/RNAparconv",
+        "path_type": "hardlink",
+        "sha256": "55cb63cd9c8a3940e9882b9871083d19bc0a190c73ffc65aa27780fce9ba4c4e",
+        "sha256_in_prefix": "55cb63cd9c8a3940e9882b9871083d19bc0a190c73ffc65aa27780fce9ba4c4e",
+        "size_in_bytes": 2656184
+      },
+      {
+        "_path": "bin/RNApdist",
+        "path_type": "hardlink",
+        "sha256": "dc157fe15e59a601380eb5ceb0260f65190dc3cc6f8e51bbdeb072cf99bca1f2",
+        "sha256_in_prefix": "dc157fe15e59a601380eb5ceb0260f65190dc3cc6f8e51bbdeb072cf99bca1f2",
+        "size_in_bytes": 2540976
+      },
+      {
+        "_path": "bin/RNAplex",
+        "path_type": "hardlink",
+        "sha256": "e4d418484f0e7ffbb73bb35d967d8cec7a74697d8791d934d1d7f649d361f0ef",
+        "sha256_in_prefix": "e4d418484f0e7ffbb73bb35d967d8cec7a74697d8791d934d1d7f649d361f0ef",
+        "size_in_bytes": 2819760
+      },
+      {
+        "_path": "bin/RNAplfold",
+        "path_type": "hardlink",
+        "sha256": "9d17f1a242ef3b34308d5ab797524340dfb2c93849aa889a4eb593d4819745f5",
+        "sha256_in_prefix": "9d17f1a242ef3b34308d5ab797524340dfb2c93849aa889a4eb593d4819745f5",
+        "size_in_bytes": 2511688
+      },
+      {
+        "_path": "bin/RNAplot",
+        "path_type": "hardlink",
+        "sha256": "7c2ab64933735209fb812382cede84f9b1392899b19c2b631705eb42b1d2b90c",
+        "sha256_in_prefix": "7c2ab64933735209fb812382cede84f9b1392899b19c2b631705eb42b1d2b90c",
+        "size_in_bytes": 207952
+      },
+      {
+        "_path": "bin/RNApvmin",
+        "path_type": "hardlink",
+        "sha256": "aa3e212af2136a7e1b8f633ac6479520461dd8ec95f46b712adb61204312f10d",
+        "sha256_in_prefix": "aa3e212af2136a7e1b8f633ac6479520461dd8ec95f46b712adb61204312f10d",
+        "size_in_bytes": 2871928
+      },
+      {
+        "_path": "bin/RNAsnoop",
+        "path_type": "hardlink",
+        "sha256": "0e1a06b0462491410d73bf3bc5894b4ebb7cec3f82f41529e5f32f09b0b7ab93",
+        "sha256_in_prefix": "0e1a06b0462491410d73bf3bc5894b4ebb7cec3f82f41529e5f32f09b0b7ab93",
+        "size_in_bytes": 711800
+      },
+      {
+        "_path": "bin/RNAsubopt",
+        "path_type": "hardlink",
+        "sha256": "f4c869f1f8f8810ff2970fa0eab36d129dd1a9f01b594fb9810abf139239fd0c",
+        "sha256_in_prefix": "f4c869f1f8f8810ff2970fa0eab36d129dd1a9f01b594fb9810abf139239fd0c",
+        "size_in_bytes": 3033208
+      },
+      {
+        "_path": "bin/RNAup",
+        "path_type": "hardlink",
+        "sha256": "e128a68083e6b9022842091e5aa32523abd37cf4cdefe15a004d27af1a6d3eaa",
+        "sha256_in_prefix": "e128a68083e6b9022842091e5aa32523abd37cf4cdefe15a004d27af1a6d3eaa",
+        "size_in_bytes": 2853992
+      },
+      {
+        "_path": "bin/b2ct",
+        "path_type": "hardlink",
+        "sha256": "0abc24e66386b96d4ad79b1ae15ba05e2cf8e4cdb3f626532b6a12d1cd3e940f",
+        "sha256_in_prefix": "0abc24e66386b96d4ad79b1ae15ba05e2cf8e4cdb3f626532b6a12d1cd3e940f",
+        "size_in_bytes": 16632
+      },
+      {
+        "_path": "bin/ct2db",
+        "path_type": "hardlink",
+        "sha256": "ee54065244642f8e2b437eed04e540933ba6e782bbce362af1f031b3d8411ced",
+        "sha256_in_prefix": "ee54065244642f8e2b437eed04e540933ba6e782bbce362af1f031b3d8411ced",
+        "size_in_bytes": 474040
+      },
+      {
+        "_path": "bin/kinwalker",
+        "path_type": "hardlink",
+        "sha256": "d084acde357b68bc45fdd6cabeaecc271c9ddda01e1a55ca061b6fd2a88560c8",
+        "sha256_in_prefix": "d084acde357b68bc45fdd6cabeaecc271c9ddda01e1a55ca061b6fd2a88560c8",
+        "size_in_bytes": 1063232
+      },
+      {
+        "_path": "bin/popt",
+        "path_type": "hardlink",
+        "sha256": "cc7fd10029e794ed66bda8d4ca1751ae81dbb083748f4ed27a22260dce64a2cd",
+        "sha256_in_prefix": "cc7fd10029e794ed66bda8d4ca1751ae81dbb083748f4ed27a22260dce64a2cd",
+        "size_in_bytes": 17520
+      },
+      {
+        "_path": "include/ViennaRNA/2Dfold.h",
+        "path_type": "hardlink",
+        "sha256": "f5cb74c457cb983c909fb3ad2976a83b2088e47796e48214402e56b37c1c1296",
+        "sha256_in_prefix": "f5cb74c457cb983c909fb3ad2976a83b2088e47796e48214402e56b37c1c1296",
+        "size_in_bytes": 14799
+      },
+      {
+        "_path": "include/ViennaRNA/2Dpfold.h",
+        "path_type": "hardlink",
+        "sha256": "bf6a5b213c53316d3ea41f0a175c6a8b5126fa43d7a071ab743be28a66776f67",
+        "sha256_in_prefix": "bf6a5b213c53316d3ea41f0a175c6a8b5126fa43d7a071ab743be28a66776f67",
+        "size_in_bytes": 17527
+      },
+      {
+        "_path": "include/ViennaRNA/LPfold.h",
+        "path_type": "hardlink",
+        "sha256": "d9cfc0807d6dea63c05ebeeebc1c1e548ce417e2bb7bbc9a92ecd560a1de3382",
+        "sha256_in_prefix": "d9cfc0807d6dea63c05ebeeebc1c1e548ce417e2bb7bbc9a92ecd560a1de3382",
+        "size_in_bytes": 7219
+      },
+      {
+        "_path": "include/ViennaRNA/Lfold.h",
+        "path_type": "hardlink",
+        "sha256": "853d72625cc16be87115fb18fa39559dbe8a346b60383668204d2f77410d9d17",
+        "sha256_in_prefix": "853d72625cc16be87115fb18fa39559dbe8a346b60383668204d2f77410d9d17",
+        "size_in_bytes": 2129
+      },
+      {
+        "_path": "include/ViennaRNA/MEA.h",
+        "path_type": "hardlink",
+        "sha256": "b2b08983b0f058dbef2ba9a0ebb29f531dba42982035834aae6acf8773e704fa",
+        "sha256_in_prefix": "b2b08983b0f058dbef2ba9a0ebb29f531dba42982035834aae6acf8773e704fa",
+        "size_in_bytes": 4701
+      },
+      {
+        "_path": "include/ViennaRNA/PKplex.h",
+        "path_type": "hardlink",
+        "sha256": "6bd3857e3884bf6d3d035291ed48c6164ff8ffdb2b7e8ebf18316e952ac85452",
+        "sha256_in_prefix": "6bd3857e3884bf6d3d035291ed48c6164ff8ffdb2b7e8ebf18316e952ac85452",
+        "size_in_bytes": 1081
+      },
+      {
+        "_path": "include/ViennaRNA/PS_dot.h",
+        "path_type": "hardlink",
+        "sha256": "a2b45619e5350cc7b108dfa3f7f3a0dd6e9df188cbd521c5d49ecd1a81f0f859",
+        "sha256_in_prefix": "a2b45619e5350cc7b108dfa3f7f3a0dd6e9df188cbd521c5d49ecd1a81f0f859",
+        "size_in_bytes": 624
+      },
+      {
+        "_path": "include/ViennaRNA/ProfileAln.h",
+        "path_type": "hardlink",
+        "sha256": "9d5e06411ba03895278fcf9941f89cb511bfc6d67f58864e369ae7c3f6db527e",
+        "sha256_in_prefix": "9d5e06411ba03895278fcf9941f89cb511bfc6d67f58864e369ae7c3f6db527e",
+        "size_in_bytes": 391
+      },
+      {
+        "_path": "include/ViennaRNA/RNAstruct.h",
+        "path_type": "hardlink",
+        "sha256": "42a59c2dbdbb61bd4cd8b6568464e5a64ff2f83bdbb63f77c047c54e9d52a0fe",
+        "sha256_in_prefix": "42a59c2dbdbb61bd4cd8b6568464e5a64ff2f83bdbb63f77c047c54e9d52a0fe",
+        "size_in_bytes": 5556
+      },
+      {
+        "_path": "include/ViennaRNA/ali_plex.h",
+        "path_type": "hardlink",
+        "sha256": "5bb4571e8c03e9c175e281166ed257169fed029416670c918a8e937c4a25539c",
+        "sha256_in_prefix": "5bb4571e8c03e9c175e281166ed257169fed029416670c918a8e937c4a25539c",
+        "size_in_bytes": 1737
+      },
+      {
+        "_path": "include/ViennaRNA/alifold.h",
+        "path_type": "hardlink",
+        "sha256": "07e29c2ef38f28e2c64bd1b6a22e8663871e74a7bdf2bc9f1cb14f0379ad3290",
+        "sha256_in_prefix": "07e29c2ef38f28e2c64bd1b6a22e8663871e74a7bdf2bc9f1cb14f0379ad3290",
+        "size_in_bytes": 10915
+      },
+      {
+        "_path": "include/ViennaRNA/aln_util.h",
+        "path_type": "hardlink",
+        "sha256": "cccbe577f1a80296d07ef67d7b9abd017de8e9dac45df1927a46162faae8313e",
+        "sha256_in_prefix": "cccbe577f1a80296d07ef67d7b9abd017de8e9dac45df1927a46162faae8313e",
+        "size_in_bytes": 503
+      },
+      {
+        "_path": "include/ViennaRNA/alphabet.h",
+        "path_type": "hardlink",
+        "sha256": "b7a090bb76c44df005235f03e5c14f87427064d884ba8dcfd92d381591c572b4",
+        "sha256_in_prefix": "b7a090bb76c44df005235f03e5c14f87427064d884ba8dcfd92d381591c572b4",
+        "size_in_bytes": 3917
+      },
+      {
+        "_path": "include/ViennaRNA/boltzmann_sampling.h",
+        "path_type": "hardlink",
+        "sha256": "c12a080f068afdb532f7d65e8d329c1c65eef9247749afec72972fe6794b7f85",
+        "sha256_in_prefix": "c12a080f068afdb532f7d65e8d329c1c65eef9247749afec72972fe6794b7f85",
+        "size_in_bytes": 50810
+      },
+      {
+        "_path": "include/ViennaRNA/centroid.h",
+        "path_type": "hardlink",
+        "sha256": "8442bcb454ea57e5d0caaae3e0b15482f3ec20d35a28decb722ffcad186c496c",
+        "sha256_in_prefix": "8442bcb454ea57e5d0caaae3e0b15482f3ec20d35a28decb722ffcad186c496c",
+        "size_in_bytes": 4448
+      },
+      {
+        "_path": "include/ViennaRNA/char_stream.h",
+        "path_type": "hardlink",
+        "sha256": "55537a2253bf14b44524452969e79cef97c2f9f826f61a1c6190a8920c1ef759",
+        "sha256_in_prefix": "55537a2253bf14b44524452969e79cef97c2f9f826f61a1c6190a8920c1ef759",
+        "size_in_bytes": 585
+      },
+      {
+        "_path": "include/ViennaRNA/cofold.h",
+        "path_type": "hardlink",
+        "sha256": "07916f2aec9cdfd1f0213df46ae3f7ddb10d58834d950efe92efcffafa25609e",
+        "sha256_in_prefix": "07916f2aec9cdfd1f0213df46ae3f7ddb10d58834d950efe92efcffafa25609e",
+        "size_in_bytes": 6618
+      },
+      {
+        "_path": "include/ViennaRNA/combinatorics.h",
+        "path_type": "hardlink",
+        "sha256": "19bf73d2f536df1b35e47cdcc7853ee7245b6b2b3ae87c923c11aa2f0826e4b1",
+        "sha256_in_prefix": "19bf73d2f536df1b35e47cdcc7853ee7245b6b2b3ae87c923c11aa2f0826e4b1",
+        "size_in_bytes": 12007
+      },
+      {
+        "_path": "include/ViennaRNA/commands.h",
+        "path_type": "hardlink",
+        "sha256": "626ca76a32e25fb15567fa77b81e39d9cf8d8b263f5b2844bb5a7635c80b0451",
+        "sha256_in_prefix": "626ca76a32e25fb15567fa77b81e39d9cf8d8b263f5b2844bb5a7635c80b0451",
+        "size_in_bytes": 3898
+      },
+      {
+        "_path": "include/ViennaRNA/concentrations.h",
+        "path_type": "hardlink",
+        "sha256": "d3f98e81ea4f27615a828c34813f8cc3cc20673caa763819acd132404f46302f",
+        "sha256_in_prefix": "d3f98e81ea4f27615a828c34813f8cc3cc20673caa763819acd132404f46302f",
+        "size_in_bytes": 5062
+      },
+      {
+        "_path": "include/ViennaRNA/constraints.h",
+        "path_type": "hardlink",
+        "sha256": "0541d6b343c177793047c08abaf644adae5aed00b4fd4babc0065312c347dad9",
+        "sha256_in_prefix": "0541d6b343c177793047c08abaf644adae5aed00b4fd4babc0065312c347dad9",
+        "size_in_bytes": 670
+      },
+      {
+        "_path": "include/ViennaRNA/constraints/SHAPE.h",
+        "path_type": "hardlink",
+        "sha256": "9fb7e78eaf6f45b35acb3a0cadef86cce1dc17ed2c34b4f1dcab6549f2669844",
+        "sha256_in_prefix": "9fb7e78eaf6f45b35acb3a0cadef86cce1dc17ed2c34b4f1dcab6549f2669844",
+        "size_in_bytes": 8072
+      },
+      {
+        "_path": "include/ViennaRNA/constraints/basic.h",
+        "path_type": "hardlink",
+        "sha256": "b4bb89f9b6f30811ac8e5b9c874cf5044b858420aa3762fd8263a98684478968",
+        "sha256_in_prefix": "b4bb89f9b6f30811ac8e5b9c874cf5044b858420aa3762fd8263a98684478968",
+        "size_in_bytes": 16717
+      },
+      {
+        "_path": "include/ViennaRNA/constraints/hard.h",
+        "path_type": "hardlink",
+        "sha256": "cc16e75492562a1e83c04441b6104c636a306d4ae03e152f86b4442f563afb20",
+        "sha256_in_prefix": "cc16e75492562a1e83c04441b6104c636a306d4ae03e152f86b4442f563afb20",
+        "size_in_bytes": 26328
+      },
+      {
+        "_path": "include/ViennaRNA/constraints/ligand.h",
+        "path_type": "hardlink",
+        "sha256": "f1318a89717f0e008ae6f6a540458f39c0eae0614abcd3d686ac38e0c6966a47",
+        "sha256_in_prefix": "f1318a89717f0e008ae6f6a540458f39c0eae0614abcd3d686ac38e0c6966a47",
+        "size_in_bytes": 2288
+      },
+      {
+        "_path": "include/ViennaRNA/constraints/soft.h",
+        "path_type": "hardlink",
+        "sha256": "2075f6f068965947f55fc146e486e0b7530b99b7508b415670f2e38d4b0d068a",
+        "sha256_in_prefix": "2075f6f068965947f55fc146e486e0b7530b99b7508b415670f2e38d4b0d068a",
+        "size_in_bytes": 20200
+      },
+      {
+        "_path": "include/ViennaRNA/constraints_SHAPE.h",
+        "path_type": "hardlink",
+        "sha256": "0b71a6b378cb4308d67ddbf3a3367c182cde26b4d5d72b7a53ee3455b46723a4",
+        "sha256_in_prefix": "0b71a6b378cb4308d67ddbf3a3367c182cde26b4d5d72b7a53ee3455b46723a4",
+        "size_in_bytes": 531
+      },
+      {
+        "_path": "include/ViennaRNA/constraints_hard.h",
+        "path_type": "hardlink",
+        "sha256": "533c12e3b86c391f34cba5c1e1e130ca3c638249f25d35633d504bc10bd7a6b4",
+        "sha256_in_prefix": "533c12e3b86c391f34cba5c1e1e130ca3c638249f25d35633d504bc10bd7a6b4",
+        "size_in_bytes": 523
+      },
+      {
+        "_path": "include/ViennaRNA/constraints_ligand.h",
+        "path_type": "hardlink",
+        "sha256": "cd0291f47af525fa17ac3f0314c4ec65000b8bf35eb9ae8efb6e91bf2fe00dcf",
+        "sha256_in_prefix": "cd0291f47af525fa17ac3f0314c4ec65000b8bf35eb9ae8efb6e91bf2fe00dcf",
+        "size_in_bytes": 539
+      },
+      {
+        "_path": "include/ViennaRNA/constraints_soft.h",
+        "path_type": "hardlink",
+        "sha256": "eea11caa866c14416e5d66ca6e2c209412147765be31c1f65c190827cd6a3bd8",
+        "sha256_in_prefix": "eea11caa866c14416e5d66ca6e2c209412147765be31c1f65c190827cd6a3bd8",
+        "size_in_bytes": 523
+      },
+      {
+        "_path": "include/ViennaRNA/convert_epars.h",
+        "path_type": "hardlink",
+        "sha256": "2eb3ba60d020a51dcecba0eb62b37c81ed2f7a60b196e86f5aa63040df53fee3",
+        "sha256_in_prefix": "2eb3ba60d020a51dcecba0eb62b37c81ed2f7a60b196e86f5aa63040df53fee3",
+        "size_in_bytes": 515
+      },
+      {
+        "_path": "include/ViennaRNA/data_structures.h",
+        "path_type": "hardlink",
+        "sha256": "a3eca700841a8c5186380b9d5ad6bb357fa6e342dfac1932b8868afb62b3c119",
+        "sha256_in_prefix": "a3eca700841a8c5186380b9d5ad6bb357fa6e342dfac1932b8868afb62b3c119",
+        "size_in_bytes": 545
+      },
+      {
+        "_path": "include/ViennaRNA/datastructures/basic.h",
+        "path_type": "hardlink",
+        "sha256": "7ee33c03680c83858c79150620da5e20d25463bc2c4f068d95a7d912d19b43a3",
+        "sha256_in_prefix": "7ee33c03680c83858c79150620da5e20d25463bc2c4f068d95a7d912d19b43a3",
+        "size_in_bytes": 8847
+      },
+      {
+        "_path": "include/ViennaRNA/datastructures/char_stream.h",
+        "path_type": "hardlink",
+        "sha256": "66cc8a302814f60b26c57626d2958e44ee99a53346f16da509558f5141a1025a",
+        "sha256_in_prefix": "66cc8a302814f60b26c57626d2958e44ee99a53346f16da509558f5141a1025a",
+        "size_in_bytes": 8002
+      },
+      {
+        "_path": "include/ViennaRNA/datastructures/hash_tables.h",
+        "path_type": "hardlink",
+        "sha256": "1ac8cb14645ee6dce3ff1b6c655a91d451c2b9c13587e84a493256944f6e9733",
+        "sha256_in_prefix": "1ac8cb14645ee6dce3ff1b6c655a91d451c2b9c13587e84a493256944f6e9733",
+        "size_in_bytes": 8291
+      },
+      {
+        "_path": "include/ViennaRNA/datastructures/heap.h",
+        "path_type": "hardlink",
+        "sha256": "77128c968746408ef8d17241ff83ca3e0f66d36a18a21afcb31caa2cb8cf57f9",
+        "sha256_in_prefix": "77128c968746408ef8d17241ff83ca3e0f66d36a18a21afcb31caa2cb8cf57f9",
+        "size_in_bytes": 8308
+      },
+      {
+        "_path": "include/ViennaRNA/datastructures/lists.h",
+        "path_type": "hardlink",
+        "sha256": "9e0295fc3b9eef61f8d4a0a0abcd4d267995140a126889c29f3614f574f8affc",
+        "sha256_in_prefix": "9e0295fc3b9eef61f8d4a0a0abcd4d267995140a126889c29f3614f574f8affc",
+        "size_in_bytes": 1767
+      },
+      {
+        "_path": "include/ViennaRNA/datastructures/stream_output.h",
+        "path_type": "hardlink",
+        "sha256": "b4453041bb65fcc351949743b4e6c39bbed4b8e48355ad687c798b95a9236885",
+        "sha256_in_prefix": "b4453041bb65fcc351949743b4e6c39bbed4b8e48355ad687c798b95a9236885",
+        "size_in_bytes": 3121
+      },
+      {
+        "_path": "include/ViennaRNA/dist_vars.h",
+        "path_type": "hardlink",
+        "sha256": "4cfd1e19187c7db8cef773278f30f38222c4ff0dec4d6cda8358a4767525a6c1",
+        "sha256_in_prefix": "4cfd1e19187c7db8cef773278f30f38222c4ff0dec4d6cda8358a4767525a6c1",
+        "size_in_bytes": 1469
+      },
+      {
+        "_path": "include/ViennaRNA/dp_matrices.h",
+        "path_type": "hardlink",
+        "sha256": "19bd1c7e8c524e75cfb248728924493db1e6f70235f078333b7570317f2798a1",
+        "sha256_in_prefix": "19bd1c7e8c524e75cfb248728924493db1e6f70235f078333b7570317f2798a1",
+        "size_in_bytes": 12186
+      },
+      {
+        "_path": "include/ViennaRNA/duplex.h",
+        "path_type": "hardlink",
+        "sha256": "7f0afa0893a23dc03c1f63795de33f05e4afb0dafa16da5fef513ea90bb71c13",
+        "sha256_in_prefix": "7f0afa0893a23dc03c1f63795de33f05e4afb0dafa16da5fef513ea90bb71c13",
+        "size_in_bytes": 791
+      },
+      {
+        "_path": "include/ViennaRNA/edit_cost.h",
+        "path_type": "hardlink",
+        "sha256": "1620283e6f1c2a8b759d8c86bb4527af49658cafaeeca2db57cf8e8e53a26967",
+        "sha256_in_prefix": "1620283e6f1c2a8b759d8c86bb4527af49658cafaeeca2db57cf8e8e53a26967",
+        "size_in_bytes": 3226
+      },
+      {
+        "_path": "include/ViennaRNA/energy_const.h",
+        "path_type": "hardlink",
+        "sha256": "fb0d0a2c9f115e6b774c52acccd7af731b5103d0172fdbda1b06c6ee7c8a2bd7",
+        "sha256_in_prefix": "fb0d0a2c9f115e6b774c52acccd7af731b5103d0172fdbda1b06c6ee7c8a2bd7",
+        "size_in_bytes": 525
+      },
+      {
+        "_path": "include/ViennaRNA/energy_par.h",
+        "path_type": "hardlink",
+        "sha256": "882cd4d75119bec662bf57d08267607f13310e2bf00f8f9f738ea7a7b71c9bc1",
+        "sha256_in_prefix": "882cd4d75119bec662bf57d08267607f13310e2bf00f8f9f738ea7a7b71c9bc1",
+        "size_in_bytes": 509
+      },
+      {
+        "_path": "include/ViennaRNA/equilibrium_probs.h",
+        "path_type": "hardlink",
+        "sha256": "6cc4499f41c9ac996ebbf155fd04b8c534b6b3dd8ae1d3f3d58940dcf1ce5636",
+        "sha256_in_prefix": "6cc4499f41c9ac996ebbf155fd04b8c534b6b3dd8ae1d3f3d58940dcf1ce5636",
+        "size_in_bytes": 10354
+      },
+      {
+        "_path": "include/ViennaRNA/eval.h",
+        "path_type": "hardlink",
+        "sha256": "b2864c33e49d702cfdf595a3747ec2572979a466d794ceb4dc2ab6fe178caceb",
+        "sha256_in_prefix": "b2864c33e49d702cfdf595a3747ec2572979a466d794ceb4dc2ab6fe178caceb",
+        "size_in_bytes": 56157
+      },
+      {
+        "_path": "include/ViennaRNA/exterior_loops.h",
+        "path_type": "hardlink",
+        "sha256": "cdda09068e1661b950d6fa063ece0d7024bebf654898273cb54121e778fcd8d0",
+        "sha256_in_prefix": "cdda09068e1661b950d6fa063ece0d7024bebf654898273cb54121e778fcd8d0",
+        "size_in_bytes": 517
+      },
+      {
+        "_path": "include/ViennaRNA/file_formats.h",
+        "path_type": "hardlink",
+        "sha256": "6a67d53b762a379e497f7ea5cca8b3e81e76bcf63f4d29753d84b41bb1c12a40",
+        "sha256_in_prefix": "6a67d53b762a379e497f7ea5cca8b3e81e76bcf63f4d29753d84b41bb1c12a40",
+        "size_in_bytes": 556
+      },
+      {
+        "_path": "include/ViennaRNA/file_formats_msa.h",
+        "path_type": "hardlink",
+        "sha256": "1eb765a2da5ad9f1145e7c229537adfc23566284e1ac270dfeeaeff99aefd3ae",
+        "sha256_in_prefix": "1eb765a2da5ad9f1145e7c229537adfc23566284e1ac270dfeeaeff99aefd3ae",
+        "size_in_bytes": 545
+      },
+      {
+        "_path": "include/ViennaRNA/file_utils.h",
+        "path_type": "hardlink",
+        "sha256": "bf2a6982cd8f59852b9d22ebfefa01ffcd3dc39ea4edc50c4df597b1754e507d",
+        "sha256_in_prefix": "bf2a6982cd8f59852b9d22ebfefa01ffcd3dc39ea4edc50c4df597b1754e507d",
+        "size_in_bytes": 477
+      },
+      {
+        "_path": "include/ViennaRNA/findpath.h",
+        "path_type": "hardlink",
+        "sha256": "b7bd3c4b68fd93c5c78df18d9f4859e91e615f17825dd7ad119ca1e73d6eac71",
+        "sha256_in_prefix": "b7bd3c4b68fd93c5c78df18d9f4859e91e615f17825dd7ad119ca1e73d6eac71",
+        "size_in_bytes": 509
+      },
+      {
+        "_path": "include/ViennaRNA/fold.h",
+        "path_type": "hardlink",
+        "sha256": "bbd9eb0e488f3b12b2c4a85a4624a1924c70123a9a3d73bf5c835be081255f4d",
+        "sha256_in_prefix": "bbd9eb0e488f3b12b2c4a85a4624a1924c70123a9a3d73bf5c835be081255f4d",
+        "size_in_bytes": 9547
+      },
+      {
+        "_path": "include/ViennaRNA/fold_compound.h",
+        "path_type": "hardlink",
+        "sha256": "33cbf40666972c6cc561b80ef38332570ed2fa512d29743cdc626dd6ba67e08e",
+        "sha256_in_prefix": "33cbf40666972c6cc561b80ef38332570ed2fa512d29743cdc626dd6ba67e08e",
+        "size_in_bytes": 27563
+      },
+      {
+        "_path": "include/ViennaRNA/fold_vars.h",
+        "path_type": "hardlink",
+        "sha256": "7baf610bf324fb88b9d025c273199c0d2c5a22ee000be28e6eaee780a2eba4ec",
+        "sha256_in_prefix": "7baf610bf324fb88b9d025c273199c0d2c5a22ee000be28e6eaee780a2eba4ec",
+        "size_in_bytes": 2185
+      },
+      {
+        "_path": "include/ViennaRNA/gquad.h",
+        "path_type": "hardlink",
+        "sha256": "79954d7574b7385ab79b96b99c73428c2ed2dd35488f2197583c752e4f58b638",
+        "sha256_in_prefix": "79954d7574b7385ab79b96b99c73428c2ed2dd35488f2197583c752e4f58b638",
+        "size_in_bytes": 45050
+      },
+      {
+        "_path": "include/ViennaRNA/grammar.h",
+        "path_type": "hardlink",
+        "sha256": "3e4fc943b00649dc2f00a5d414224d1badd7c3dd00631899c9d3f5f00cdb581e",
+        "sha256_in_prefix": "3e4fc943b00649dc2f00a5d414224d1badd7c3dd00631899c9d3f5f00cdb581e",
+        "size_in_bytes": 3910
+      },
+      {
+        "_path": "include/ViennaRNA/hairpin_loops.h",
+        "path_type": "hardlink",
+        "sha256": "07c9fe9363a0edf2a20bafdb1f26598f5a6815d09146437fa57a83ebff5aff71",
+        "sha256_in_prefix": "07c9fe9363a0edf2a20bafdb1f26598f5a6815d09146437fa57a83ebff5aff71",
+        "size_in_bytes": 509
+      },
+      {
+        "_path": "include/ViennaRNA/heat_capacity.h",
+        "path_type": "hardlink",
+        "sha256": "3a7f19a3c4d0ec9b9cc8bfcc7229f8122eef47b09792518e29deb659531dbf80",
+        "sha256_in_prefix": "3a7f19a3c4d0ec9b9cc8bfcc7229f8122eef47b09792518e29deb659531dbf80",
+        "size_in_bytes": 8072
+      },
+      {
+        "_path": "include/ViennaRNA/interior_loops.h",
+        "path_type": "hardlink",
+        "sha256": "b97a3b3ea1072291e95f952eb659911f3cb86d68fb3d2c507d405a57d5d8745e",
+        "sha256_in_prefix": "b97a3b3ea1072291e95f952eb659911f3cb86d68fb3d2c507d405a57d5d8745e",
+        "size_in_bytes": 517
+      },
+      {
+        "_path": "include/ViennaRNA/inverse.h",
+        "path_type": "hardlink",
+        "sha256": "1b102f258ae9488828ab2a47bea785af8ac2c421535533200d690ac13233ffcb",
+        "sha256_in_prefix": "1b102f258ae9488828ab2a47bea785af8ac2c421535533200d690ac13233ffcb",
+        "size_in_bytes": 2366
+      },
+      {
+        "_path": "include/ViennaRNA/io/file_formats.h",
+        "path_type": "hardlink",
+        "sha256": "7a5ea67ea53f29777b04ca6887ebde15a548467e37066f4da8c3a35711d08bc4",
+        "sha256_in_prefix": "7a5ea67ea53f29777b04ca6887ebde15a548467e37066f4da8c3a35711d08bc4",
+        "size_in_bytes": 12269
+      },
+      {
+        "_path": "include/ViennaRNA/io/file_formats_msa.h",
+        "path_type": "hardlink",
+        "sha256": "658a96afe05d4b7ee35db34e6dd2d1eeacc8d1f6e79881308b6bd504ea097ff7",
+        "sha256_in_prefix": "658a96afe05d4b7ee35db34e6dd2d1eeacc8d1f6e79881308b6bd504ea097ff7",
+        "size_in_bytes": 11573
+      },
+      {
+        "_path": "include/ViennaRNA/io/utils.h",
+        "path_type": "hardlink",
+        "sha256": "2774070b37a2facf2919ef3b798f9ca46dabf01e81a36279cfb78952e282f560",
+        "sha256_in_prefix": "2774070b37a2facf2919ef3b798f9ca46dabf01e81a36279cfb78952e282f560",
+        "size_in_bytes": 3186
+      },
+      {
+        "_path": "include/ViennaRNA/json.h",
+        "path_type": "hardlink",
+        "sha256": "8e647e8960b76dd9b022132d9fb9aa115f07ba004ed41b7704add69fd8da5b66",
+        "sha256_in_prefix": "8e647e8960b76dd9b022132d9fb9aa115f07ba004ed41b7704add69fd8da5b66",
+        "size_in_bytes": 3492
+      },
+      {
+        "_path": "include/ViennaRNA/landscape/findpath.h",
+        "path_type": "hardlink",
+        "sha256": "153ae0e0bf39b7608fa075537e873ba70a27aa7e6900b2c80227ad41f375098e",
+        "sha256_in_prefix": "153ae0e0bf39b7608fa075537e873ba70a27aa7e6900b2c80227ad41f375098e",
+        "size_in_bytes": 8810
+      },
+      {
+        "_path": "include/ViennaRNA/landscape/move.h",
+        "path_type": "hardlink",
+        "sha256": "80a98b273b4e10edf3a426d606a8228459e9da602e0a82646292eb30500b71a1",
+        "sha256_in_prefix": "80a98b273b4e10edf3a426d606a8228459e9da602e0a82646292eb30500b71a1",
+        "size_in_bytes": 5547
+      },
+      {
+        "_path": "include/ViennaRNA/landscape/neighbor.h",
+        "path_type": "hardlink",
+        "sha256": "fc017896acbab4ecc56f1b69f0c82742798fc6a1cab193e9671685d99c00f049",
+        "sha256_in_prefix": "fc017896acbab4ecc56f1b69f0c82742798fc6a1cab193e9671685d99c00f049",
+        "size_in_bytes": 14836
+      },
+      {
+        "_path": "include/ViennaRNA/landscape/paths.h",
+        "path_type": "hardlink",
+        "sha256": "262df904b0efa1def2a63c63d768f0f00809f1232797bd20b551a02b158b1a05",
+        "sha256_in_prefix": "262df904b0efa1def2a63c63d768f0f00809f1232797bd20b551a02b158b1a05",
+        "size_in_bytes": 9834
+      },
+      {
+        "_path": "include/ViennaRNA/landscape/walk.h",
+        "path_type": "hardlink",
+        "sha256": "455f19ce0f865e58993da3323b907d8d81df5f93a0dfc4c59df2a54b96536897",
+        "sha256_in_prefix": "455f19ce0f865e58993da3323b907d8d81df5f93a0dfc4c59df2a54b96536897",
+        "size_in_bytes": 6323
+      },
+      {
+        "_path": "include/ViennaRNA/loop_energies.h",
+        "path_type": "hardlink",
+        "sha256": "f7c3814b4fd8ee549ee56a2511fdf39cf183a38efe60cdd1526024b92b1c1c40",
+        "sha256_in_prefix": "f7c3814b4fd8ee549ee56a2511fdf39cf183a38efe60cdd1526024b92b1c1c40",
+        "size_in_bytes": 485
+      },
+      {
+        "_path": "include/ViennaRNA/loops/all.h",
+        "path_type": "hardlink",
+        "sha256": "ed1ca9ae00c7a2793d3f6e1814d8a44b80a0611d91c98d954d55381ed2e89ea1",
+        "sha256_in_prefix": "ed1ca9ae00c7a2793d3f6e1814d8a44b80a0611d91c98d954d55381ed2e89ea1",
+        "size_in_bytes": 1038
+      },
+      {
+        "_path": "include/ViennaRNA/loops/external.h",
+        "path_type": "hardlink",
+        "sha256": "8dc25c8951d8cd7db46f30734c7c8a5b2ed325ab8a4cbd91001c82ae928313af",
+        "sha256_in_prefix": "8dc25c8951d8cd7db46f30734c7c8a5b2ed325ab8a4cbd91001c82ae928313af",
+        "size_in_bytes": 10783
+      },
+      {
+        "_path": "include/ViennaRNA/loops/hairpin.h",
+        "path_type": "hardlink",
+        "sha256": "c8f938eef849e1159fe13389e37234fb6f937d49c3ddc08663fa5f420b24c6b9",
+        "sha256_in_prefix": "c8f938eef849e1159fe13389e37234fb6f937d49c3ddc08663fa5f420b24c6b9",
+        "size_in_bytes": 10084
+      },
+      {
+        "_path": "include/ViennaRNA/loops/internal.h",
+        "path_type": "hardlink",
+        "sha256": "9e115e0c50a4bc6fcdc7f0f2b41ceb9c21e1d4e0842ccf5b2cf31dda16de4034",
+        "sha256_in_prefix": "9e115e0c50a4bc6fcdc7f0f2b41ceb9c21e1d4e0842ccf5b2cf31dda16de4034",
+        "size_in_bytes": 22241
+      },
+      {
+        "_path": "include/ViennaRNA/loops/multibranch.h",
+        "path_type": "hardlink",
+        "sha256": "e32a320acf179c1d7795362953b35a6ea1c53d32b919263eeab2de83da990c8e",
+        "sha256_in_prefix": "e32a320acf179c1d7795362953b35a6ea1c53d32b919263eeab2de83da990c8e",
+        "size_in_bytes": 7249
+      },
+      {
+        "_path": "include/ViennaRNA/mfe.h",
+        "path_type": "hardlink",
+        "sha256": "44ab725b1c9765a003ffb121404853df8cb41ccf065db5e6b90c6faacf3f6d3f",
+        "sha256_in_prefix": "44ab725b1c9765a003ffb121404853df8cb41ccf065db5e6b90c6faacf3f6d3f",
+        "size_in_bytes": 13111
+      },
+      {
+        "_path": "include/ViennaRNA/mfe_window.h",
+        "path_type": "hardlink",
+        "sha256": "e6aa8e3296390061267b561642ccd257fc4080e6f30c3cd5c26e950113db6b7f",
+        "sha256_in_prefix": "e6aa8e3296390061267b561642ccd257fc4080e6f30c3cd5c26e950113db6b7f",
+        "size_in_bytes": 10437
+      },
+      {
+        "_path": "include/ViennaRNA/mm.h",
+        "path_type": "hardlink",
+        "sha256": "9238abfa4c284542d63bb9f2386cf8811dcdcd5d2f7a8c71a90e421469c9618e",
+        "sha256_in_prefix": "9238abfa4c284542d63bb9f2386cf8811dcdcd5d2f7a8c71a90e421469c9618e",
+        "size_in_bytes": 807
+      },
+      {
+        "_path": "include/ViennaRNA/model.h",
+        "path_type": "hardlink",
+        "sha256": "9ced6c34ddca6d060cc3879b7e4e8595075ef7c7a48f0a74cbec870cb6a387d3",
+        "sha256_in_prefix": "9ced6c34ddca6d060cc3879b7e4e8595075ef7c7a48f0a74cbec870cb6a387d3",
+        "size_in_bytes": 34774
+      },
+      {
+        "_path": "include/ViennaRNA/move_set.h",
+        "path_type": "hardlink",
+        "sha256": "4a7d9a7c0f033fb6f67da99a4db16a046cb9e047489b356f6f5803e1793cddb4",
+        "sha256_in_prefix": "4a7d9a7c0f033fb6f67da99a4db16a046cb9e047489b356f6f5803e1793cddb4",
+        "size_in_bytes": 3312
+      },
+      {
+        "_path": "include/ViennaRNA/multibranch_loops.h",
+        "path_type": "hardlink",
+        "sha256": "6b758d46d8e881190ec28dafcef7f909ffba63f60a12c4e58b87700f80205997",
+        "sha256_in_prefix": "6b758d46d8e881190ec28dafcef7f909ffba63f60a12c4e58b87700f80205997",
+        "size_in_bytes": 541
+      },
+      {
+        "_path": "include/ViennaRNA/naview.h",
+        "path_type": "hardlink",
+        "sha256": "92dc3d52e957aff9a2ed99d6a115e9e32ae44aa80555dd2bb6ecfb6f96bc2f1c",
+        "sha256_in_prefix": "92dc3d52e957aff9a2ed99d6a115e9e32ae44aa80555dd2bb6ecfb6f96bc2f1c",
+        "size_in_bytes": 645
+      },
+      {
+        "_path": "include/ViennaRNA/neighbor.h",
+        "path_type": "hardlink",
+        "sha256": "ca81823b2b3254a54a1686cf4b5cabbbe7f09271beca045315693a9e75904ea6",
+        "sha256_in_prefix": "ca81823b2b3254a54a1686cf4b5cabbbe7f09271beca045315693a9e75904ea6",
+        "size_in_bytes": 547
+      },
+      {
+        "_path": "include/ViennaRNA/pair_mat.h",
+        "path_type": "hardlink",
+        "sha256": "3920f563a773f130ca537572e5df7c06b02217abdb0d7f49291a8af7221d37a7",
+        "sha256_in_prefix": "3920f563a773f130ca537572e5df7c06b02217abdb0d7f49291a8af7221d37a7",
+        "size_in_bytes": 4630
+      },
+      {
+        "_path": "include/ViennaRNA/params.h",
+        "path_type": "hardlink",
+        "sha256": "a6ffca8059fbb0d28bfab4955706aaac758ba8c306e05ee23e7d1b4468c1fd84",
+        "sha256_in_prefix": "a6ffca8059fbb0d28bfab4955706aaac758ba8c306e05ee23e7d1b4468c1fd84",
+        "size_in_bytes": 477
+      },
+      {
+        "_path": "include/ViennaRNA/params/basic.h",
+        "path_type": "hardlink",
+        "sha256": "4a6fedc513d3cadda2a2103e23728522dec606af8ee143014f470bf116ffb0a4",
+        "sha256_in_prefix": "4a6fedc513d3cadda2a2103e23728522dec606af8ee143014f470bf116ffb0a4",
+        "size_in_bytes": 20336
+      },
+      {
+        "_path": "include/ViennaRNA/params/constants.h",
+        "path_type": "hardlink",
+        "sha256": "1d76b68fd85f69bc2da9f930d2913090c7d3441c8961140243d6772a1c73eecb",
+        "sha256_in_prefix": "1d76b68fd85f69bc2da9f930d2913090c7d3441c8961140243d6772a1c73eecb",
+        "size_in_bytes": 771
+      },
+      {
+        "_path": "include/ViennaRNA/params/convert.h",
+        "path_type": "hardlink",
+        "sha256": "cd02ce254aef31ecb57019bf7d19ec01fc7149c47c876eca88da9a6a74656ec4",
+        "sha256_in_prefix": "cd02ce254aef31ecb57019bf7d19ec01fc7149c47c876eca88da9a6a74656ec4",
+        "size_in_bytes": 4777
+      },
+      {
+        "_path": "include/ViennaRNA/params/default.h",
+        "path_type": "hardlink",
+        "sha256": "d9be6b1c911ceb2f86d9149d43fa381f66041b90a6124ee93dde78eb9979a265",
+        "sha256_in_prefix": "d9be6b1c911ceb2f86d9149d43fa381f66041b90a6124ee93dde78eb9979a265",
+        "size_in_bytes": 4007
+      },
+      {
+        "_path": "include/ViennaRNA/params/io.h",
+        "path_type": "hardlink",
+        "sha256": "5f8c751e15229d36bf1ab50dd777f88be27bd0e61680ede567f338c7e9ba2e36",
+        "sha256_in_prefix": "5f8c751e15229d36bf1ab50dd777f88be27bd0e61680ede567f338c7e9ba2e36",
+        "size_in_bytes": 8932
+      },
+      {
+        "_path": "include/ViennaRNA/part_func.h",
+        "path_type": "hardlink",
+        "sha256": "1c3d71bfc5fb6e9795ff95dbe19832dac55a64ca65130f1d68687477fa67dcca",
+        "sha256_in_prefix": "1c3d71bfc5fb6e9795ff95dbe19832dac55a64ca65130f1d68687477fa67dcca",
+        "size_in_bytes": 32439
+      },
+      {
+        "_path": "include/ViennaRNA/part_func_co.h",
+        "path_type": "hardlink",
+        "sha256": "4069692a4cc70a0cce8e9243f4d4746ea70cfdbc120c1aca974615ae99bf57e9",
+        "sha256_in_prefix": "4069692a4cc70a0cce8e9243f4d4746ea70cfdbc120c1aca974615ae99bf57e9",
+        "size_in_bytes": 9344
+      },
+      {
+        "_path": "include/ViennaRNA/part_func_up.h",
+        "path_type": "hardlink",
+        "sha256": "2188137480315340d74c7c1d07faf39ecfa7f2890c3a993e000c1fbf98562b20",
+        "sha256_in_prefix": "2188137480315340d74c7c1d07faf39ecfa7f2890c3a993e000c1fbf98562b20",
+        "size_in_bytes": 5460
+      },
+      {
+        "_path": "include/ViennaRNA/part_func_window.h",
+        "path_type": "hardlink",
+        "sha256": "0dfe50972e3f4bef2c306d50c72a33621c97ff95944214ea4c2c313a00ff6287",
+        "sha256_in_prefix": "0dfe50972e3f4bef2c306d50c72a33621c97ff95944214ea4c2c313a00ff6287",
+        "size_in_bytes": 13843
+      },
+      {
+        "_path": "include/ViennaRNA/perturbation_fold.h",
+        "path_type": "hardlink",
+        "sha256": "a9b6dbe235c021ad433843f74fe3b12874dcf844f2d9be93454fd8d9ef885247",
+        "sha256_in_prefix": "a9b6dbe235c021ad433843f74fe3b12874dcf844f2d9be93454fd8d9ef885247",
+        "size_in_bytes": 7826
+      },
+      {
+        "_path": "include/ViennaRNA/pf_multifold.h",
+        "path_type": "hardlink",
+        "sha256": "d1b3641009182ebc7b648fff2ed4730f14663d2b038025119935a7b7a9b8e690",
+        "sha256_in_prefix": "d1b3641009182ebc7b648fff2ed4730f14663d2b038025119935a7b7a9b8e690",
+        "size_in_bytes": 203
+      },
+      {
+        "_path": "include/ViennaRNA/pk_plex.h",
+        "path_type": "hardlink",
+        "sha256": "1431ab91da83f64375baf04685c9a9678773183c9d0cbdd5670d6668a3e0d640",
+        "sha256_in_prefix": "1431ab91da83f64375baf04685c9a9678773183c9d0cbdd5670d6668a3e0d640",
+        "size_in_bytes": 8321
+      },
+      {
+        "_path": "include/ViennaRNA/plex.h",
+        "path_type": "hardlink",
+        "sha256": "7d504a6ffa50a3b044db4a7e4532b3f4cd00035ce8e70912d0a215bdddec5869",
+        "sha256_in_prefix": "7d504a6ffa50a3b044db4a7e4532b3f4cd00035ce8e70912d0a215bdddec5869",
+        "size_in_bytes": 2873
+      },
+      {
+        "_path": "include/ViennaRNA/plot_aln.h",
+        "path_type": "hardlink",
+        "sha256": "a0f0092db6c5f536fb61485b7de2bebf98cc826c025f14f8f8770ce7566aa874",
+        "sha256_in_prefix": "a0f0092db6c5f536fb61485b7de2bebf98cc826c025f14f8f8770ce7566aa874",
+        "size_in_bytes": 513
+      },
+      {
+        "_path": "include/ViennaRNA/plot_layouts.h",
+        "path_type": "hardlink",
+        "sha256": "05336145f5147044c3d4a4c1312cc02947186d7987cdf81eded91f8d68d2b2de",
+        "sha256_in_prefix": "05336145f5147044c3d4a4c1312cc02947186d7987cdf81eded91f8d68d2b2de",
+        "size_in_bytes": 517
+      },
+      {
+        "_path": "include/ViennaRNA/plot_structure.h",
+        "path_type": "hardlink",
+        "sha256": "f92d232b0e8cbfade64fd5f91743de395cc24397ef6bf8142023a88f810e28cb",
+        "sha256_in_prefix": "f92d232b0e8cbfade64fd5f91743de395cc24397ef6bf8142023a88f810e28cb",
+        "size_in_bytes": 537
+      },
+      {
+        "_path": "include/ViennaRNA/plot_utils.h",
+        "path_type": "hardlink",
+        "sha256": "73222e9a1d515f7efa1404dd7bfd879592f0eae19f484f59a3d7d0328fe11855",
+        "sha256_in_prefix": "73222e9a1d515f7efa1404dd7bfd879592f0eae19f484f59a3d7d0328fe11855",
+        "size_in_bytes": 501
+      },
+      {
+        "_path": "include/ViennaRNA/plotting/RNApuzzler/RNApuzzler.h",
+        "path_type": "hardlink",
+        "sha256": "4e9eea0d47e264605329ddcb8ac5051541a1bf00ca9f0a8b7607016109b984fb",
+        "sha256_in_prefix": "4e9eea0d47e264605329ddcb8ac5051541a1bf00ca9f0a8b7607016109b984fb",
+        "size_in_bytes": 5643
+      },
+      {
+        "_path": "include/ViennaRNA/plotting/RNApuzzler/RNAturtle.h",
+        "path_type": "hardlink",
+        "sha256": "be63a855fa4e9728a8ef57d6619d0cf5e67c8248677986f4df6918d930c49de8",
+        "sha256_in_prefix": "be63a855fa4e9728a8ef57d6619d0cf5e67c8248677986f4df6918d930c49de8",
+        "size_in_bytes": 3624
+      },
+      {
+        "_path": "include/ViennaRNA/plotting/alignments.h",
+        "path_type": "hardlink",
+        "sha256": "e1de16007f125aaca0c1618a5ee1bca01da38b3d1dc2e7043d51439ea31d6cd7",
+        "sha256_in_prefix": "e1de16007f125aaca0c1618a5ee1bca01da38b3d1dc2e7043d51439ea31d6cd7",
+        "size_in_bytes": 3675
+      },
+      {
+        "_path": "include/ViennaRNA/plotting/layouts.h",
+        "path_type": "hardlink",
+        "sha256": "5741e5ddeb9fb50b2051ec861f22ac0b5c8eec5faee34c8eafa566388d21e502",
+        "sha256_in_prefix": "5741e5ddeb9fb50b2051ec861f22ac0b5c8eec5faee34c8eafa566388d21e502",
+        "size_in_bytes": 21569
+      },
+      {
+        "_path": "include/ViennaRNA/plotting/naview/naview.h",
+        "path_type": "hardlink",
+        "sha256": "7ee1f249bcd3e0bcdd54e3e6b8d70fada2e7e9a0abeeb56946bcdc5dfe9cbbb8",
+        "sha256_in_prefix": "7ee1f249bcd3e0bcdd54e3e6b8d70fada2e7e9a0abeeb56946bcdc5dfe9cbbb8",
+        "size_in_bytes": 3904
+      },
+      {
+        "_path": "include/ViennaRNA/plotting/probabilities.h",
+        "path_type": "hardlink",
+        "sha256": "32eb0e7b6268d898daf1b259cced8b1f1a3ba9f23f75608f64e6c8583bfcae3a",
+        "sha256_in_prefix": "32eb0e7b6268d898daf1b259cced8b1f1a3ba9f23f75608f64e6c8583bfcae3a",
+        "size_in_bytes": 4814
+      },
+      {
+        "_path": "include/ViennaRNA/plotting/structures.h",
+        "path_type": "hardlink",
+        "sha256": "565852e40a3a25bdf63cd9c15f605d2fb70bd5e3045aefbc6030599d0f136869",
+        "sha256_in_prefix": "565852e40a3a25bdf63cd9c15f605d2fb70bd5e3045aefbc6030599d0f136869",
+        "size_in_bytes": 6816
+      },
+      {
+        "_path": "include/ViennaRNA/plotting/utils.h",
+        "path_type": "hardlink",
+        "sha256": "c13e5c46ccd41e651825be82ebcac5027abcdbc0839f92b79011f13b819e2f7a",
+        "sha256_in_prefix": "c13e5c46ccd41e651825be82ebcac5027abcdbc0839f92b79011f13b819e2f7a",
+        "size_in_bytes": 1516
+      },
+      {
+        "_path": "include/ViennaRNA/profiledist.h",
+        "path_type": "hardlink",
+        "sha256": "4ebfa3f8e21ccf3970de7c38e15787765f856d0990ef4bed0d4289dbcab61249",
+        "sha256_in_prefix": "4ebfa3f8e21ccf3970de7c38e15787765f856d0990ef4bed0d4289dbcab61249",
+        "size_in_bytes": 1835
+      },
+      {
+        "_path": "include/ViennaRNA/read_epars.h",
+        "path_type": "hardlink",
+        "sha256": "54079b18d46bfe4ee422b57ceb13b2f770dd4d723ce6f3aee7c4a7919bd768b4",
+        "sha256_in_prefix": "54079b18d46bfe4ee422b57ceb13b2f770dd4d723ce6f3aee7c4a7919bd768b4",
+        "size_in_bytes": 479
+      },
+      {
+        "_path": "include/ViennaRNA/ribo.h",
+        "path_type": "hardlink",
+        "sha256": "efbf78ed84fbb2a903bd550ce821364ae3e83dd0c5af9abacc8cfc73c29714f8",
+        "sha256_in_prefix": "efbf78ed84fbb2a903bd550ce821364ae3e83dd0c5af9abacc8cfc73c29714f8",
+        "size_in_bytes": 694
+      },
+      {
+        "_path": "include/ViennaRNA/search/BoyerMoore.h",
+        "path_type": "hardlink",
+        "sha256": "5725944da30e00eadabeb78c29af596e874e2f199f5e3d1a0b08d689387e2097",
+        "sha256_in_prefix": "5725944da30e00eadabeb78c29af596e874e2f199f5e3d1a0b08d689387e2097",
+        "size_in_bytes": 5217
+      },
+      {
+        "_path": "include/ViennaRNA/sequence.h",
+        "path_type": "hardlink",
+        "sha256": "4d18cd860428609f2ecbaef6a40d3e14e2160b0b6937d636f77ba2f208f839a3",
+        "sha256_in_prefix": "4d18cd860428609f2ecbaef6a40d3e14e2160b0b6937d636f77ba2f208f839a3",
+        "size_in_bytes": 2850
+      },
+      {
+        "_path": "include/ViennaRNA/snofold.h",
+        "path_type": "hardlink",
+        "sha256": "09afb323ec19ad4cbba78a4930ce555dd05f8009611774c9721efd027e70e1f9",
+        "sha256_in_prefix": "09afb323ec19ad4cbba78a4930ce555dd05f8009611774c9721efd027e70e1f9",
+        "size_in_bytes": 2073
+      },
+      {
+        "_path": "include/ViennaRNA/snoop.h",
+        "path_type": "hardlink",
+        "sha256": "21018ecbe75b7a4b7ea9125844aa3ea8547eed12f60c7bb1c1c0019bc097a4bf",
+        "sha256_in_prefix": "21018ecbe75b7a4b7ea9125844aa3ea8547eed12f60c7bb1c1c0019bc097a4bf",
+        "size_in_bytes": 10544
+      },
+      {
+        "_path": "include/ViennaRNA/stream_output.h",
+        "path_type": "hardlink",
+        "sha256": "32be7400f583806f4ae2b8ec3de7c55367f40ef4db0268867d02d070f3c45116",
+        "sha256_in_prefix": "32be7400f583806f4ae2b8ec3de7c55367f40ef4db0268867d02d070f3c45116",
+        "size_in_bytes": 601
+      },
+      {
+        "_path": "include/ViennaRNA/string_utils.h",
+        "path_type": "hardlink",
+        "sha256": "92ab09efc1d2a4a412d92328ea5a7e652f10d00ac6801166c0a1f85805e0a9b8",
+        "sha256_in_prefix": "92ab09efc1d2a4a412d92328ea5a7e652f10d00ac6801166c0a1f85805e0a9b8",
+        "size_in_bytes": 505
+      },
+      {
+        "_path": "include/ViennaRNA/stringdist.h",
+        "path_type": "hardlink",
+        "sha256": "fe62486ec8b7ac4a7efb7b711b8a6d03efc6a438cdab193253d9d4c07fe2fa42",
+        "sha256_in_prefix": "fe62486ec8b7ac4a7efb7b711b8a6d03efc6a438cdab193253d9d4c07fe2fa42",
+        "size_in_bytes": 571
+      },
+      {
+        "_path": "include/ViennaRNA/structure_utils.h",
+        "path_type": "hardlink",
+        "sha256": "2ba1b0b8ca3998302d429b87392129671d353510b20e40ae468c98510e3867fe",
+        "sha256_in_prefix": "2ba1b0b8ca3998302d429b87392129671d353510b20e40ae468c98510e3867fe",
+        "size_in_bytes": 529
+      },
+      {
+        "_path": "include/ViennaRNA/structured_domains.h",
+        "path_type": "hardlink",
+        "sha256": "0146973d681c5fbdba8d6b99cc066547323ccbadc083a55b44650fa2e730aad1",
+        "sha256_in_prefix": "0146973d681c5fbdba8d6b99cc066547323ccbadc083a55b44650fa2e730aad1",
+        "size_in_bytes": 859
+      },
+      {
+        "_path": "include/ViennaRNA/subopt.h",
+        "path_type": "hardlink",
+        "sha256": "258ce3a1b205f33452020a947ae2c4aa33902cab1dcd87f4c1d8ee81e5f125b7",
+        "sha256_in_prefix": "258ce3a1b205f33452020a947ae2c4aa33902cab1dcd87f4c1d8ee81e5f125b7",
+        "size_in_bytes": 8782
+      },
+      {
+        "_path": "include/ViennaRNA/subopt_zuker.h",
+        "path_type": "hardlink",
+        "sha256": "95f724834db3096e912e599e9b47ccafad612215eb5c74ba3ab141b6d8bbb3c7",
+        "sha256_in_prefix": "95f724834db3096e912e599e9b47ccafad612215eb5c74ba3ab141b6d8bbb3c7",
+        "size_in_bytes": 1256
+      },
+      {
+        "_path": "include/ViennaRNA/svm.h",
+        "path_type": "hardlink",
+        "sha256": "f056986607b671c6b74249d2d47684ce0d5050838382904afd6c55ab554effa8",
+        "sha256_in_prefix": "f056986607b671c6b74249d2d47684ce0d5050838382904afd6c55ab554effa8",
+        "size_in_bytes": 3381
+      },
+      {
+        "_path": "include/ViennaRNA/svm_utils.h",
+        "path_type": "hardlink",
+        "sha256": "8703b99b7d1cff8eb0f9824c213b54d668ed7f17108cddefcf4e3c9977bed2ff",
+        "sha256_in_prefix": "8703b99b7d1cff8eb0f9824c213b54d668ed7f17108cddefcf4e3c9977bed2ff",
+        "size_in_bytes": 477
+      },
+      {
+        "_path": "include/ViennaRNA/treedist.h",
+        "path_type": "hardlink",
+        "sha256": "1b46a283e484a4800eb19e258f50060cb55d1d6e52ed7531327d89e318818bd6",
+        "sha256_in_prefix": "1b46a283e484a4800eb19e258f50060cb55d1d6e52ed7531327d89e318818bd6",
+        "size_in_bytes": 814
+      },
+      {
+        "_path": "include/ViennaRNA/units.h",
+        "path_type": "hardlink",
+        "sha256": "44091cd7ad1af9013723ec223d87d45c09fd7759951366062b100b910027e47c",
+        "sha256_in_prefix": "44091cd7ad1af9013723ec223d87d45c09fd7759951366062b100b910027e47c",
+        "size_in_bytes": 469
+      },
+      {
+        "_path": "include/ViennaRNA/unstructured_domains.h",
+        "path_type": "hardlink",
+        "sha256": "d47004a54235a3b1ca73b4f0f12f96dbb7831ea6b774b80c8dab21426fca8486",
+        "sha256_in_prefix": "d47004a54235a3b1ca73b4f0f12f96dbb7831ea6b774b80c8dab21426fca8486",
+        "size_in_bytes": 23079
+      },
+      {
+        "_path": "include/ViennaRNA/utils.h",
+        "path_type": "hardlink",
+        "sha256": "3c3f8d2ea6643f6081d01f4622600347742a90d1e4a50944dd4f64bcf5c6c700",
+        "sha256_in_prefix": "3c3f8d2ea6643f6081d01f4622600347742a90d1e4a50944dd4f64bcf5c6c700",
+        "size_in_bytes": 610
+      },
+      {
+        "_path": "include/ViennaRNA/utils/alignments.h",
+        "path_type": "hardlink",
+        "sha256": "2fee7a5333c3d4b4fa0f19a7012f13317f886b73bcaa95cbbd2d514f78e9f1df",
+        "sha256_in_prefix": "2fee7a5333c3d4b4fa0f19a7012f13317f886b73bcaa95cbbd2d514f78e9f1df",
+        "size_in_bytes": 14509
+      },
+      {
+        "_path": "include/ViennaRNA/utils/basic.h",
+        "path_type": "hardlink",
+        "sha256": "a1013b8f7af50873a718ef1900c94d918f7c1b2ff9ae81f308b62a61281e919f",
+        "sha256_in_prefix": "a1013b8f7af50873a718ef1900c94d918f7c1b2ff9ae81f308b62a61281e919f",
+        "size_in_bytes": 14586
+      },
+      {
+        "_path": "include/ViennaRNA/utils/cpu.h",
+        "path_type": "hardlink",
+        "sha256": "8a2d74a35375225b0893aa66d6ff2f0449ace78d0348a2ccd9f46beb5b1e8b71",
+        "sha256_in_prefix": "8a2d74a35375225b0893aa66d6ff2f0449ace78d0348a2ccd9f46beb5b1e8b71",
+        "size_in_bytes": 459
+      },
+      {
+        "_path": "include/ViennaRNA/utils/higher_order_functions.h",
+        "path_type": "hardlink",
+        "sha256": "76b45dbc4bc505297baa0a731f5053518c9f53d9ddc0b566d0fa189b3c5ec59b",
+        "sha256_in_prefix": "76b45dbc4bc505297baa0a731f5053518c9f53d9ddc0b566d0fa189b3c5ec59b",
+        "size_in_bytes": 285
+      },
+      {
+        "_path": "include/ViennaRNA/utils/strings.h",
+        "path_type": "hardlink",
+        "sha256": "4f270342b96c3dd85edf593caa220d7cef4286d3c40827e35a4b976141fb5002",
+        "sha256_in_prefix": "4f270342b96c3dd85edf593caa220d7cef4286d3c40827e35a4b976141fb5002",
+        "size_in_bytes": 16184
+      },
+      {
+        "_path": "include/ViennaRNA/utils/structures.h",
+        "path_type": "hardlink",
+        "sha256": "9741bb19c0a3aefb3c1cb93f79a431f8c21e322914566c5473c86858f093b66b",
+        "sha256_in_prefix": "9741bb19c0a3aefb3c1cb93f79a431f8c21e322914566c5473c86858f093b66b",
+        "size_in_bytes": 44245
+      },
+      {
+        "_path": "include/ViennaRNA/utils/svm.h",
+        "path_type": "hardlink",
+        "sha256": "e0da337c7989b9313692dc4e446b2d5334192dc17c54c1ecfea246fc90182829",
+        "sha256_in_prefix": "e0da337c7989b9313692dc4e446b2d5334192dc17c54c1ecfea246fc90182829",
+        "size_in_bytes": 1120
+      },
+      {
+        "_path": "include/ViennaRNA/utils/units.h",
+        "path_type": "hardlink",
+        "sha256": "413554b32ddc686a28db1a82886b36fc687bd01d8802a5f36ba634060c71bc9b",
+        "sha256_in_prefix": "413554b32ddc686a28db1a82886b36fc687bd01d8802a5f36ba634060c71bc9b",
+        "size_in_bytes": 4693
+      },
+      {
+        "_path": "include/ViennaRNA/vrna_config.h",
+        "path_type": "hardlink",
+        "sha256": "a7ee7f108864e61d7bc489a136612027f15a89532970125319d07aaedecaba79",
+        "sha256_in_prefix": "a7ee7f108864e61d7bc489a136612027f15a89532970125319d07aaedecaba79",
+        "size_in_bytes": 1648
+      },
+      {
+        "_path": "include/ViennaRNA/walk.h",
+        "path_type": "hardlink",
+        "sha256": "f1bd6e4c47b4b1835fa8de944af9185e4ca356992efc294925f356c4dcda1680",
+        "sha256_in_prefix": "f1bd6e4c47b4b1835fa8de944af9185e4ca356992efc294925f356c4dcda1680",
+        "size_in_bytes": 519
+      },
+      {
+        "_path": "include/ViennaRNA/wrap_dlib.h",
+        "path_type": "hardlink",
+        "sha256": "10a4708dabed8ba7f5fc254c27515a1a2cdf17c6b3fc7ece4acd0ff4e4645101",
+        "sha256_in_prefix": "10a4708dabed8ba7f5fc254c27515a1a2cdf17c6b3fc7ece4acd0ff4e4645101",
+        "size_in_bytes": 437
+      },
+      {
+        "_path": "include/ViennaRNA/zscore.h",
+        "path_type": "hardlink",
+        "sha256": "dba1bd78eb0da236ad5b2106e128e03284a8a00d74fb10d98a075264c08ae953",
+        "sha256_in_prefix": "dba1bd78eb0da236ad5b2106e128e03284a8a00d74fb10d98a075264c08ae953",
+        "size_in_bytes": 1371
+      },
+      {
+        "_path": "include/g2.h",
+        "path_type": "hardlink",
+        "sha256": "aee841fb135b119765a7e433febd638ae8ef054d7a948d45a563b9889106c888",
+        "sha256_in_prefix": "aee841fb135b119765a7e433febd638ae8ef054d7a948d45a563b9889106c888",
+        "size_in_bytes": 5910
+      },
+      {
+        "_path": "include/g2_FIG.h",
+        "path_type": "hardlink",
+        "sha256": "b84db910d2aaad3f017604f66d0719e2d8e315042d5641f5861911f12199d602",
+        "sha256_in_prefix": "b84db910d2aaad3f017604f66d0719e2d8e315042d5641f5861911f12199d602",
+        "size_in_bytes": 1523
+      },
+      {
+        "_path": "include/g2_PS.h",
+        "path_type": "hardlink",
+        "sha256": "2b0ea709d789c20d61f38acc1253d236b3a14eb08eb0f1cbfda7c2048da8b64b",
+        "sha256_in_prefix": "2b0ea709d789c20d61f38acc1253d236b3a14eb08eb0f1cbfda7c2048da8b64b",
+        "size_in_bytes": 4127
+      },
+      {
+        "_path": "lib/libRNA.a",
+        "path_type": "hardlink",
+        "sha256": "75037a91804f814466644b6ccfadca20607633f58147189a817198f171a598c7",
+        "sha256_in_prefix": "75037a91804f814466644b6ccfadca20607633f58147189a817198f171a598c7",
+        "size_in_bytes": 10299428
+      },
+      {
+        "_path": "lib/libg2.a",
+        "path_type": "hardlink",
+        "sha256": "d305d278fbac69f40dc94660252a1ef6febd1fed7be3557a9942a326024d6847",
+        "sha256_in_prefix": "d305d278fbac69f40dc94660252a1ef6febd1fed7be3557a9942a326024d6847",
+        "size_in_bytes": 188112
+      },
+      {
+        "_path": "lib/perl5/5.32/site_perl/auto/RNA/RNA.so",
+        "path_type": "hardlink",
+        "sha256": "0135e0e56abe11525978f71c9160cb79966a642ee43184030d09c542b4cf1128",
+        "sha256_in_prefix": "0135e0e56abe11525978f71c9160cb79966a642ee43184030d09c542b4cf1128",
+        "size_in_bytes": 9250648
+      },
+      {
+        "_path": "lib/perl5/site_perl/RNA.pm",
+        "path_type": "hardlink",
+        "sha256": "9aab65776f0333d4fd8802daf3c6aecb3f8822c3da5938c445819922cf4b872a",
+        "sha256_in_prefix": "9aab65776f0333d4fd8802daf3c6aecb3f8822c3da5938c445819922cf4b872a",
+        "size_in_bytes": 110765
+      },
+      {
+        "_path": "lib/perl5/site_perl/RNA/Benchmark.pm",
+        "path_type": "hardlink",
+        "sha256": "67df47fa8ee386374a7aff7fbc04b9d9bc253174f73b16c82ee36b813c05cb09",
+        "sha256_in_prefix": "67df47fa8ee386374a7aff7fbc04b9d9bc253174f73b16c82ee36b813c05cb09",
+        "size_in_bytes": 14079
+      },
+      {
+        "_path": "lib/perl5/site_perl/RNA/Design.pm",
+        "path_type": "hardlink",
+        "sha256": "2d9fbad5a58d04d0ee699d520fec2703ad9fd5344cf4676f4a65b54b6ce0bb4e",
+        "sha256_in_prefix": "2d9fbad5a58d04d0ee699d520fec2703ad9fd5344cf4676f4a65b54b6ce0bb4e",
+        "size_in_bytes": 39458
+      },
+      {
+        "_path": "lib/perl5/site_perl/RNA/Files.pm",
+        "path_type": "hardlink",
+        "sha256": "61f2c2a5c31b8406fd4b0acda983e81fc5793c91c93366e33ac525316fb2b636",
+        "sha256_in_prefix": "61f2c2a5c31b8406fd4b0acda983e81fc5793c91c93366e33ac525316fb2b636",
+        "size_in_bytes": 4614
+      },
+      {
+        "_path": "lib/perl5/site_perl/RNA/Params.pm",
+        "path_type": "hardlink",
+        "sha256": "aec7dfba5b7fdb0de358ed084f1a0468eb6b8f85b6e9e6726738436ab91b2ea8",
+        "sha256_in_prefix": "aec7dfba5b7fdb0de358ed084f1a0468eb6b8f85b6e9e6726738436ab91b2ea8",
+        "size_in_bytes": 57391
+      },
+      {
+        "_path": "lib/perl5/site_perl/RNA/Reliability.pm",
+        "path_type": "hardlink",
+        "sha256": "bf5ba42ec188733ddce00281953cb39c9409c104f3950fd0fae5e313f1462687",
+        "sha256_in_prefix": "bf5ba42ec188733ddce00281953cb39c9409c104f3950fd0fae5e313f1462687",
+        "size_in_bytes": 1818
+      },
+      {
+        "_path": "lib/perl5/site_perl/RNA/Utils.pm",
+        "path_type": "hardlink",
+        "sha256": "eebf5b2f4ca66d2f1c162c91d8862eb4949c344b82485f64ed3a610a56622fbc",
+        "sha256_in_prefix": "eebf5b2f4ca66d2f1c162c91d8862eb4949c344b82485f64ed3a610a56622fbc",
+        "size_in_bytes": 8342
+      },
+      {
+        "_path": "lib/pkgconfig/RNAlib2.pc",
+        "file_mode": "text",
+        "path_type": "hardlink",
+        "prefix_placeholder": "/opt/conda/conda-bld/viennarna_1684220287012/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_pla",
+        "sha256": "2cad808278735114407e249b2bdeee87e9f1921eba8a59b9371499f21710b1a9",
+        "sha256_in_prefix": "c6092d1f6098067544c6f1d3494859659169ddaa27308ccc4465a9a1d71c2764",
+        "size_in_bytes": 615
+      },
+      {
+        "_path": "lib/python3.9/site-packages/RNA/_RNA.cpython-39-x86_64-linux-gnu.so",
+        "path_type": "hardlink",
+        "sha256": "a696110b6bbb3ca044e6b67df242fa760d0e249b11096b7f3afc5f62ef19d4b7",
+        "sha256_in_prefix": "a696110b6bbb3ca044e6b67df242fa760d0e249b11096b7f3afc5f62ef19d4b7",
+        "size_in_bytes": 9336856
+      },
+      {
+        "_path": "lib/python3.9/site-packages/RNA/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "5c8f3770c8507c8e5e8c7d725c58fe8d8dcbde07076f507aec9d9313a4d8ccc7",
+        "sha256_in_prefix": "5c8f3770c8507c8e5e8c7d725c58fe8d8dcbde07076f507aec9d9313a4d8ccc7",
+        "size_in_bytes": 169403
+      },
+      {
+        "_path": "lib/python3.9/site-packages/RNA/__pycache__/__init__.cpython-39.pyc",
+        "path_type": "hardlink",
+        "sha256": "4864fdb09a5199a8111c542c002c3f201d1889853186e6976d0b9a33b1778cb0",
+        "sha256_in_prefix": "4864fdb09a5199a8111c542c002c3f201d1889853186e6976d0b9a33b1778cb0",
+        "size_in_bytes": 225159
+      },
+      {
+        "_path": "share/ViennaRNA/2Dlandscape.R",
+        "path_type": "hardlink",
+        "sha256": "151ea7948dd5fd2e9131af5da2cb16d2fad4c88a8f8bde28c166bc7621a8911c",
+        "sha256_in_prefix": "151ea7948dd5fd2e9131af5da2cb16d2fad4c88a8f8bde28c166bc7621a8911c",
+        "size_in_bytes": 6307
+      },
+      {
+        "_path": "share/ViennaRNA/2Dlandscape_mfe.gri",
+        "path_type": "hardlink",
+        "sha256": "089f779184934c0506d5db52a363a494a1d64b4bed8993cab9a927044f0610cc",
+        "sha256_in_prefix": "089f779184934c0506d5db52a363a494a1d64b4bed8993cab9a927044f0610cc",
+        "size_in_bytes": 3969
+      },
+      {
+        "_path": "share/ViennaRNA/2Dlandscape_pf.gri",
+        "path_type": "hardlink",
+        "sha256": "dd46eac442df5b1d5ba50f1d3ed23057a39f130ee77559aed751eebc7400e775",
+        "sha256_in_prefix": "dd46eac442df5b1d5ba50f1d3ed23057a39f130ee77559aed751eebc7400e775",
+        "size_in_bytes": 3969
+      },
+      {
+        "_path": "share/ViennaRNA/DoxygenLayout.xml",
+        "path_type": "hardlink",
+        "sha256": "4ee0858eac126f65b8698f54a4510f69be5beaaac70d2f22ca39764fa1716c98",
+        "sha256_in_prefix": "4ee0858eac126f65b8698f54a4510f69be5beaaac70d2f22ca39764fa1716c98",
+        "size_in_bytes": 6503
+      },
+      {
+        "_path": "share/ViennaRNA/bin/RNAdesign.pl",
+        "file_mode": "text",
+        "path_type": "hardlink",
+        "prefix_placeholder": "/opt/conda/conda-bld/viennarna_1684220287012/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_pla",
+        "sha256": "4d35723ad4ace86e47465111b82de77fc3bb73b58af64f06d91d974857bcfbc6",
+        "sha256_in_prefix": "271bc96a03640e2f7ad8d003a350cc47e26a9be32e3c9c6beb8eea58544d3516",
+        "size_in_bytes": 14212
+      },
+      {
+        "_path": "share/ViennaRNA/bin/b2mt.pl",
+        "file_mode": "text",
+        "path_type": "hardlink",
+        "prefix_placeholder": "/opt/conda/conda-bld/viennarna_1684220287012/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_pla",
+        "sha256": "bca052bc324381b86362af859486df4064485cd0da83c6e0a0d8f36bf5bbc08f",
+        "sha256_in_prefix": "42fff442efa6765711a208bca2c8615078ad36b86e2d89dc13e871d2467cb86f",
+        "size_in_bytes": 1352
+      },
+      {
+        "_path": "share/ViennaRNA/bin/cmount.pl",
+        "file_mode": "text",
+        "path_type": "hardlink",
+        "prefix_placeholder": "/opt/conda/conda-bld/viennarna_1684220287012/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_pla",
+        "sha256": "324064593f101b1040a2b4846f956b3e19c3f50d2eeed8dec79dbaccac99f2a3",
+        "sha256_in_prefix": "7512147e51ed2c55f24ec9c4f7980d47ab3defc88f1dd805826f76cf7e155656",
+        "size_in_bytes": 3944
+      },
+      {
+        "_path": "share/ViennaRNA/bin/coloraln.pl",
+        "file_mode": "text",
+        "path_type": "hardlink",
+        "prefix_placeholder": "/opt/conda/conda-bld/viennarna_1684220287012/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_pla",
+        "sha256": "844187d2358f16134708457432158e6c3f1f2bfbe48cc800a7e64cd03f8346cc",
+        "sha256_in_prefix": "e1fec0f5676875f28efd6bfacbcc7bd231aed5507192ea2bbc0cb7de64aaa68c",
+        "size_in_bytes": 13885
+      },
+      {
+        "_path": "share/ViennaRNA/bin/dpzoom.pl",
+        "file_mode": "text",
+        "path_type": "hardlink",
+        "prefix_placeholder": "/opt/conda/conda-bld/viennarna_1684220287012/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_pla",
+        "sha256": "5d2e55f25bca79c8deea1dd1e6b3c36bc224781f1a03fd9ff6ec28ef088e871f",
+        "sha256_in_prefix": "6c51952b943919c2a16506e5e20150980360f41e3238b149b1221077d932191e",
+        "size_in_bytes": 2174
+      },
+      {
+        "_path": "share/ViennaRNA/bin/mountain.pl",
+        "file_mode": "text",
+        "path_type": "hardlink",
+        "prefix_placeholder": "/opt/conda/conda-bld/viennarna_1684220287012/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_pla",
+        "sha256": "7bb9f396ae9f75c807fc21340d9422df84e464fdfa7cc0d97f84f8877acfa66c",
+        "sha256_in_prefix": "d7b9b5d6048fdc9c266fd6a8e6a3a0f31014548c441c9fed6ed77d4c59496949",
+        "size_in_bytes": 4302
+      },
+      {
+        "_path": "share/ViennaRNA/bin/refold.pl",
+        "file_mode": "text",
+        "path_type": "hardlink",
+        "prefix_placeholder": "/opt/conda/conda-bld/viennarna_1684220287012/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_pla",
+        "sha256": "810e72cc97b4ddd8a03e1ef7ea529156a3fcad9e93b1ef401c414f8b55e39438",
+        "sha256_in_prefix": "35041f1e473e5405851dc9bf084a8608333f903152dc8d42afa95351635edee2",
+        "size_in_bytes": 8916
+      },
+      {
+        "_path": "share/ViennaRNA/bin/relplot.pl",
+        "file_mode": "text",
+        "path_type": "hardlink",
+        "prefix_placeholder": "/opt/conda/conda-bld/viennarna_1684220287012/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_pla",
+        "sha256": "ea68a2748a9ebf023a510a42a26d516c3608964e16e15503f624c75780e338f9",
+        "sha256_in_prefix": "0346cae5a74e5896135cc1bbb1232debc2dc1b9886feb6846e7e7524f58afbdd",
+        "size_in_bytes": 6590
+      },
+      {
+        "_path": "share/ViennaRNA/bin/rotate_ss.pl",
+        "file_mode": "text",
+        "path_type": "hardlink",
+        "prefix_placeholder": "/opt/conda/conda-bld/viennarna_1684220287012/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_pla",
+        "sha256": "eab4c27de6110a5dfbc6a83789a7013493732a4c0959a0ab414bb372718173b7",
+        "sha256_in_prefix": "dafa667309b6746ed3db7c88fd9bbcad8c9a37b0a8ecef16458ade195db33254",
+        "size_in_bytes": 3262
+      },
+      {
+        "_path": "share/ViennaRNA/bin/switch.pl",
+        "file_mode": "text",
+        "path_type": "hardlink",
+        "prefix_placeholder": "/opt/conda/conda-bld/viennarna_1684220287012/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_pla",
+        "sha256": "7311174b0a664a6dd9624bb6a653834c301bb611bf7339198ede71cc57796374",
+        "sha256_in_prefix": "ee18ecd5b8b8e93eb27a97bace82fe0ec5da54dbd718eb1ce602ee2137b6d546",
+        "size_in_bytes": 17997
+      },
+      {
+        "_path": "share/ViennaRNA/dna_mathews1999.par",
+        "path_type": "hardlink",
+        "sha256": "d94951904a99de3df14de82826731e68d89d37c6050f4e0f36957cd5f689063e",
+        "sha256_in_prefix": "d94951904a99de3df14de82826731e68d89d37c6050f4e0f36957cd5f689063e",
+        "size_in_bytes": 251648
+      },
+      {
+        "_path": "share/ViennaRNA/dna_mathews2004.par",
+        "path_type": "hardlink",
+        "sha256": "71e370178328e563ce8845c1477a369accf4a4bb5af96936978f25e1aa6c6ffb",
+        "sha256_in_prefix": "71e370178328e563ce8845c1477a369accf4a4bb5af96936978f25e1aa6c6ffb",
+        "size_in_bytes": 381156
+      },
+      {
+        "_path": "share/ViennaRNA/examples/callback_subopt.c",
+        "path_type": "hardlink",
+        "sha256": "ca2c6e9bfa01bfec9de1084e1ed1571e63d95a68546b93c83ad00faef0768e86",
+        "sha256_in_prefix": "ca2c6e9bfa01bfec9de1084e1ed1571e63d95a68546b93c83ad00faef0768e86",
+        "size_in_bytes": 1154
+      },
+      {
+        "_path": "share/ViennaRNA/examples/data/alignment_clustal.aln",
+        "path_type": "hardlink",
+        "sha256": "4abf267f028e6ec110d980bb5cde78c0fe7da6838fdc08efa406629762ee592b",
+        "sha256_in_prefix": "4abf267f028e6ec110d980bb5cde78c0fe7da6838fdc08efa406629762ee592b",
+        "size_in_bytes": 475
+      },
+      {
+        "_path": "share/ViennaRNA/examples/data/alignment_fasta.fa",
+        "path_type": "hardlink",
+        "sha256": "fb1771dced141b204e9d637f63b4b800eeb7a6bc946592170404438c67bd5fc3",
+        "sha256_in_prefix": "fb1771dced141b204e9d637f63b4b800eeb7a6bc946592170404438c67bd5fc3",
+        "size_in_bytes": 334
+      },
+      {
+        "_path": "share/ViennaRNA/examples/data/alignment_maf.maf",
+        "path_type": "hardlink",
+        "sha256": "7d0eee7a30f313f4c9e52683723961e711916f5da74cb67c00a67c359cf1f7ad",
+        "sha256_in_prefix": "7d0eee7a30f313f4c9e52683723961e711916f5da74cb67c00a67c359cf1f7ad",
+        "size_in_bytes": 1138
+      },
+      {
+        "_path": "share/ViennaRNA/examples/data/alignment_stockholm.stk",
+        "path_type": "hardlink",
+        "sha256": "6b037694c24b574cde03598f3fbc8c0b66d492df5513aee34e591e9532263781",
+        "sha256_in_prefix": "6b037694c24b574cde03598f3fbc8c0b66d492df5513aee34e591e9532263781",
+        "size_in_bytes": 1350
+      },
+      {
+        "_path": "share/ViennaRNA/examples/example1.c",
+        "path_type": "hardlink",
+        "sha256": "96628598ee3863f8b29fc9730431cdc195b0f94d4ed2054afc901b93ff62e691",
+        "sha256_in_prefix": "96628598ee3863f8b29fc9730431cdc195b0f94d4ed2054afc901b93ff62e691",
+        "size_in_bytes": 1711
+      },
+      {
+        "_path": "share/ViennaRNA/examples/example_old.c",
+        "path_type": "hardlink",
+        "sha256": "bf7f8bb21cec2edbd7c2663fd5a18e070e922c00558a96a870c3ff4e1f22c085",
+        "sha256_in_prefix": "bf7f8bb21cec2edbd7c2663fd5a18e070e922c00558a96a870c3ff4e1f22c085",
+        "size_in_bytes": 2786
+      },
+      {
+        "_path": "share/ViennaRNA/examples/fold_compound_md.c",
+        "path_type": "hardlink",
+        "sha256": "8001012d0eb3b1ad2c242b1a7fd69203a3a2de93defe6725b7c716c6f23a7c24",
+        "sha256_in_prefix": "8001012d0eb3b1ad2c242b1a7fd69203a3a2de93defe6725b7c716c6f23a7c24",
+        "size_in_bytes": 1310
+      },
+      {
+        "_path": "share/ViennaRNA/examples/fold_compound_mfe.c",
+        "path_type": "hardlink",
+        "sha256": "1b4f2c0ffb2e53cf63e1e4477d69121c7334f6e9cc396b7d832be69cd0644942",
+        "sha256_in_prefix": "1b4f2c0ffb2e53cf63e1e4477d69121c7334f6e9cc396b7d832be69cd0644942",
+        "size_in_bytes": 976
+      },
+      {
+        "_path": "share/ViennaRNA/examples/helloworld_mfe.c",
+        "path_type": "hardlink",
+        "sha256": "a680e55bb85b533bda2ec066bf9f81f93581c4fbce926bed5d3a5b9bc75ed53b",
+        "sha256_in_prefix": "a680e55bb85b533bda2ec066bf9f81f93581c4fbce926bed5d3a5b9bc75ed53b",
+        "size_in_bytes": 623
+      },
+      {
+        "_path": "share/ViennaRNA/examples/helloworld_mfe_comparative.c",
+        "path_type": "hardlink",
+        "sha256": "3c4f26af2d6af954929c439b7af59f699ced0d447597247935b1e377667d651a",
+        "sha256_in_prefix": "3c4f26af2d6af954929c439b7af59f699ced0d447597247935b1e377667d651a",
+        "size_in_bytes": 1010
+      },
+      {
+        "_path": "share/ViennaRNA/examples/helloworld_probabilities.c",
+        "path_type": "hardlink",
+        "sha256": "0e5b6f7ec6ccd5341a6e6224fe267c5353372fc4b12898a8b41d8181c4c27230",
+        "sha256_in_prefix": "0e5b6f7ec6ccd5341a6e6224fe267c5353372fc4b12898a8b41d8181c4c27230",
+        "size_in_bytes": 1007
+      },
+      {
+        "_path": "share/ViennaRNA/examples/perl5/helloworld_mfe.pl",
+        "path_type": "hardlink",
+        "sha256": "7311d596f5fd9e80b4cba1a84dcbf24508250de0d1eda7570ca0d12eb70018ce",
+        "sha256_in_prefix": "7311d596f5fd9e80b4cba1a84dcbf24508250de0d1eda7570ca0d12eb70018ce",
+        "size_in_bytes": 246
+      },
+      {
+        "_path": "share/ViennaRNA/examples/perl5/helloworld_mfe_comparative.pl",
+        "path_type": "hardlink",
+        "sha256": "fdfa245611fe6642890bc4457da1d9a42d75b8eb14a61b7b760a411771570b6e",
+        "sha256_in_prefix": "fdfa245611fe6642890bc4457da1d9a42d75b8eb14a61b7b760a411771570b6e",
+        "size_in_bytes": 476
+      },
+      {
+        "_path": "share/ViennaRNA/examples/perl5/helloworld_nondefault.pl",
+        "path_type": "hardlink",
+        "sha256": "ba93049fdba03bbe932dd5672a5764bcfef452203db0b6e97d98001b3fc7eb02",
+        "sha256_in_prefix": "ba93049fdba03bbe932dd5672a5764bcfef452203db0b6e97d98001b3fc7eb02",
+        "size_in_bytes": 527
+      },
+      {
+        "_path": "share/ViennaRNA/examples/perl5/maximum_matching.pl",
+        "path_type": "hardlink",
+        "sha256": "11328c956c3148f7eaf30312c06763884650567e047cddc91aaf55d281ca9470",
+        "sha256_in_prefix": "11328c956c3148f7eaf30312c06763884650567e047cddc91aaf55d281ca9470",
+        "size_in_bytes": 2573
+      },
+      {
+        "_path": "share/ViennaRNA/examples/perl5/oo_example1.pl",
+        "path_type": "hardlink",
+        "sha256": "14ca8c5aa3dc28ecc307ab1fdff7c45c542e669ddc616a1b374c5399981f1e57",
+        "sha256_in_prefix": "14ca8c5aa3dc28ecc307ab1fdff7c45c542e669ddc616a1b374c5399981f1e57",
+        "size_in_bytes": 306
+      },
+      {
+        "_path": "share/ViennaRNA/examples/python/RNAfold_MEA.py",
+        "path_type": "hardlink",
+        "sha256": "c9f059291d8040b13ac731bb5773c15840145f66bacfaf74669bf4fa68bbf4f5",
+        "sha256_in_prefix": "c9f059291d8040b13ac731bb5773c15840145f66bacfaf74669bf4fa68bbf4f5",
+        "size_in_bytes": 1179
+      },
+      {
+        "_path": "share/ViennaRNA/examples/python/__pycache__/RNAfold_MEA.cpython-39.pyc",
+        "path_type": "hardlink",
+        "sha256": "53c748474ec6ea8d7f506328c9a9aa9731c8008c70dec210516a640525e95122",
+        "sha256_in_prefix": "53c748474ec6ea8d7f506328c9a9aa9731c8008c70dec210516a640525e95122",
+        "size_in_bytes": 831
+      },
+      {
+        "_path": "share/ViennaRNA/examples/python/__pycache__/boltzmann_sampling.cpython-39.pyc",
+        "path_type": "hardlink",
+        "sha256": "900aa74a5c310d4b838e7bf73751e31eb772c1c3f29a5a919b13c98267bd040b",
+        "sha256_in_prefix": "900aa74a5c310d4b838e7bf73751e31eb772c1c3f29a5a919b13c98267bd040b",
+        "size_in_bytes": 1490
+      },
+      {
+        "_path": "share/ViennaRNA/examples/python/__pycache__/helloworld_mfe.cpython-39.pyc",
+        "path_type": "hardlink",
+        "sha256": "437e73d5c7a17331c8801ade96458173794784f5a993e32eb06861f64dc65b9e",
+        "sha256_in_prefix": "437e73d5c7a17331c8801ade96458173794784f5a993e32eb06861f64dc65b9e",
+        "size_in_bytes": 295
+      },
+      {
+        "_path": "share/ViennaRNA/examples/python/__pycache__/helloworld_mfe_comparative.cpython-39.pyc",
+        "path_type": "hardlink",
+        "sha256": "1bd3fdfb1db459915d027e27529353d1b06812916b3e72e435f719fd5cd44f7b",
+        "sha256_in_prefix": "1bd3fdfb1db459915d027e27529353d1b06812916b3e72e435f719fd5cd44f7b",
+        "size_in_bytes": 457
+      },
+      {
+        "_path": "share/ViennaRNA/examples/python/__pycache__/helloworld_nondefault.cpython-39.pyc",
+        "path_type": "hardlink",
+        "sha256": "d24b0c8e744de27e8ff6c01fcd630a5f8171bd0567a3c39825fb472c22de79d7",
+        "sha256_in_prefix": "d24b0c8e744de27e8ff6c01fcd630a5f8171bd0567a3c39825fb472c22de79d7",
+        "size_in_bytes": 393
+      },
+      {
+        "_path": "share/ViennaRNA/examples/python/__pycache__/maximum_matching.cpython-39.pyc",
+        "path_type": "hardlink",
+        "sha256": "53fe73eddee665fa8075aa8ec4ada7dfa17c9255e7bba734a4e6fdf42d6e0d4b",
+        "sha256_in_prefix": "53fe73eddee665fa8075aa8ec4ada7dfa17c9255e7bba734a4e6fdf42d6e0d4b",
+        "size_in_bytes": 2266
+      },
+      {
+        "_path": "share/ViennaRNA/examples/python/__pycache__/oo_example1.cpython-39.pyc",
+        "path_type": "hardlink",
+        "sha256": "5081e28f8f811fcf8cdc0650429d3655821176ef7b25f904bc86d80631290e89",
+        "sha256_in_prefix": "5081e28f8f811fcf8cdc0650429d3655821176ef7b25f904bc86d80631290e89",
+        "size_in_bytes": 289
+      },
+      {
+        "_path": "share/ViennaRNA/examples/python/__pycache__/subopt.cpython-39.pyc",
+        "path_type": "hardlink",
+        "sha256": "eb8100f1243932ac6855801b8dd45e56f918a73b4efa2398ca80fad67a7c3d35",
+        "sha256_in_prefix": "eb8100f1243932ac6855801b8dd45e56f918a73b4efa2398ca80fad67a7c3d35",
+        "size_in_bytes": 574
+      },
+      {
+        "_path": "share/ViennaRNA/examples/python/boltzmann_sampling.py",
+        "path_type": "hardlink",
+        "sha256": "5ab8b10dacca7f4060465bdffe302acaa6bd35c73be49bc266506c60d3d3e4b5",
+        "sha256_in_prefix": "5ab8b10dacca7f4060465bdffe302acaa6bd35c73be49bc266506c60d3d3e4b5",
+        "size_in_bytes": 3134
+      },
+      {
+        "_path": "share/ViennaRNA/examples/python/helloworld_mfe.py",
+        "path_type": "hardlink",
+        "sha256": "d200ae14d2db9f08aab609f4e299326874040fa4c44befc8bad07a187f6aa49a",
+        "sha256_in_prefix": "d200ae14d2db9f08aab609f4e299326874040fa4c44befc8bad07a187f6aa49a",
+        "size_in_bytes": 238
+      },
+      {
+        "_path": "share/ViennaRNA/examples/python/helloworld_mfe_comparative.py",
+        "path_type": "hardlink",
+        "sha256": "dbe760a2d902c4fea62b9cdb8b82dc0dc0abdd7280d41de57d3faaf47db6dfdf",
+        "sha256_in_prefix": "dbe760a2d902c4fea62b9cdb8b82dc0dc0abdd7280d41de57d3faaf47db6dfdf",
+        "size_in_bytes": 460
+      },
+      {
+        "_path": "share/ViennaRNA/examples/python/helloworld_nondefault.py",
+        "path_type": "hardlink",
+        "sha256": "cea1a38e8b4b6f157ab3b083f77c7d889f30f07a79ae3e1ac6070e37957624c1",
+        "sha256_in_prefix": "cea1a38e8b4b6f157ab3b083f77c7d889f30f07a79ae3e1ac6070e37957624c1",
+        "size_in_bytes": 486
+      },
+      {
+        "_path": "share/ViennaRNA/examples/python/maximum_matching.py",
+        "path_type": "hardlink",
+        "sha256": "955da1e704348d3d592c27303776966001f3f1b1aafef9bd04e1ef5ad278288a",
+        "sha256_in_prefix": "955da1e704348d3d592c27303776966001f3f1b1aafef9bd04e1ef5ad278288a",
+        "size_in_bytes": 1979
+      },
+      {
+        "_path": "share/ViennaRNA/examples/python/oo_example1.py",
+        "path_type": "hardlink",
+        "sha256": "b440d3373e42e0653daaf33cc1fea2f5cd3922e868d7a296c9d3519792f5a0d4",
+        "sha256_in_prefix": "b440d3373e42e0653daaf33cc1fea2f5cd3922e868d7a296c9d3519792f5a0d4",
+        "size_in_bytes": 253
+      },
+      {
+        "_path": "share/ViennaRNA/examples/python/subopt.py",
+        "path_type": "hardlink",
+        "sha256": "f7911beeec6a679ce57747509bcfee5f8649ef4d672d913fc087f39d8ab22b4a",
+        "sha256_in_prefix": "f7911beeec6a679ce57747509bcfee5f8649ef4d672d913fc087f39d8ab22b4a",
+        "size_in_bytes": 752
+      },
+      {
+        "_path": "share/ViennaRNA/examples/soft_constraints_up.c",
+        "path_type": "hardlink",
+        "sha256": "03f81a6a2773660755d86e3cd50a5c5ee0cd90589580387864921a4e81cf5d2a",
+        "sha256_in_prefix": "03f81a6a2773660755d86e3cd50a5c5ee0cd90589580387864921a4e81cf5d2a",
+        "size_in_bytes": 1125
+      },
+      {
+        "_path": "share/ViennaRNA/rna_andronescu2007.par",
+        "path_type": "hardlink",
+        "sha256": "565f0247f06e4e83c17bf3962fac62bbfd0641a7d7ee8bc82ec5e8fa12772b52",
+        "sha256_in_prefix": "565f0247f06e4e83c17bf3962fac62bbfd0641a7d7ee8bc82ec5e8fa12772b52",
+        "size_in_bytes": 251143
+      },
+      {
+        "_path": "share/ViennaRNA/rna_langdon2018.par",
+        "path_type": "hardlink",
+        "sha256": "d0084fd4771cfbd6834640c318e2c25a30d320fa08aa8cf97402526bf879d02f",
+        "sha256_in_prefix": "d0084fd4771cfbd6834640c318e2c25a30d320fa08aa8cf97402526bf879d02f",
+        "size_in_bytes": 251139
+      },
+      {
+        "_path": "share/ViennaRNA/rna_misc_special_hairpins.par",
+        "path_type": "hardlink",
+        "sha256": "64d7f64c88edb08b85980c0d52fee20f6ee9e21a7619bf904c43483ccfa8e9c0",
+        "sha256_in_prefix": "64d7f64c88edb08b85980c0d52fee20f6ee9e21a7619bf904c43483ccfa8e9c0",
+        "size_in_bytes": 4856
+      },
+      {
+        "_path": "share/ViennaRNA/rna_turner1999.par",
+        "path_type": "hardlink",
+        "sha256": "c01de01f5eed471cadbbf615183b8ffb71dcaa85bae69e87fa3549febd267033",
+        "sha256_in_prefix": "c01de01f5eed471cadbbf615183b8ffb71dcaa85bae69e87fa3549febd267033",
+        "size_in_bytes": 251143
+      },
+      {
+        "_path": "share/ViennaRNA/rna_turner2004.par",
+        "path_type": "hardlink",
+        "sha256": "0c671a7455f5686bc160fc655194b11888594ab7d506626cdad1470bcadd17d9",
+        "sha256_in_prefix": "0c671a7455f5686bc160fc655194b11888594ab7d506626cdad1470bcadd17d9",
+        "size_in_bytes": 381610
+      },
+      {
+        "_path": "share/ViennaRNA/viennarna.bib",
+        "path_type": "hardlink",
+        "sha256": "02775207b3cd9eaf3e57045b5564509909286da4ab8961d79caa15c12fcbcbc3",
+        "sha256_in_prefix": "02775207b3cd9eaf3e57045b5564509909286da4ab8961d79caa15c12fcbcbc3",
+        "size_in_bytes": 19441
+      },
+      {
+        "_path": "share/info/RNAlib.info",
+        "path_type": "hardlink",
+        "sha256": "77f9bf4faac14ef46bffc8660af8dd1fb18d0f53647d1475b2454507a1fe05e0",
+        "sha256_in_prefix": "77f9bf4faac14ef46bffc8660af8dd1fb18d0f53647d1475b2454507a1fe05e0",
+        "size_in_bytes": 73106
+      },
+      {
+        "_path": "share/man/man1/AnalyseDists.1",
+        "path_type": "hardlink",
+        "sha256": "f805dd9009d1a2e9cf8d20c550d9661494931c74171e0bbce9d72e8433de97f7",
+        "sha256_in_prefix": "f805dd9009d1a2e9cf8d20c550d9661494931c74171e0bbce9d72e8433de97f7",
+        "size_in_bytes": 2370
+      },
+      {
+        "_path": "share/man/man1/AnalyseSeqs.1",
+        "path_type": "hardlink",
+        "sha256": "ad330c4fa789629f723987943294a705b184a1e12a6ddbbc8b8aeb3f7df06a71",
+        "sha256_in_prefix": "ad330c4fa789629f723987943294a705b184a1e12a6ddbbc8b8aeb3f7df06a71",
+        "size_in_bytes": 5961
+      },
+      {
+        "_path": "share/man/man1/Kinfold.1",
+        "path_type": "hardlink",
+        "sha256": "9ce60d0a99400643dd4a3e6caca210932f7c497e33cad1e9e95efbca91ec5db0",
+        "sha256_in_prefix": "9ce60d0a99400643dd4a3e6caca210932f7c497e33cad1e9e95efbca91ec5db0",
+        "size_in_bytes": 5297
+      },
+      {
+        "_path": "share/man/man1/RNA2Dfold.1",
+        "path_type": "hardlink",
+        "sha256": "4caaa14e4b69c8b43b8eb1a9d880e5f15903238306e266433989d59da4237031",
+        "sha256_in_prefix": "4caaa14e4b69c8b43b8eb1a9d880e5f15903238306e266433989d59da4237031",
+        "size_in_bytes": 6002
+      },
+      {
+        "_path": "share/man/man1/RNALalifold.1",
+        "path_type": "hardlink",
+        "sha256": "222b613661c291d32672b759158db11e57eb0fa4bc54dcc5ef67638881962935",
+        "sha256_in_prefix": "222b613661c291d32672b759158db11e57eb0fa4bc54dcc5ef67638881962935",
+        "size_in_bytes": 16222
+      },
+      {
+        "_path": "share/man/man1/RNALfold.1",
+        "path_type": "hardlink",
+        "sha256": "501a1fb46e17b245d52c31cb09440ab1003e660a15bb1ade9cbed10c8115047b",
+        "sha256_in_prefix": "501a1fb46e17b245d52c31cb09440ab1003e660a15bb1ade9cbed10c8115047b",
+        "size_in_bytes": 17340
+      },
+      {
+        "_path": "share/man/man1/RNAPKplex.1",
+        "path_type": "hardlink",
+        "sha256": "0cb2bb2eef78c480678d08f9a76491ab07a90296986a625eef48e592ba22639e",
+        "sha256_in_prefix": "0cb2bb2eef78c480678d08f9a76491ab07a90296986a625eef48e592ba22639e",
+        "size_in_bytes": 5574
+      },
+      {
+        "_path": "share/man/man1/RNAaliduplex.1",
+        "path_type": "hardlink",
+        "sha256": "b2ae3ce0f5d77fc08e8d849535e787edf69c8c124e93f72b799df1b0ae164114",
+        "sha256_in_prefix": "b2ae3ce0f5d77fc08e8d849535e787edf69c8c124e93f72b799df1b0ae164114",
+        "size_in_bytes": 5731
+      },
+      {
+        "_path": "share/man/man1/RNAalifold.1",
+        "path_type": "hardlink",
+        "sha256": "7f6f1f6008dceb89fa651c8df82ed40afa83440c683d6ec4b4dd21b2196a27f2",
+        "sha256_in_prefix": "7f6f1f6008dceb89fa651c8df82ed40afa83440c683d6ec4b4dd21b2196a27f2",
+        "size_in_bytes": 28448
+      },
+      {
+        "_path": "share/man/man1/RNAcofold.1",
+        "path_type": "hardlink",
+        "sha256": "895d02147081dad6f2418a3a6b64643f32a5529b064bc4adeb45d4baedfcab65",
+        "sha256_in_prefix": "895d02147081dad6f2418a3a6b64643f32a5529b064bc4adeb45d4baedfcab65",
+        "size_in_bytes": 22878
+      },
+      {
+        "_path": "share/man/man1/RNAdistance.1",
+        "path_type": "hardlink",
+        "sha256": "e6980c2e5c87b8b0e1a0d0c3ea3edb232e292a745261d0b1792f97c7cc72876a",
+        "sha256_in_prefix": "e6980c2e5c87b8b0e1a0d0c3ea3edb232e292a745261d0b1792f97c7cc72876a",
+        "size_in_bytes": 4998
+      },
+      {
+        "_path": "share/man/man1/RNAdos.1",
+        "path_type": "hardlink",
+        "sha256": "a6fd875710039b291604c46a61f2807463be47d744c7673b12ad25e03b9f89b9",
+        "sha256_in_prefix": "a6fd875710039b291604c46a61f2807463be47d744c7673b12ad25e03b9f89b9",
+        "size_in_bytes": 4335
+      },
+      {
+        "_path": "share/man/man1/RNAduplex.1",
+        "path_type": "hardlink",
+        "sha256": "818e09a80146656fbfe6074654d59a23dcb6140fc030b77b243e0b67b4bb86aa",
+        "sha256_in_prefix": "818e09a80146656fbfe6074654d59a23dcb6140fc030b77b243e0b67b4bb86aa",
+        "size_in_bytes": 5622
+      },
+      {
+        "_path": "share/man/man1/RNAeval.1",
+        "path_type": "hardlink",
+        "sha256": "72e0a7b5a218989ee5abef5d5e8e4fabdb2b71b1c4311debda17fe5d042cfa1a",
+        "sha256_in_prefix": "72e0a7b5a218989ee5abef5d5e8e4fabdb2b71b1c4311debda17fe5d042cfa1a",
+        "size_in_bytes": 13633
+      },
+      {
+        "_path": "share/man/man1/RNAfold.1",
+        "path_type": "hardlink",
+        "sha256": "8d5f409f6466ca9dd0a2b664c3a3bb750aa4d20d69eefafe39c9deedfa66c32e",
+        "sha256_in_prefix": "8d5f409f6466ca9dd0a2b664c3a3bb750aa4d20d69eefafe39c9deedfa66c32e",
+        "size_in_bytes": 35572
+      },
+      {
+        "_path": "share/man/man1/RNAforester.1",
+        "path_type": "hardlink",
+        "sha256": "920ba918988e1ccb1476624d93d67cb270b60248f1701e221738b8f6f4b044fd",
+        "sha256_in_prefix": "920ba918988e1ccb1476624d93d67cb270b60248f1701e221738b8f6f4b044fd",
+        "size_in_bytes": 11888
+      },
+      {
+        "_path": "share/man/man1/RNAheat.1",
+        "path_type": "hardlink",
+        "sha256": "9aed8c806aaf2c7db07cc00430c666023904ef20bd38f39f5347fb7dcbb7fa28",
+        "sha256_in_prefix": "9aed8c806aaf2c7db07cc00430c666023904ef20bd38f39f5347fb7dcbb7fa28",
+        "size_in_bytes": 9649
+      },
+      {
+        "_path": "share/man/man1/RNAinverse.1",
+        "path_type": "hardlink",
+        "sha256": "8c502f13699aa9d6cb402b1fe8e9465db5f6561509a897e570062be7d6ec3417",
+        "sha256_in_prefix": "8c502f13699aa9d6cb402b1fe8e9465db5f6561509a897e570062be7d6ec3417",
+        "size_in_bytes": 7652
+      },
+      {
+        "_path": "share/man/man1/RNAlocmin.1",
+        "path_type": "hardlink",
+        "sha256": "1af155831fa07df9cb42ce7da7168a647b1662485c7ffdc0645d864a8498e7f6",
+        "sha256_in_prefix": "1af155831fa07df9cb42ce7da7168a647b1662485c7ffdc0645d864a8498e7f6",
+        "size_in_bytes": 6682
+      },
+      {
+        "_path": "share/man/man1/RNAmultifold.1",
+        "path_type": "hardlink",
+        "sha256": "16cb1ab120677185d6d8ae85fc7e4bae9ef4423d96a1df58643dd8fb85cfc6b6",
+        "sha256_in_prefix": "16cb1ab120677185d6d8ae85fc7e4bae9ef4423d96a1df58643dd8fb85cfc6b6",
+        "size_in_bytes": 16001
+      },
+      {
+        "_path": "share/man/man1/RNApaln.1",
+        "path_type": "hardlink",
+        "sha256": "7b62936e965e73e3ce65682dec659afe6c0ad07fd27a35ddb0406ca4e00db3ee",
+        "sha256_in_prefix": "7b62936e965e73e3ce65682dec659afe6c0ad07fd27a35ddb0406ca4e00db3ee",
+        "size_in_bytes": 7301
+      },
+      {
+        "_path": "share/man/man1/RNAparconv.1",
+        "path_type": "hardlink",
+        "sha256": "c03aebb44badd40c82952aafbc94261d92654264b5e056f9da95245e990f1b9a",
+        "sha256_in_prefix": "c03aebb44badd40c82952aafbc94261d92654264b5e056f9da95245e990f1b9a",
+        "size_in_bytes": 4448
+      },
+      {
+        "_path": "share/man/man1/RNApdist.1",
+        "path_type": "hardlink",
+        "sha256": "cf3f7754056c7ad47dd5dcd86f71437540649f0accd683972fc252d980a1c931",
+        "sha256_in_prefix": "cf3f7754056c7ad47dd5dcd86f71437540649f0accd683972fc252d980a1c931",
+        "size_in_bytes": 5784
+      },
+      {
+        "_path": "share/man/man1/RNAplex.1",
+        "path_type": "hardlink",
+        "sha256": "618901688372497b9d1f7e765f90983a39e835feb83e9e40a83dad0d821af193",
+        "sha256_in_prefix": "618901688372497b9d1f7e765f90983a39e835feb83e9e40a83dad0d821af193",
+        "size_in_bytes": 9696
+      },
+      {
+        "_path": "share/man/man1/RNAplfold.1",
+        "path_type": "hardlink",
+        "sha256": "a8e5faa527a69e1947885576778e89500cf52ef5192c27e0da9f026bbb8ecfb3",
+        "sha256_in_prefix": "a8e5faa527a69e1947885576778e89500cf52ef5192c27e0da9f026bbb8ecfb3",
+        "size_in_bytes": 14927
+      },
+      {
+        "_path": "share/man/man1/RNAplot.1",
+        "path_type": "hardlink",
+        "sha256": "34be9aae97d8def3c08a36b42f257ebe1c47a1356d7c286278c28fdb03b57f3e",
+        "sha256_in_prefix": "34be9aae97d8def3c08a36b42f257ebe1c47a1356d7c286278c28fdb03b57f3e",
+        "size_in_bytes": 10616
+      },
+      {
+        "_path": "share/man/man1/RNApvmin.1",
+        "path_type": "hardlink",
+        "sha256": "08d1fa54a7a899d512b09d7582947fae54d1f3a2f7a845bb7de02e4912412c90",
+        "sha256_in_prefix": "08d1fa54a7a899d512b09d7582947fae54d1f3a2f7a845bb7de02e4912412c90",
+        "size_in_bytes": 11179
+      },
+      {
+        "_path": "share/man/man1/RNAsnoop.1",
+        "path_type": "hardlink",
+        "sha256": "f178f6e6a2171fd5853db4b618dc90c5532c174c8eb0eb19ba5d14b9051b4933",
+        "sha256_in_prefix": "f178f6e6a2171fd5853db4b618dc90c5532c174c8eb0eb19ba5d14b9051b4933",
+        "size_in_bytes": 9999
+      },
+      {
+        "_path": "share/man/man1/RNAsubopt.1",
+        "path_type": "hardlink",
+        "sha256": "3c8ace5810e11478e24432f1221f0ba86502766a85476b0b7678afca23748bcd",
+        "sha256_in_prefix": "3c8ace5810e11478e24432f1221f0ba86502766a85476b0b7678afca23748bcd",
+        "size_in_bytes": 19501
+      },
+      {
+        "_path": "share/man/man1/RNAup.1",
+        "path_type": "hardlink",
+        "sha256": "dc6e7a0acb2263fef38369cc5a44093f2127ae8e3fbe438e0eaad7d35491770e",
+        "sha256_in_prefix": "dc6e7a0acb2263fef38369cc5a44093f2127ae8e3fbe438e0eaad7d35491770e",
+        "size_in_bytes": 13045
+      },
+      {
+        "_path": "share/man/man1/ct2db.1",
+        "path_type": "hardlink",
+        "sha256": "43ff3dad68260de636e43d8eb162e684346318128fc1fc3010c85fc143438c4a",
+        "sha256_in_prefix": "43ff3dad68260de636e43d8eb162e684346318128fc1fc3010c85fc143438c4a",
+        "size_in_bytes": 1582
+      },
+      {
+        "_path": "share/man/man1/kinwalker.1",
+        "path_type": "hardlink",
+        "sha256": "180bdf51c27e385ca6251ad90d4097d73ab245c7c8653ffe3224b2f9a3794c22",
+        "sha256_in_prefix": "180bdf51c27e385ca6251ad90d4097d73ab245c7c8653ffe3224b2f9a3794c22",
+        "size_in_bytes": 5495
+      }
+    ],
+    "paths_version": 1
+  },
+  "requested_spec": "viennarna=2.5.1",
+  "sha256": "0dfde83c1ef35f126a2287667f1d304629f6054783698c0881016ec9420d8d9b",
+  "size": 17453581,
+  "subdir": "linux-64",
+  "timestamp": 1684221770000,
+  "track_features": "",
+  "url": "https://conda.anaconda.org/bioconda/linux-64/viennarna-2.5.1-py39pl5321h4e691d4_2.tar.bz2",
+  "version": "2.5.1"
+}

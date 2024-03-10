@@ -1,0 +1,114 @@
+tagline: 'A pipeline for genome-wide riboSNitch prediction'
+
+cli:
+  tmp-dir:
+    type: path
+    help: "Path to the temporary directory"
+    required: True
+    short: wd
+
+  out-dir:
+    type: path
+    help: "Path to the output directory"
+    required: True
+    short: o
+
+  singulary-dir:
+    type: path
+    help: "Path to the singularity image directory"
+    short: s
+    default: none
+
+  cluster:
+    type: str
+    help: "Cluster configuration"
+    short: c
+    default: "local"
+
+  cluster-jobs:
+    type: int
+    help: "Number of jobs to run on the cluster"
+    short: j
+    default: 1
+
+  chunks:
+    type: int
+    help: "The number of splits of the input files"
+    short: c
+    default: 1
+
+  vcf:
+    type: path
+    help: "Path to the VCF file"
+    default: none
+  
+  gff:
+    type: path
+    help: "Path to the GFF file"
+    default: none
+  
+  ref-genome:
+    type: path
+    help: "Path to the reference genome file"
+    short: ref
+    default: none
+
+  csv:
+    type: path
+    help: "Path to the CSV file"
+    short: csv
+    default: none
+  
+  flank-len:
+    type: int
+    help: "Number of nucleotides on either side of the SNP for riboSNitch prediction"
+    short: fl
+    default: 50
+
+  spliced:
+    type: bool
+    help: "Predict riboSNitches in spliced transcripts"
+    short: sp
+    default: True
+  
+  canonical:
+    type: bool
+    help: "Predict riboSNitches in canonical transcripts"
+    short: cs
+    default: True
+  
+  variant-annotation-type:
+    type: str
+    help: "Variant annotation class to use"
+    short: vat
+    default: "All"
+  
+  temperature:
+    type: float
+    help: "Temperature for RNA folding (in Celsius)"
+    short: t
+    default: 37.0
+  
+  temp-step:
+    type: float
+    help: "Temperature step for RNA folding (in Celsius)"
+    short: ts
+    default: 5
+  
+  ribosnitch-prediction-tool:
+    type: str
+    help: "Tool to use for predicting riboSNitches (SNPfold, RipRap, RNAsnp, or remuRNA)"
+    short: r
+    default: SNPfold
+  
+  rna-folding-tool:
+    type: str
+    help: "Tool to use for predicting the RNA structural ensembles (Only for RipRap - RNAfold or RNAstructure)"
+    short: s
+    default: RNAfold
+  
+  riprap-min-window:
+    type: int
+    help: "Minimum window size for RipRap"
+    short: rw
+    default: 3

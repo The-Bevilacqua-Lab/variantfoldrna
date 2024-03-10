@@ -1,0 +1,13 @@
+prefix=/scratch/kjk6173/variantfoldrna/src/variantfoldrna/.conda/da3fe7ac05a93498635e6ead9a007a41_
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+enginesdir=${libdir}/engines-3
+modulesdir=${libdir}/ossl-modules
+
+Name: OpenSSL-libcrypto
+Description: OpenSSL cryptography library
+Version: 3.2.1
+Libs: -L${libdir} -lcrypto
+Libs.private: -ldl -pthread 
+Cflags: -I${includedir}

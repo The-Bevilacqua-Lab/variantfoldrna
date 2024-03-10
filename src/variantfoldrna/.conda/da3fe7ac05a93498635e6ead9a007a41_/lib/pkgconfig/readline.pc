@@ -1,0 +1,12 @@
+prefix=/scratch/kjk6173/variantfoldrna/src/variantfoldrna/.conda/da3fe7ac05a93498635e6ead9a007a41_
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: Readline
+Description: Gnu Readline library for command line editing
+URL: http://tiswww.cwru.edu/php/chet/readline/rltop.html
+Version: 8.2
+Requires.private: tinfo
+Libs: -L${libdir} -lreadline
+Cflags: -I${includedir}
