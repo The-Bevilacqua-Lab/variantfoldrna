@@ -120,6 +120,6 @@ rule remove_duplicates:
     conda:
         "../envs/process_seq.yaml"
     singularity:
-        "docker://condaforge/mambaforge""
+        "docker://condaforge/mambaforge"
     shell:
         f"python3 {src_dir}/../variantfoldrna/workflow/scripts/remove_duplicates.py -i {{input}} -o {{output}}"
