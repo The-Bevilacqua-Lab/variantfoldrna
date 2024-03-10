@@ -4,35 +4,86 @@ build-backend = "hatchling.build"
 
 [project]
 name = "variantfoldrna"
-version = "0.0.1"
-authors = [
-  { name="Kobie Kirven", email="kjk6173@psu.edu" },
-]
-description = "A Snakemake pipeline for riboSNitch prediction"
+dynamic = ["version"]
+description = ''
 readme = "README.md"
-requires-python = ">=3.6"
+requires-python = ">=3.7"
+license = "MIT"
+keywords = []
+authors = [
+  { name = "Kobie-Kirven", email = "kjkirven@presby.edu" },
+]
 classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
-    "Operating System :: OS Independent",
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dependencies = [
   "snakemake==7.24.2",
-  "pulp==2.7.0"
+  "snk",
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/The-Bevilacqua-Lab/variantfoldrna"
+Documentation = "https://github.com/unknown/variantfoldrna#readme"
+Issues = "https://github.com/unknown/variantfoldrna/issues"
+Source = "https://github.com/unknown/variantfoldrna"
 
-# Add entry points for the command line interface
 [project.scripts]
-variantfoldrna = "variantfoldrna.variantfoldrna:main"
+variantfoldrna = "variantfoldrna.cli:variantfoldrna"
 
-[tool.hatch.build]
-include = [
-  "variantfoldrna/*/*/*",
-  "variantfoldrna/variantfoldrna_workflow/variantfoldrna.smk",
-  "variantfoldrna/__init__.py",
-  "variantfoldrna/variantfoldrna.py",
-  "variantfoldrna/variantfoldrna_utils.py"
+[tool.hatch.version]
+path = "src/variantfoldrna/__about__.py"
+
+[tool.hatch.envs.default]
+dependencies = [
+  "coverage[toml]>=6.5",
+  "pytest",
+  "snakemake==7.24.2"
+]
+[tool.hatch.envs.default.scripts]
+test = "pytest {args:tests}"
+test-cov = "coverage run -m pytest {args:tests}"
+cov-report = [
+  "- coverage combine",
+  "coverage report",
+]
+cov = [
+  "test-cov",
+  "cov-report",
+]
+
+[[tool.hatch.envs.all.matrix]]
+python = ["3.7","3.8", "3.9", "3.10", "3.11", "3.12"]
+
+[tool.hatch.envs.types]
+dependencies = [
+  "mypy>=1.0.0",
+]
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/variantfoldrna tests}"
+
+[tool.coverage.run]
+source_pkgs = ["variantfoldrna", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/variantfoldrna/__about__.py",
+]
+
+[tool.coverage.paths]
+variantfoldrna = ["src/variantfoldrna", "*/variantfoldrna/src/variantfoldrna"]
+tests = ["tests", "*/variantfoldrna/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
 ]
