@@ -17,9 +17,9 @@ src_dir = os.path.dirname(script_path)
 #---- setup ----#
 # Check to see if the user only wants to use the canonical transcripts:
 if config["canonical"] == True:
-    gff_file = f"{config['tmp_dir']}/temp/canonical_transcripts.gff3"
+    gff = f"{config['tmp_dir']}/temp/canonical_transcripts.gff3"
 else:
-    gff_file = config["gff"]
+    gff = config["gff"]
 
 
 # Get what the final combined outpout will be
@@ -47,7 +47,7 @@ rule get_canonical_transcripts_with_AGAT:
 rule get_table_from_gffread:
     # Get the table from the GFF file
     input:
-        gff=gff_file,
+        gff=gff,
     output:
         f"{config['tmp_dir']}/temp/gffread_table.txt",
     conda:
@@ -87,7 +87,7 @@ rule create_fadix_index:
 rule extract_cdna_from_gff_with_gffread:
     # Extract the cDNA sequences from the GFF file
     input:
-        gff=gff_file,
+        gff=gff,
     params:
         ref=config["ref_genome"],
     output:

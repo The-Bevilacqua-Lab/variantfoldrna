@@ -25,7 +25,7 @@ def prRed(skk):
 
 
 # Check to see if the VCF file is gzipped using the magic number
-with open(config["vcf_file"], "rb") as f:
+with open(config["vcf"], "rb") as f:
     magic_number = f.read(2)
     if magic_number == b"\x1f\x8b":
         cmd = "zcat"
@@ -40,7 +40,7 @@ rule get_vcf_header:
     params:
         output=f"{config['tmp_dir']}/temp/vcf_header.txt",
     shell:
-        f"{cmd} < {config['vcf_file']} | grep '##' > {{params.output}} && gzip {{params.output}}"
+        f"{cmd} < {config['vcf']} | grep '##' > {{params.output}} && gzip {{params.output}}"
 
 
 rule rid_header:
@@ -51,4 +51,4 @@ rule rid_header:
     params:
         output=f"{config['tmp_dir']}/temp/vcf_no_header.vcf",
     shell:
-        f"{cmd} < {config['vcf_file']} | grep -v '##' > {{params.output}} && gzip {{params.output}}"
+        f"{cmd} < {config['vcf']} | grep -v '##' > {{params.output}} && gzip {{params.output}}"

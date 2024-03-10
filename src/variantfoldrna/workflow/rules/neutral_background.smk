@@ -32,7 +32,7 @@ rule get_bedtools_genome_file:
 
 rule convert_gff_to_bed:
     input:
-        gff_file = config["gff_file"]
+        gff = config["gff"]
     output:
         f"{config['working_directory']}/temp/gene_model.bed"
     log:
@@ -40,7 +40,7 @@ rule convert_gff_to_bed:
     singularity:
         "docker://quay.io/biocontainers/agat:1.0.0--pl5321hdfd78af_0"
     shell:
-        "agat_convert_sp_gff2bed.pl --gff {input.gff_file} -o {output} &&  cat {output} | cut -f1-3 > {output}.tmp && mv {output}.tmp {output}"
+        "agat_convert_sp_gff2bed.pl --gff {input.gff} -o {output} &&  cat {output} | cut -f1-3 > {output}.tmp && mv {output}.tmp {output}"
 
 rule sort_gene_model_null:
     input:
@@ -69,7 +69,7 @@ rule sort_genome_file:
 rule complement_gene_model:
     input:
         ref = f"{config['working_directory']}/temp/genome_bedtools_file_sorted.txt",
-        gff_file = f"{config['working_directory']}/temp/gene_model_sorted.bed"
+        gff = f"{config['working_directory']}/temp/gene_model_sorted.bed"
     output:
         f"{config['working_directory']}/temp/gene_model_complement.bed"
     log:
@@ -77,7 +77,7 @@ rule complement_gene_model:
     singularity:
         "docker://quay.io/staphb/bedtools"
     shell:
-        "bedtools complement -i {input.gff_file} -g {input.ref} > {output}"
+        "bedtools complement -i {input.gff} -g {input.ref} > {output}"
 
 
 rule trim_intergenic_regions:
@@ -96,21 +96,21 @@ rule trim_intergenic_regions:
 
 rule bgzip_vcf:
     params:
-        vcf_file = config["vcf_file"],
-        bgzip = f"{config['working_directory']}/temp/bgzip_{config['vcf_file']}"
+        vcf = config["vcf"],
+        bgzip = f"{config['working_directory']}/temp/bgzip_{config['vcf']}"
     output:
-        f"{config['working_directory']}/temp/bgzip_{config['vcf_file']}.gz"
+        f"{config['working_directory']}/temp/bgzip_{config['vcf']}.gz"
     log:
         f"{config['working_directory']}/logs/bgzip_vcf.log"
     singularity:
         "docker://kjkirven/snpeff"
     shell:
-        "cp {params.vcf_file} {params.bgzip} && bgzip {params.bgzip} && tabix -p vcf {params.bgzip}.gz"
+        "cp {params.vcf} {params.bgzip} && bgzip {params.bgzip} && tabix -p vcf {params.bgzip}.gz"
 
 rule intersect_vcf_with_gene_model:
     input:
         gene_model = f"{config['working_directory']}/temp/gene_model_complement_trimmed.bed",
-        vcf_file = f"{config['working_directory']}/temp/bgzip_{config['vcf_file']}.gz"
+        vcf = f"{config['working_directory']}/temp/bgzip_{config['vcf']}.gz"
     output:
         f"{config['working_directory']}/temp/intergenic_variants.vcf"
     log:
@@ -118,12 +118,12 @@ rule intersect_vcf_with_gene_model:
     singularity:
         "docker://kjkirven/snpeff"
     shell:
-        "bcftools view -R {input.gene_model} {input.vcf_file} > {output}"
+        "bcftools view -R {input.gene_model} {input.vcf} > {output}"
 
 rule extract_flank_sequences_null:
     input:
         ref = config["ref_genome"],
-        vcf_file = f"{config['working_directory']}/temp/intergenic_variants.vcf"
+        vcf = f"{config['working_directory']}/temp/intergenic_variants.vcf"
     output:
         f"{config['working_directory']}/temp/intergenic_flank_seq.txt"
     log:
@@ -131,7 +131,7 @@ rule extract_flank_sequences_null:
     singularity:
         "docker://kjkirven/process_seq"
     shell:
-        "python3 {src_dir}/../variantfoldrna/workflow/scripts/extract_flank_sequences_null.py --ref-genome {input.ref} --vcf {input.vcf_file} --o {output} --flank 50"
+        "python3 {src_dir}/../variantfoldrna/workflow/scripts/extract_flank_sequences_null.py --ref-genome {input.ref} --vcf {input.vcf} --o {output} --flank 50"
 
 rule get_bakground_mutation_rate"
     input:

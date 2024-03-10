@@ -10,17 +10,17 @@ script_path = os.path.realpath(__file__)
 src_dir = os.path.dirname(script_path)
 
 kind = "gff"
-gff_file = config['gff_file']
+gff = config['gff']
 
 # Check to see if the user only wants to use the canonical transcripts:
 if config["canonical"] == True:
-    gff_file = f"{config['tmp_dir']}/temp/canonical_transcripts.gff3"
+    gff = f"{config['tmp_dir']}/temp/canonical_transcripts.gff3"
 else:
-    gff_file = gff_file
+    gff = gff
 
 rule sort_gene_model:
     input:
-        gff_file
+        gff
     output:
         f"{config['tmp_dir']}/temp/annotation.sorted.{kind}.gz"
     conda:
