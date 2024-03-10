@@ -133,7 +133,7 @@ rule extract_flank_sequences_null:
     shell:
         "python3 {src_dir}/../variantfoldrna/workflow/scripts/extract_flank_sequences_null.py --ref-genome {input.ref} --vcf {input.vcf} --o {output} --flank 50"
 
-rule get_bakground_mutation_rate"
+rule get_bakground_mutation_rate:
     input:
         f"{config['working_directory']}/temp/intergenic_flank_seq.txt"
     output:
