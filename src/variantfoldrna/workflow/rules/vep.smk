@@ -74,8 +74,8 @@ rule normalize:
     shell:
         "bcftools norm --check-ref s --fasta-ref {input.ref} --output-type v -o {output} {input.vcf} 2> {log}"
 
-if config['variant_class'] != "None":
-    grep_command = f" grep -v '##' | grep -v 'stream_gene_variant' | grep -v 'intergenic' | grep -v 'coding_sequence_variant' | grep {config['variant_class']} ",
+if config['variant-annotation-type'] != "None":
+    grep_command = f" grep -v '##' | grep -v 'stream_gene_variant' | grep -v 'intergenic' | grep -v 'coding_sequence_variant' | grep {config['variant-annotation-type']} ",
 else:
     grep_command = f" grep -v '##' | grep -v 'stream_gene_variant' | grep -v 'intergenic' | grep -v 'coding_sequence_variant' "
 
