@@ -9,9 +9,12 @@
 ################################################################################
 
 #---- imports ----#
+import os 
+import sys
 
-# Read in the config file:
-configfile: srcdir("../config.yaml")
+# Get the path to the script
+script_path = os.path.realpath(__file__)
+src_dir = os.path.dirname(script_path)
 
 # Create a rule to complement the input gene model so that we get the 
 # putative intergenic regions.

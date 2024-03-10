@@ -5,6 +5,12 @@
 # Assmann and Bevilacqua Labs -- Penn State University
 ########################################################################################################################
 
+import os 
+import sys
+
+# Get the path to the script
+script_path = os.path.realpath(__file__)
+src_dir = os.path.dirname(script_path)
 
 rule add_possible_alts:
     # Add possible alternative alleles to the VCF file

@@ -8,6 +8,13 @@
 ################################################################################
 
 
+import os 
+import sys
+
+# Get the path to the script
+script_path = os.path.realpath(__file__)
+src_dir = os.path.dirname(script_path)
+
 rule chunk_vcf:
     # Break up the VCF file in to bite-sized chunks so that it is easier to process
     input:

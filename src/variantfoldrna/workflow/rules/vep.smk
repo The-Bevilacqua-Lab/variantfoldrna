@@ -2,8 +2,12 @@
 # Rules for running VEP
 ############################################################
 
-# Path to the config file
-configfile: srcdir("../config.yaml")
+import os 
+import sys
+
+# Get the path to the script
+script_path = os.path.realpath(__file__)
+src_dir = os.path.dirname(script_path)
 
 kind = "gff"
 gff_file = config['gff_file']

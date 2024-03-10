@@ -7,6 +7,13 @@
 # The Pennsylvania State University
 ################################################################################
 
+import os 
+import sys
+
+# Get the path to the script
+script_path = os.path.realpath(__file__)
+src_dir = os.path.dirname(script_path)
+
 #---- setup ----#
 # Check to see if the user only wants to use the canonical transcripts:
 if config["canonical"] == True:
