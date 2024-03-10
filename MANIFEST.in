@@ -1,6 +1,0 @@
-include variantfoldrna/variantfoldrna_worfklow/envs/*
-include variantfoldrna/variantfoldrna_worfklow/rules/*
-include variantfoldrna/variantfoldrna_worfklow/scripts/*
-include variantfoldrna/variantfoldrna_worfklow/variantfoldrna.smk
-include variantfoldrna/variantfoldrna.py
-include variantfoldrna/variantfoldrna_utils.py
