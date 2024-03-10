@@ -25,12 +25,12 @@ print(src_dir)
 rule run_snpfold:
     # Perform the riboSNitch analysis with SNPFold
     input:
-        f"{config['tmp_dir']}/temp/extracted_seqs_chunks/extracted_flank_snp_{{i}}.txt",
+        f"{config['tmp_dir']}/extracted_seqs_chunks/extracted_flank_snp_{{i}}.txt",
     params:
         f"{{temp_deg}}",
     output:
-        ribo=f"{config['tmp_dir']}/temp/ribosnitch_chunks_{{temp_deg}}/chunk_{{i}}_riboSNitch_{{temp_deg}}.txt",
-        error=f"{config['tmp_dir']}/temp/ribosnitch_chunks_{{temp_deg}}/chunk_{{i}}_riboSNitch_{{temp_deg}}_error.txt",
+        ribo=f"{config['tmp_dir']}/ribosnitch_chunks_{{temp_deg}}/chunk_{{i}}_riboSNitch_{{temp_deg}}.txt",
+        error=f"{config['tmp_dir']}/ribosnitch_chunks_{{temp_deg}}/chunk_{{i}}_riboSNitch_{{temp_deg}}_error.txt",
     conda:
         "../envs/snpfold.yaml"
     singularity:
@@ -45,7 +45,7 @@ rule combine_ribosnitch_results:
     # Combine the results of riboSNitch prediction into one file
     input:
         [
-            f"{config['out_dir']}/temp/ribosnitch_chunks_{{temp_deg}}/chunk_{i}_riboSNitch_{{temp_deg}}.txt"
+            f"{config['out_dir']}/ribosnitch_chunks_{{temp_deg}}/chunk_{i}_riboSNitch_{{temp_deg}}.txt"
             for i in range(1, config["chunks"] + 1)
         ],
     output:
@@ -77,7 +77,7 @@ rule run_snpfold_csv:
 #     # Combine the results of riboSNitch prediction into one file
 #     input:
 #         [
-#             f"{config['out_dir']}/temp/ribosnitch_chunks_{{temp_deg}}/chunk_{i}_riboSNitch_{{temp_deg}}.txt"
+#             f"{config['out_dir']}/ribosnitch_chunks_{{temp_deg}}/chunk_{i}_riboSNitch_{{temp_deg}}.txt"
 #             for i in range(1, config["chunks"] + 1)
 #         ],
 #     output:
@@ -90,7 +90,7 @@ rule run_snpfold_csv:
 # rule combine_ribosnitch_errors:
 #     # Combine the errors from riboSNitch prediction into one file
 #     input:
-#         expand(f"{config['out_dir']}/temp/ribosnitch_chunks_{{temp_deg}}/chunk_{{i}}_riboSNitch_{{temp_deg}}_error.txt", i=range(1,config["chunks"]+1), temp_deg=wildcards.temp_deg)
+#         expand(f"{config['out_dir']}/ribosnitch_chunks_{{temp_deg}}/chunk_{{i}}_riboSNitch_{{temp_deg}}_error.txt", i=range(1,config["chunks"]+1), temp_deg=wildcards.temp_deg)
 #     output:
 #         f"{config['out_dir']}/ribosnitch_prediction/errors/combined_ribosnitch_prediction_error_{{temp_deg}}.txt"
 #     shell:
