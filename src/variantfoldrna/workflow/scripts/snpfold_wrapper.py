@@ -59,7 +59,7 @@ if __name__ == "__main__":
 
     # Open the output files
     outfile = open(args.output, "w")
-    error = open(args.output.strip(".txt") + "_error.txt", "w")
+    error = open(args.output[:-4] + "_error.txt", "w")
 
     ids, seqs = [], []
     with open(args.in_file) as fn:
