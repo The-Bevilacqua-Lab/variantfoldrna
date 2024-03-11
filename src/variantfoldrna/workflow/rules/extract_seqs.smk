@@ -17,13 +17,13 @@ src_dir = os.path.dirname(script_path)
 # ---- setup ----#
 # Check to see if the user only wants to use the canonical transcripts:
 if config["canonical"] == True:
-    gff = f"{config['tmp_dir']}/temp/canonical_transcripts.gff3"
+    gff = f"{config['tmp_dir']}/canonical_transcripts.gff3"
 else:
     gff = config["gff"]
 
 # Get what the final combined outpout will be
 combine_input = expand(
-    f"{config['tmp_dir']}/temp/extracted_sequences/extracted_seqs_{{i}}.txt",
+    f"{config['tmp_dir']}/extracted_sequences/extracted_seqs_{{i}}.txt",
     i=range(1, config["chunks"] + 1),
 )
 
@@ -33,7 +33,7 @@ rule get_canonical_transcripts_with_AGAT:
     input:
         gff=config["gff"],
     output:
-        f"{config['tmp_dir']}/temp/canonical_transcripts.gff3",
+        f"{config['tmp_dir']}/canonical_transcripts.gff3",
     singularity:
         "docker://condaforge/mambaforge"
     conda:
@@ -51,7 +51,7 @@ rule extract_cds_from_gff_with_gffread:
         gff=gff,
         ref=config["ref_genome"],
     output:
-        f"{config['tmp_dir']}/temp/cds.fa",
+        f"{config['tmp_dir']}/cds.fa",
     conda:
         f"{src_dir}/../variantfoldrna/envs/process_seq.yaml"
     singularity:
@@ -67,7 +67,7 @@ rule get_table_from_gffread:
     input:
         gtf=gff,
     output:
-        f"{config['tmp_dir']}/temp/gffread_table.txt",
+        f"{config['tmp_dir']}/gffread_table.txt",
     conda:
         f"{src_dir}/../variantfoldrna/envs/process_seq.yaml"
     singularity:
@@ -79,9 +79,9 @@ rule get_table_from_gffread:
 rule create_json_from_gffread_table:
     # Create a JSON file from the GFF table
     input:
-        f"{config['tmp_dir']}/temp/gffread_table.txt",
+        f"{config['tmp_dir']}/gffread_table.txt",
     output:
-        f"{config['tmp_dir']}/temp/gffread_table.json",
+        f"{config['tmp_dir']}/gffread_table.json",
     conda:
         f"{src_dir}/../variantfoldrna/envs/process_seq.yaml"
     singularity:
@@ -93,13 +93,13 @@ rule create_json_from_gffread_table:
 rule extract_sequences:
     # Extract the sequences flanking the SNP
     input:
-        vcf=f"{config['tmp_dir']}/temp/annotated_vcf_chunks_effects/vcf_no_header_{{i}}_annotated_one_per_line.txt",
-        database=f"{config['tmp_dir']}/temp/gffread_table.json",
+        vcf=f"{config['tmp_dir']}/annotated_vcf_chunks_effects/vcf_no_header_{{i}}_annotated_one_per_line.txt",
+        database=f"{config['tmp_dir']}/gffread_table.json",
     params:
         ref_genome=config["ref_genome"],
         flank=config["flank_len"],
     output:
-        seqs=f"{config['tmp_dir']}/temp/extracted_sequences/extracted_seqs_{{i}}.txt",
+        seqs=f"{config['tmp_dir']}/extracted_sequences/extracted_seqs_{{i}}.txt",
     conda:
         f"{src_dir}/../variantfoldrna/envs/process_seq.yaml"
     singularity:
@@ -113,7 +113,7 @@ rule combine_extracted_sequences:
     input:
         combine_input,
     output:
-        f"{config['tmp_dir']}/temp/extracted_flank_snp.txt",
+        f"{config['tmp_dir']}/extracted_flank_snp.txt",
     shell:
         "cat {input} > {output}"
 
@@ -121,9 +121,9 @@ rule combine_extracted_sequences:
 rule remove_duplicates:
     # Remove duplicates from the extracted sequences
     input:
-        f"{config['tmp_dir']}/temp/extracted_flank_snp.txt",
+        f"{config['tmp_dir']}/extracted_flank_snp.txt",
     output:
-        f"{config['tmp_dir']}/temp/extracted_flank_snp_no_duplicates.txt",
+        f"{config['tmp_dir']}/extracted_flank_snp_no_duplicates.txt",
     conda:
         f"{src_dir}/../variantfoldrna/envs/process_seq.yaml"
     singularity:

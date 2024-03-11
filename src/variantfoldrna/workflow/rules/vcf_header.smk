@@ -35,9 +35,9 @@ with open(config["vcf"], "rb") as f:
 rule get_vcf_header:
     # Get the header from the VCF file so that it can be added back in later
     output:
-        f"{config['tmp_dir']}/temp/vcf_header.txt.gz",
+        f"{config['tmp_dir']}/vcf_header.txt.gz",
     params:
-        output=f"{config['tmp_dir']}/temp/vcf_header.txt",
+        output=f"{config['tmp_dir']}/vcf_header.txt",
     shell:
         f"{cmd} < {config['vcf']} | grep '##' > {{params.output}} && gzip {{params.output}}"
 
@@ -46,8 +46,8 @@ rule rid_header:
     # Get rid of the header from the VCF file so that it is
     # not included in the chunks
     output:
-        f"{config['tmp_dir']}/temp/vcf_no_header.vcf.gz",
+        f"{config['tmp_dir']}/vcf_no_header.vcf.gz",
     params:
-        output=f"{config['tmp_dir']}/temp/vcf_no_header.vcf",
+        output=f"{config['tmp_dir']}/vcf_no_header.vcf",
     shell:
         f"{cmd} < {config['vcf']} | grep -v '##' > {{params.output}} && gzip {{params.output}}"

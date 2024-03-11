@@ -19,11 +19,11 @@ src_dir = os.path.dirname(script_path)
 rule chunk_vcf:
     # Break up the VCF file in to bite-sized chunks so that it is easier to process
     input:
-        vcf=f"{config['tmp_dir']}/temp/vcf_no_header.vcf.gz",
-        header=f"{config['tmp_dir']}/temp/vcf_header.txt.gz",
+        vcf=f"{config['tmp_dir']}/vcf_no_header.vcf.gz",
+        header=f"{config['tmp_dir']}/vcf_header.txt.gz",
     output:
         expand(
-            f"{config['tmp_dir']}/temp/vcf_chunks/vcf_no_header_{{i}}.vcf.gz",
+            f"{config['tmp_dir']}/vcf_chunks/vcf_no_header_{{i}}.vcf.gz",
             i=range(1, int(config["chunks"]) + 1),
         ),
     conda:
@@ -39,10 +39,10 @@ rule chunk_vcf:
 rule chunk_extracted_sequences:
     # Chunk the extracted sequences:
     input:
-        f"{config['tmp_dir']}/temp/extracted_flank_snp_no_duplicates.txt",
+        f"{config['tmp_dir']}/extracted_flank_snp_no_duplicates.txt",
     output:
         expand(
-            f"{config['tmp_dir']}/temp/extracted_seqs_chunks/extracted_flank_snp_{{i}}.txt",
+            f"{config['tmp_dir']}/extracted_seqs_chunks/extracted_flank_snp_{{i}}.txt",
             i=range(1, config["chunks"] + 1),
         ),
     conda:

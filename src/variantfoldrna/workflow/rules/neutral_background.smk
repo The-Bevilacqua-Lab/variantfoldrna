@@ -23,7 +23,7 @@ rule get_bedtools_genome_file:
     params:
         ref=config["ref_genome"],
     output:
-        f"{config['tmp_dir']}/temp/genome_bedtools_file.txt",
+        f"{config['tmp_dir']}/genome_bedtools_file.txt",
     log:
         f"{config['tmp_dir']}/logs/get_bedtools_genome_file.log",
     singularity:
@@ -36,7 +36,7 @@ rule convert_gff_to_bed:
     input:
         gff=config["gff"],
     output:
-        f"{config['tmp_dir']}/temp/gene_model.bed",
+        f"{config['tmp_dir']}/gene_model.bed",
     log:
         f"{config['tmp_dir']}/logs/convert_gff_to_bed.log",
     singularity:
@@ -47,9 +47,9 @@ rule convert_gff_to_bed:
 
 rule sort_gene_model_null:
     input:
-        gene_model=f"{config['tmp_dir']}/temp/gene_model.bed",
+        gene_model=f"{config['tmp_dir']}/gene_model.bed",
     output:
-        f"{config['tmp_dir']}/temp/gene_model_sorted.bed",
+        f"{config['tmp_dir']}/gene_model_sorted.bed",
     log:
         f"{config['tmp_dir']}/logs/sort_gene_model.log",
     singularity:
@@ -60,9 +60,9 @@ rule sort_gene_model_null:
 
 rule sort_genome_file:
     input:
-        ref=f"{config['tmp_dir']}/temp/genome_bedtools_file.txt",
+        ref=f"{config['tmp_dir']}/genome_bedtools_file.txt",
     output:
-        f"{config['tmp_dir']}/temp/genome_bedtools_file_sorted.txt",
+        f"{config['tmp_dir']}/genome_bedtools_file_sorted.txt",
     log:
         f"{config['tmp_dir']}/logs/sort_genome_file.log",
     singularity:
@@ -73,10 +73,10 @@ rule sort_genome_file:
 
 rule complement_gene_model:
     input:
-        ref=f"{config['tmp_dir']}/temp/genome_bedtools_file_sorted.txt",
-        gff=f"{config['tmp_dir']}/temp/gene_model_sorted.bed",
+        ref=f"{config['tmp_dir']}/genome_bedtools_file_sorted.txt",
+        gff=f"{config['tmp_dir']}/gene_model_sorted.bed",
     output:
-        f"{config['tmp_dir']}/temp/gene_model_complement.bed",
+        f"{config['tmp_dir']}/gene_model_complement.bed",
     log:
         f"{config['tmp_dir']}/logs/complement_gene_model.log",
     singularity:
@@ -88,9 +88,9 @@ rule complement_gene_model:
 rule trim_intergenic_regions:
     # trim the intergenic regions to avoid promoters
     input:
-        gene_model=f"{config['tmp_dir']}/temp/gene_model_complement.bed",
+        gene_model=f"{config['tmp_dir']}/gene_model_complement.bed",
     output:
-        f"{config['tmp_dir']}/temp/gene_model_complement_trimmed.bed",
+        f"{config['tmp_dir']}/gene_model_complement_trimmed.bed",
     log:
         f"{config['tmp_dir']}/logs/trim_intergenic_regions.log",
     singularity:
@@ -102,9 +102,9 @@ rule trim_intergenic_regions:
 rule bgzip_vcf:
     params:
         vcf=config["vcf"],
-        bgzip=f"{config['tmp_dir']}/temp/bgzip_{config['vcf']}",
+        bgzip=f"{config['tmp_dir']}/bgzip_{config['vcf']}",
     output:
-        f"{config['tmp_dir']}/temp/bgzip_{config['vcf']}.gz",
+        f"{config['tmp_dir']}/bgzip_{config['vcf']}.gz",
     log:
         f"{config['tmp_dir']}/logs/bgzip_vcf.log",
     singularity:
@@ -115,10 +115,10 @@ rule bgzip_vcf:
 
 rule intersect_vcf_with_gene_model:
     input:
-        gene_model=f"{config['tmp_dir']}/temp/gene_model_complement_trimmed.bed",
-        vcf=f"{config['tmp_dir']}/temp/bgzip_{config['vcf']}.gz",
+        gene_model=f"{config['tmp_dir']}/gene_model_complement_trimmed.bed",
+        vcf=f"{config['tmp_dir']}/bgzip_{config['vcf']}.gz",
     output:
-        f"{config['tmp_dir']}/temp/intergenic_variants.vcf",
+        f"{config['tmp_dir']}/intergenic_variants.vcf",
     log:
         f"{config['tmp_dir']}/logs/intersect_vcf_with_gene_model.log",
     singularity:
@@ -130,9 +130,9 @@ rule intersect_vcf_with_gene_model:
 rule extract_flank_sequences_null:
     input:
         ref=config["ref_genome"],
-        vcf=f"{config['tmp_dir']}/temp/intergenic_variants.vcf",
+        vcf=f"{config['tmp_dir']}/intergenic_variants.vcf",
     output:
-        f"{config['tmp_dir']}/temp/intergenic_flank_seq.txt",
+        f"{config['tmp_dir']}/intergenic_flank_seq.txt",
     log:
         f"{config['tmp_dir']}/logs/extract_flank_sequences.log",
     singularity:
@@ -143,9 +143,9 @@ rule extract_flank_sequences_null:
 
 rule get_bakground_mutation_rate:
     input:
-        f"{config['tmp_dir']}/temp/intergenic_flank_seq.txt",
+        f"{config['tmp_dir']}/intergenic_flank_seq.txt",
     output:
-        f"{config['tmp_dir']}/temp/background_mutation_rate.txt",
+        f"{config['tmp_dir']}/background_mutation_rate.txt",
     log:
         f"{config['tmp_dir']}/logs/get_background_mutation_rate.log",
     singularity:
