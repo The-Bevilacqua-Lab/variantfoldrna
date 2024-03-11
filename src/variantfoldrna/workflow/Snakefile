@@ -14,7 +14,7 @@ import subprocess
 
 # Check to make sure that, if the user is running RNAsnp, they use 
 # a flanking lenth that is between 100 and 800 nt in intervals of 50
-config['ribosnitch_prediction_tool'].lower() == 'rnasnp:p-value' or config['ribosnitch_prediction_tool'].lower() == 'rnasnp:dist':
+if config['ribosnitch_prediction_tool'].lower() == 'rnasnp:p-value' or config['ribosnitch_prediction_tool'].lower() == 'rnasnp:dist':
     flanking = config['flank_len']
     if flanking < 100 or flanking > 800 or flanking % 50 != 0:
         raise ValueError("The flanking length must be between 100 and 800 in intervals of 50.")
