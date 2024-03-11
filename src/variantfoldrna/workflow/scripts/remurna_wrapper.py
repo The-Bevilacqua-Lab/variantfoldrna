@@ -48,7 +48,7 @@ def run_remurna(sequence, mutation, temperature):
     # Run RNAsnp
     remurna = subprocess.run(
         [
-            "/data2/remuRNA/remuRNA",
+            "remuRNA",
             seq,
             f"--tmin={temperature}",
             f"--tmax={temperature}",

@@ -38,7 +38,7 @@ rule combine_ribosnitch_results:
     # Combine the results of riboSNitch prediction into one file
     input:
         [
-            f"{config['out_dir']}/ribosnitch_chunks_{{temp_deg}}/chunk_{i}_riboSNitch_{{temp_deg}}.txt"
+            f"{config['tmp_dir']}/ribosnitch_chunks_{{temp_deg}}/chunk_{i}_riboSNitch_{{temp_deg}}.txt"
             for i in range(1, config["chunks"] + 1)
         ],
     output:
