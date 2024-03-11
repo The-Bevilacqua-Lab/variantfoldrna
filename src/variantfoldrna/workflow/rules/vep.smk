@@ -78,7 +78,7 @@ rule normalize:
         "bcftools norm --check-ref s --fasta-ref {input.ref} --output-type v -o {output} {input.vcf} 2> {log}"
 
 
-if config["variant_annotation_type"] != "None":
+if config["variant_annotation_type"] != "All":
     grep_command = (
         f" grep -v '##' | grep -v 'stream_gene_variant' | grep -v 'intergenic' | grep -v 'coding_sequence_variant' | grep {config['variant_annotation_type']} ",
     )
