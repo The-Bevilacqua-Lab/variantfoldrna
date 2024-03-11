@@ -37,7 +37,7 @@ rule get_canonical_transcripts_with_AGAT:
     singularity:
         "docker://condaforge/mambaforge"
     conda:
-        f"{src_dir}/../variantfoldrna/envs/agat.yaml"
+        f"{src_dir}/../variantfoldrna/envs/envs/envs/agat.yaml"
     log:
         f"{config['tmp_dir']}/logs/get_canonical_transcripts_with_AGAT.log",
     shell:
@@ -53,7 +53,7 @@ rule extract_cds_from_gff_with_gffread:
     output:
         f"{config['tmp_dir']}/cds.fa",
     conda:
-        f"{src_dir}/../variantfoldrna/envs/process_seq.yaml"
+        f"{src_dir}/../variantfoldrna/envs/envs/envs/process_seq.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     log:
@@ -69,7 +69,7 @@ rule get_table_from_gffread:
     output:
         f"{config['tmp_dir']}/gffread_table.txt",
     conda:
-        f"{src_dir}/../variantfoldrna/envs/process_seq.yaml"
+        f"{src_dir}/../variantfoldrna/envs/envs/envs/process_seq.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:
@@ -83,11 +83,11 @@ rule create_json_from_gffread_table:
     output:
         f"{config['tmp_dir']}/gffread_table.json",
     conda:
-        f"{src_dir}/../variantfoldrna/envs/process_seq.yaml"
+        f"{src_dir}/../variantfoldrna/envs/envs/envs/process_seq.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:
-        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/create_json_from_gffread_table.py --table {{input}} --o {{output}}"
+        f"python3 {src_dir}/../variantfoldrna/envs/envs/workflow/scripts/create_json_from_gffread_table.py --table {{input}} --o {{output}}"
 
 
 rule extract_sequences:
@@ -101,11 +101,11 @@ rule extract_sequences:
     output:
         seqs=f"{config['tmp_dir']}/extracted_sequences/extracted_seqs_{{i}}.txt",
     conda:
-        f"{src_dir}/../variantfoldrna/envs/process_seq.yaml"
+        f"{src_dir}/../variantfoldrna/envs/envs/envs/process_seq.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:
-        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/get_read_data.py --vcf {{input.vcf}} --gffread {{input.database}} --ref-genome {{params.ref_genome}} --flank {{params.flank}} --o {{output.seqs}}"
+        f"python3 {src_dir}/../variantfoldrna/envs/envs/workflow/scripts/get_read_data.py --vcf {{input.vcf}} --gffread {{input.database}} --ref-genome {{params.ref_genome}} --flank {{params.flank}} --o {{output.seqs}}"
 
 
 rule combine_extracted_sequences:
@@ -125,8 +125,8 @@ rule remove_duplicates:
     output:
         f"{config['tmp_dir']}/extracted_flank_snp_no_duplicates.txt",
     conda:
-        f"{src_dir}/../variantfoldrna/envs/process_seq.yaml"
+        f"{src_dir}/../variantfoldrna/envs/envs/envs/process_seq.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:
-        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/remove_duplicates.py -i {{input}} -o {{output}}"
+        f"python3 {src_dir}/../variantfoldrna/envs/envs/workflow/scripts/remove_duplicates.py -i {{input}} -o {{output}}"

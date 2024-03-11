@@ -33,13 +33,13 @@ rule run_snpfold:
         ribo=f"{config['tmp_dir']}/ribosnitch_chunks_{{temp_deg}}/chunk_{{i}}_riboSNitch_{{temp_deg}}.txt",
         error=f"{config['tmp_dir']}/ribosnitch_chunks_{{temp_deg}}/chunk_{{i}}_riboSNitch_{{temp_deg}}_error.txt",
     conda:
-        f"{src_dir}/../variantfoldrna/envs/snpfold.yaml"
+        f"{src_dir}/../variantfoldrna/envs/envs/snpfold.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     log:
         f"{config['tmp_dir']}/logs/ribosnitch_prediction/chunk_{{i}}_riboSNitch_{{temp_deg}}.log",
     shell:
-        f"python3 {src_dir}/../variantfoldrna/scripts/snpfold_wrapper.py --i {{input[0]}} --o {{output.ribo}} --flank {config['flank_len']} --temp {{params}}"
+        f"python3 {src_dir}/../variantfoldrna/envs/scripts/snpfold_wrapper.py --i {{input[0]}} --o {{output.ribo}} --flank {config['flank_len']} --temp {{params}}"
 
 
 rule combine_ribosnitch_results:
@@ -66,13 +66,13 @@ rule run_snpfold_csv:
     output:
         ribo=f"{config['out_dir']}/ribosnitch_predictions_csv/combined_ribosnitch_prediction_{{temp_deg}}.txt",
     conda:
-        f"{src_dir}/../variantfoldrna/envs/snpfold.yaml"
+        f"{src_dir}/../variantfoldrna/envs/envs/snpfold.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     # log:
     #     f"{config['out_dir']}/logs/ribosnitch_prediction/chunk_{{i}}_riboSNitch_{{temp_deg}}.log",
     shell:
-        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/from_csv_snpfold.py --i {{input[0]}} --o {{output.ribo}} --temp {{params}}"
+        f"python3 {src_dir}/../variantfoldrna/envs/workflow/scripts/from_csv_snpfold.py --i {{input[0]}} --o {{output.ribo}} --temp {{params}}"
 
 
 # rule combine_ribosnitch_results_csv:
