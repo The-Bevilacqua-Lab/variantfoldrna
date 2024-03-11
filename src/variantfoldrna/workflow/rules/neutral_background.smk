@@ -29,7 +29,7 @@ rule get_bedtools_genome_file:
     singularity:
         "docker://kjkirven/process_seq"
     shell:
-        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/get_chrom_lengths.py --ref-genome {params.ref} --output {output}"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/get_chrom_lengths.py --ref-genome {{params.ref}} --output {{output}}"
 
 
 rule convert_gff_to_bed:
@@ -96,7 +96,7 @@ rule trim_intergenic_regions:
     singularity:
         "docker://kjkirven/process_seq"
     shell:
-        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/trim_intergenic_regions.py --input {input.gene_model} --output {output}"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/trim_intergenic_regions.py --input {{input.gene_model}} --output {{output}}"
 
 
 rule bgzip_vcf:
@@ -138,7 +138,7 @@ rule extract_flank_sequences_null:
     singularity:
         "docker://kjkirven/process_seq"
     shell:
-        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/extract_flank_sequences_null.py --ref-genome {input.ref} --vcf {input.vcf} --o {output} --flank 50"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/extract_flank_sequences_null.py --ref-genome {{input.ref}} --vcf {{input.vcf}} --o {{output}} --flank 50"
 
 
 rule get_bakground_mutation_rate:
@@ -151,4 +151,4 @@ rule get_bakground_mutation_rate:
     singularity:
         "docker://kjkirven/process_seq"
     shell:
-        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/get_background_mutation_rate.py --input {input} --output {output}"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/get_background_mutation_rate.py --input {{input}} --output {{output}}"
