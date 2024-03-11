@@ -35,7 +35,7 @@ rule get_canonical_transcripts_with_AGAT:
     singularity:
         "docker://condaforge/mambaforge"
     conda:
-        "../envs/agat.yaml"
+        "f"{src_dir}/../variantfoldrna/envs/agat.yaml"
     log:
         f"{config['tmp_dir']}/logs/get_canonical_transcripts_with_AGAT.log"
     shell:
@@ -50,7 +50,7 @@ rule extract_cds_from_gff_with_gffread:
     output:
         f"{config['tmp_dir']}/temp/cds.fa",
     conda:
-        "../envs/process_seq.yaml"
+        "f"{src_dir}/../variantfoldrna/envs/process_seq.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     log:
@@ -65,7 +65,7 @@ rule get_table_from_gffread:
     output:
         f"{config['tmp_dir']}/temp/gffread_table.txt",
     conda:
-        "../envs/process_seq.yaml"
+        "f"{src_dir}/../variantfoldrna/envs/process_seq.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:
@@ -78,7 +78,7 @@ rule create_json_from_gffread_table:
     output:
         f"{config['tmp_dir']}/temp/gffread_table.json",
     conda:
-        "../envs/process_seq.yaml"
+        "f"{src_dir}/../variantfoldrna/envs/process_seq.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:
@@ -95,7 +95,7 @@ rule extract_sequences:
     output:
         seqs=f"{config['tmp_dir']}/temp/extracted_sequences/extracted_seqs_{{i}}.txt",
     conda:
-        "../envs/process_seq.yaml"
+        "f"{src_dir}/../variantfoldrna/envs/process_seq.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:
@@ -118,7 +118,7 @@ rule remove_duplicates:
     output:
         f"{config['tmp_dir']}/temp/extracted_flank_snp_no_duplicates.txt",
     conda:
-        "../envs/process_seq.yaml"
+        "f"{src_dir}/../variantfoldrna/envs/process_seq.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:

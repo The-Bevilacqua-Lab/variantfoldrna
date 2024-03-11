@@ -24,7 +24,7 @@ rule run_rnasnp:
         ribo=f"{config['tmp_dir']}/ribosnitch_chunks_{{temp_deg}}/chunk_{{i}}_riboSNitch_{{temp_deg}}.txt",
         error=f"{config['tmp_dir']}/ribosnitch_chunks_{{temp_deg}}/chunk_{{i}}_riboSNitch_{{temp_deg}}_error.txt",
     conda:
-        "../envs/rnasnp.yaml"
+        "f"{src_dir}/../variantfoldrna/envs/rnasnp.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     log:
@@ -55,7 +55,7 @@ rule run_rnasnp_csv:
     output:
         ribo=f"{config['out_dir']}/ribosnitch_predictions_csv/combined_ribosnitch_prediction_{{temp_deg}}.txt",
     conda:
-        "../envs/rnasnp.yaml"
+        "f"{src_dir}/../variantfoldrna/envs/rnasnp.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:

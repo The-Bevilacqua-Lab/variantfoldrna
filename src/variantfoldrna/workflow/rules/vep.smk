@@ -24,7 +24,7 @@ rule sort_gene_model:
     output:
         f"{config['tmp_dir']}/temp/annotation.sorted.{kind}.gz"
     conda:
-        "../envs/ensembl.yaml"
+        "f"{src_dir}/../variantfoldrna/envs/ensembl.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:
@@ -36,7 +36,7 @@ rule tabix_annotation:
     output:
         f"{config['tmp_dir']}/temp/annotation.sorted.{kind}.gz.csi"
     conda:
-        "../envs/ensembl.yaml"
+        "f"{src_dir}/../variantfoldrna/envs/ensembl.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:
@@ -51,7 +51,7 @@ rule seperate_multi_vars:
     output:
         f"{config['tmp_dir']}/temp/vcf_chunks/vcf_no_header_{{i}}_seperated.vcf.gz",
     conda:
-        "../envs/snpeff_env.yaml"
+        "f"{src_dir}/../variantfoldrna/envs/snpeff_env.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:
@@ -68,7 +68,7 @@ rule normalize:
     output:
         f"{config['tmp_dir']}/temp/vcf_chunks/vcf_no_header_{{i}}_normalized.vcf",
     conda:
-        "../envs/snpeff_env.yaml"
+        "f"{src_dir}/../variantfoldrna/envs/snpeff_env.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:
@@ -92,7 +92,7 @@ rule vep:
         output = f"{config['tmp_dir']}/temp/annotated_vcf_chunks_effects/vcf_no_header_{{i}}_annotated_one_per_line_temp.txt",
         grep_command = f"{grep_command}"
     conda:
-        "../envs/ensembl.yaml"
+        "f"{src_dir}/../variantfoldrna/envs/ensembl.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     log:

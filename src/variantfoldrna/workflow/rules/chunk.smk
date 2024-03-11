@@ -26,7 +26,7 @@ rule chunk_vcf:
             i=range(1, int(config["chunks"]) + 1),
         ),
     conda:
-        "../envs/process_seq.yaml"
+        "f"{src_dir}/../variantfoldrna/envs/process_seq.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     log:
@@ -45,7 +45,7 @@ rule chunk_extracted_sequences:
             i=range(1, config["chunks"] + 1),
         ),
     conda:
-        "../envs/process_seq.yaml"
+        "f"{src_dir}/../variantfoldrna/envs/process_seq.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:

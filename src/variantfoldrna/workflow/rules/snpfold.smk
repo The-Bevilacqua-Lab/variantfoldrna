@@ -21,7 +21,7 @@ import sys
 # Get the path to the script
 script_path = os.path.realpath(__file__)
 src_dir = os.path.dirname(script_path)
-print(src_dir)
+
 rule run_snpfold:
     # Perform the riboSNitch analysis with SNPFold
     input:
@@ -32,7 +32,7 @@ rule run_snpfold:
         ribo=f"{config['tmp_dir']}/ribosnitch_chunks_{{temp_deg}}/chunk_{{i}}_riboSNitch_{{temp_deg}}.txt",
         error=f"{config['tmp_dir']}/ribosnitch_chunks_{{temp_deg}}/chunk_{{i}}_riboSNitch_{{temp_deg}}_error.txt",
     conda:
-        "../envs/snpfold.yaml"
+        f"{src_dir}/../variantfoldrna/envs/snpfold.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     log:
@@ -49,7 +49,7 @@ rule combine_ribosnitch_results:
             for i in range(1, config["chunks"] + 1)
         ],
     output:
-        f"{config['out_dir']}ribosnitch_predictions/combined_ribosnitch_prediction_{{temp_deg}}.txt",
+        f"{config['out_dir']}/ribosnitch_predictions/combined_ribosnitch_prediction_{{temp_deg}}.txt",
     log:
         f"{config['out_dir']}/logs/combine_ribosnitch_results_{{temp_deg}}.log",
     shell:
@@ -64,7 +64,7 @@ rule run_snpfold_csv:
     output:
         ribo=f"{config['out_dir']}/ribosnitch_predictions_csv/combined_ribosnitch_prediction_{{temp_deg}}.txt",
     conda:
-        "../envs/snpfold.yaml"
+        f"{src_dir}/../variantfoldrna/envs/snpfold.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     # log:
