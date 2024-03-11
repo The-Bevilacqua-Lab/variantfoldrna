@@ -12,20 +12,21 @@
 import os
 import subprocess
 
-# Get the location of this file:
-location = os.getcwd()
+# Check to make sure that, if the user is running RNAsnp, they use 
+# a flanking lenth that is between 100 and 800 nt in intervals of 50
+if "rnasnp" in location:
+    flanking = int(location.split("flanking_")[1].split("_")[0])
+    if flanking < 100 or flanking > 800 or flanking % 50 != 0:
+        raise ValueError("The flanking length must be between 100 and 800 in intervals of 50.")
 
-# Get the path up to the VariantFoldRNA directory:
-path = []
-for ele in location.split("/"):
-    if ele == "variantfoldrna":
-        path.append(ele)
-        break
-    else:
-        path.append(ele)
 
-# Convert the path to a string:
-path = "/".join(path)
+# if the user does not specify the number of chunks, let's estimate it by the size of 
+# the input file
+if config['chunks'] == -1:
+    # get the size of the input file
+    size = os.path.getsize(input_file)
+    # estimate the number of chunks
+    config['chunks'] = int(size / 10000000) + 1
 
 
 # -- Import common rules -- #
