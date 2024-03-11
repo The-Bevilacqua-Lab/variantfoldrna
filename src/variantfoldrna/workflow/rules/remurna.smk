@@ -6,12 +6,13 @@
 # The Pennsylvania State University
 ############################################################################################
 
-import os 
+import os
 import sys
 
 # Get the path to the script
 script_path = os.path.realpath(__file__)
 src_dir = os.path.dirname(script_path)
+
 
 ###########################
 # Rules for running Riprap
@@ -26,9 +27,9 @@ rule run_remurna:
         ribo=f"{config['tmp_dir']}/ribosnitch_chunks_{{temp_deg}}/chunk_{{i}}_riboSNitch_{{temp_deg}}.txt",
         error=f"{config['tmp_dir']}/ribosnitch_chunks_{{temp_deg}}/chunk_{{i}}_riboSNitch_{{temp_deg}}_error.txt",
     conda:
-        "f"{src_dir}/../variantfoldrna/envs/process_seq.yaml"
+        f"{src_dir}/../variantfoldrna/envs/process_seq.yaml"
     singularity:
-        "f"{src_dir}/../variantfoldrna/envs/remurna.yaml"
+        f"{src_dir}/../variantfoldrna/envs/remurna.yaml"
     log:
         f"{config['tmp_dir']}/logs/ribosnitch_prediction/chunk_{{i}}_riboSNitch_{{temp_deg}}.log",
     shell:
@@ -47,7 +48,8 @@ rule combine_ribosnitch_results:
     log:
         f"{config['out_dir']}/logs/combine_ribosnitch_results_{{temp_deg}}.log",
     shell:
-        "echo    'Chrom	Pos	Ref	Alt	Flank_left	Flank_right	Gene	Match	Type	Strand	Effect	Score' > {output} && cat {input} >> {output}"
+        "echo    'Chrom    Pos    Ref    Alt    Flank_left    Flank_right    Gene    Match    Type    Strand    Effect    Score' > {output} && cat {input} >> {output}"
+
 
 rule run_remurna_csv:
     # Perform the riboSNitch analysis with Riprap
@@ -58,8 +60,8 @@ rule run_remurna_csv:
     output:
         ribo=f"{config['out_dir']}/ribosnitch_predictions_csv/combined_ribosnitch_prediction_{{temp_deg}}.txt",
     conda:
-        "f"{src_dir}/../variantfoldrna/envs/process_seq.yaml"
+        f"{src_dir}/../variantfoldrna/envs/process_seq.yaml"
     singularity:
-        "f"{src_dir}/../variantfoldrna/envs/remurna.yaml"
+        f"{src_dir}/../variantfoldrna/envs/remurna.yaml"
     shell:
         f"python3 {src_dir}/../variantfoldrna/workflow/scripts/csv_remurna.py --i {{input}} --o {{output.ribo}} --temp {{params}} --flank {config['flank_len']}"

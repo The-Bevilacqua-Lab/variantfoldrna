@@ -5,12 +5,13 @@
 # Assmann and Bevilacqua Labs -- Penn State University
 ########################################################################################################################
 
-import os 
+import os
 import sys
 
 # Get the path to the script
 script_path = os.path.realpath(__file__)
 src_dir = os.path.dirname(script_path)
+
 
 rule add_possible_alts:
     # Add possible alternative alleles to the VCF file
@@ -31,9 +32,7 @@ rule add_possible_alts:
 rule create_vep_other_alts_dir:
     # Create the directory for the VEP annotations for the generated alternative alleles
     output:
-        directory(
-            f"{config['tmp_dir']}/temp/vep_chunks_all_alts_annotated"
-        ),
+        directory(f"{config['tmp_dir']}/temp/vep_chunks_all_alts_annotated"),
     shell:
         "mkdir -p {output}"
 

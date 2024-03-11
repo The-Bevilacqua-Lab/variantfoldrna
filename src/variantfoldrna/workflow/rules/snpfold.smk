@@ -7,7 +7,7 @@
 # The Pennsylvania State University
 ################################################################################
 
-import os 
+import os
 import sys
 
 # Get the path to the script
@@ -15,12 +15,13 @@ script_path = os.path.realpath(__file__)
 src_dir = os.path.dirname(script_path)
 
 # Get the path to the script
-import os 
+import os
 import sys
 
 # Get the path to the script
 script_path = os.path.realpath(__file__)
 src_dir = os.path.dirname(script_path)
+
 
 rule run_snpfold:
     # Perform the riboSNitch analysis with SNPFold
@@ -53,7 +54,8 @@ rule combine_ribosnitch_results:
     log:
         f"{config['out_dir']}/logs/combine_ribosnitch_results_{{temp_deg}}.log",
     shell:
-        "echo    'Chrom	Pos	Transcript_pos	Ref	Alt	Flank_left	Flank_right	Gene	Match	Type	Strand	Ref_dG	Alt_dG	Ref_ED	Alt_ED	Score' > {output} && cat {input} >> {output}"
+        "echo    'Chrom    Pos    Transcript_pos    Ref    Alt    Flank_left    Flank_right    Gene    Match    Type    Strand    Ref_dG    Alt_dG    Ref_ED    Alt_ED    Score' > {output} && cat {input} >> {output}"
+
 
 rule run_snpfold_csv:
     # Perform the riboSNitch analysis with SNPFold
@@ -86,7 +88,6 @@ rule run_snpfold_csv:
 #         f"{config['out_dir']}/logs/combine_ribosnitch_results_{{temp_deg}}.log",
 #     shell:
 #         "echo    'Chrom	Pos	Transcript_pos	Ref	Alt	Flank_left	Flank_right	Gene	Match	Type	Strand	Ref_dG	Alt_dG	Ref_ED	Alt_ED	Score' > {output} && cat {input} >> {output}"
-
 # rule combine_ribosnitch_errors:
 #     # Combine the errors from riboSNitch prediction into one file
 #     input:

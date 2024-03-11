@@ -8,12 +8,13 @@
 ################################################################################
 
 
-import os 
+import os
 import sys
 
 # Get the path to the script
 script_path = os.path.realpath(__file__)
 src_dir = os.path.dirname(script_path)
+
 
 rule chunk_vcf:
     # Break up the VCF file in to bite-sized chunks so that it is easier to process
@@ -26,7 +27,7 @@ rule chunk_vcf:
             i=range(1, int(config["chunks"]) + 1),
         ),
     conda:
-        "f"{src_dir}/../variantfoldrna/envs/process_seq.yaml"
+        f"{src_dir}/../variantfoldrna/envs/process_seq.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     log:
@@ -45,7 +46,7 @@ rule chunk_extracted_sequences:
             i=range(1, config["chunks"] + 1),
         ),
     conda:
-        "f"{src_dir}/../variantfoldrna/envs/process_seq.yaml"
+        f"{src_dir}/../variantfoldrna/envs/process_seq.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:

@@ -6,12 +6,13 @@
 # The Pennsylvania State University
 ############################################################################################
 
-import os 
+import os
 import sys
 
 # Get the path to the script
 script_path = os.path.realpath(__file__)
 src_dir = os.path.dirname(script_path)
+
 
 ###########################
 # Rules for running Riprap
@@ -28,7 +29,7 @@ rule run_riprap:
     singularity:
         "docker://condaforge/mambaforge"
     conda:
-        "f"{src_dir}/../variantfoldrna/envs/riprap.yaml"
+        f"{src_dir}/../variantfoldrna/envs/riprap.yaml"
     log:
         f"{config['tmp_dir']}/logs/ribosnitch_prediction/chunk_{{i}}_riboSNitch_{{temp_deg}}.log",
     shell:
@@ -47,7 +48,8 @@ rule combine_ribosnitch_results:
     log:
         f"{config['out_dir']}/logs/combine_ribosnitch_results_{{temp_deg}}.log",
     shell:
-        "echo    'Chrom	Pos	Ref	Alt	Flank_left	Flank_right	Gene	Match	Type	Strand	Effect	Score' > {output} && cat {input} >> {output}"
+        "echo    'Chrom    Pos    Ref    Alt    Flank_left    Flank_right    Gene    Match    Type    Strand    Effect    Score' > {output} && cat {input} >> {output}"
+
 
 rule run_riprap_csv:
     # Perform the riboSNitch analysis with Riprap
@@ -60,6 +62,6 @@ rule run_riprap_csv:
     singularity:
         "docker://condaforge/mambaforge"
     conda:
-        "f"{src_dir}/../variantfoldrna/envs/riprap.yaml"
+        f"{src_dir}/../variantfoldrna/envs/riprap.yaml"
     shell:
         f"python3 {src_dir}/../variantfoldrna/workflow/scripts/csv_riprap.py --i {{input}} --o {{output.ribo}} --flank {config['flank_len']} --temp {{params}}"

@@ -2,7 +2,7 @@
 # Rules for running VEP
 ############################################################
 
-import os 
+import os
 import sys
 
 # Get the path to the script
@@ -10,7 +10,7 @@ script_path = os.path.realpath(__file__)
 src_dir = os.path.dirname(script_path)
 
 kind = "gff"
-gff = config['gff']
+gff = config["gff"]
 
 # Check to see if the user only wants to use the canonical transcripts:
 if config["canonical"] == True:
@@ -18,29 +18,32 @@ if config["canonical"] == True:
 else:
     gff = gff
 
+
 rule sort_gene_model:
     input:
-        gff
+        gff,
     output:
-        f"{config['tmp_dir']}/temp/annotation.sorted.{kind}.gz"
+        f"{config['tmp_dir']}/temp/annotation.sorted.{kind}.gz",
     conda:
-        "f"{src_dir}/../variantfoldrna/envs/ensembl.yaml"
+        f"{src_dir}/../variantfoldrna/envs/ensembl.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:
         "grep -v '#' {input} | sort -k1,1 -k4,4n -k5,5n -t$'\t' | bgzip -c > {output}"
 
+
 rule tabix_annotation:
     input:
-        annotation = f"{config['tmp_dir']}/temp/annotation.sorted.{kind}.gz"
+        annotation=f"{config['tmp_dir']}/temp/annotation.sorted.{kind}.gz",
     output:
-        f"{config['tmp_dir']}/temp/annotation.sorted.{kind}.gz.csi"
+        f"{config['tmp_dir']}/temp/annotation.sorted.{kind}.gz.csi",
     conda:
-        "f"{src_dir}/../variantfoldrna/envs/ensembl.yaml"
+        f"{src_dir}/../variantfoldrna/envs/ensembl.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:
         "tabix --csi -p gff {input.annotation}"
+
 
 rule seperate_multi_vars:
     # Seperate multi-allelic variants
@@ -51,7 +54,7 @@ rule seperate_multi_vars:
     output:
         f"{config['tmp_dir']}/temp/vcf_chunks/vcf_no_header_{{i}}_seperated.vcf.gz",
     conda:
-        "f"{src_dir}/../variantfoldrna/envs/snpeff_env.yaml"
+        f"{src_dir}/../variantfoldrna/envs/snpeff_env.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:
@@ -68,34 +71,38 @@ rule normalize:
     output:
         f"{config['tmp_dir']}/temp/vcf_chunks/vcf_no_header_{{i}}_normalized.vcf",
     conda:
-        "f"{src_dir}/../variantfoldrna/envs/snpeff_env.yaml"
+        f"{src_dir}/../variantfoldrna/envs/snpeff_env.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:
         "bcftools norm --check-ref s --fasta-ref {input.ref} --output-type v -o {output} {input.vcf} 2> {log}"
 
-if config['variant_annotation_type'] != "None":
-    grep_command = f" grep -v '##' | grep -v 'stream_gene_variant' | grep -v 'intergenic' | grep -v 'coding_sequence_variant' | grep {config['variant_annotation_type']} ",
+
+if config["variant_annotation_type"] != "None":
+    grep_command = (
+        f" grep -v '##' | grep -v 'stream_gene_variant' | grep -v 'intergenic' | grep -v 'coding_sequence_variant' | grep {config['variant_annotation_type']} ",
+    )
 else:
     grep_command = f" grep -v '##' | grep -v 'stream_gene_variant' | grep -v 'intergenic' | grep -v 'coding_sequence_variant' "
+
 
 rule vep:
     # Run VEP on the VCF file and output a TAB file with the annotations
     input:
         vcf=f"{config['tmp_dir']}/temp/vcf_chunks/vcf_no_header_{{i}}_normalized.vcf",
         annotation=f"{config['tmp_dir']}/temp/annotation.sorted.{kind}.gz",
-        fasta = config["ref_genome"],
-        tbi = f"{config['tmp_dir']}/temp/annotation.sorted.{kind}.gz.csi"
+        fasta=config["ref_genome"],
+        tbi=f"{config['tmp_dir']}/temp/annotation.sorted.{kind}.gz.csi",
     output:
         f"{config['tmp_dir']}/temp/annotated_vcf_chunks_effects/vcf_no_header_{{i}}_annotated_one_per_line.txt",
     params:
-        output = f"{config['tmp_dir']}/temp/annotated_vcf_chunks_effects/vcf_no_header_{{i}}_annotated_one_per_line_temp.txt",
-        grep_command = f"{grep_command}"
+        output=f"{config['tmp_dir']}/temp/annotated_vcf_chunks_effects/vcf_no_header_{{i}}_annotated_one_per_line_temp.txt",
+        grep_command=f"{grep_command}",
     conda:
-        "f"{src_dir}/../variantfoldrna/envs/ensembl.yaml"
+        f"{src_dir}/../variantfoldrna/envs/ensembl.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     log:
-        f"{config['tmp_dir']}/logs/vep/vcf_no_header_{{i}}_annotated_one_per_line.log"
+        f"{config['tmp_dir']}/logs/vep/vcf_no_header_{{i}}_annotated_one_per_line.log",
     shell:
         f'vep -i {{input.vcf}} --{kind} {{input.annotation}} --fasta {{input.fasta}} -o {{params.output}} --force_overwrite --tab --fields "Location,REF_ALLELE,Allele,Consequence,Feature,cDNA_position,HGVSc,STRAND,CANONICAL" --hgvs --show_ref_allele --canonical 2> {{log}}   && cat {{params.output}} | {{params.grep_command}}  > {{output}}'

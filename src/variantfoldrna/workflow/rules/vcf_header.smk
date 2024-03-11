@@ -7,7 +7,7 @@
 # The Pennsylvania State University
 ################################################################################
 
-import os 
+import os
 import sys
 
 # Get the path to the script
@@ -21,7 +21,6 @@ import gzip
 
 def prRed(skk):
     print("\033[91m {}\033[00m".format(skk))
-
 
 
 # Check to see if the VCF file is gzipped using the magic number
