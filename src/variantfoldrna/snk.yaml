@@ -13,29 +13,11 @@ cli:
     required: True
     short: o
 
-  singulary-dir:
-    type: path
-    help: "Path to the singularity image directory"
-    short: s
-    default: none
-
-  cluster:
-    type: str
-    help: "Cluster configuration"
-    short: c
-    default: "local"
-
-  cluster-jobs:
-    type: int
-    help: "Number of jobs to run on the cluster"
-    short: j
-    default: 1
-
   chunks:
     type: int
     help: "The number of splits of the input files"
     short: c
-    default: 1
+    default: -1
 
   vcf:
     type: path
