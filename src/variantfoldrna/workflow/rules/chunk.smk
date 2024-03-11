@@ -50,4 +50,4 @@ rule chunk_extracted_sequences:
     singularity:
         "docker://condaforge/mambaforge"
     shell:
-        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/chunk_extracted_seqs.py --input {{input}} --dir {config['tmp_dir']}/temp --chunk-total {config['chunks']}"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/chunk_extracted_seqs.py --input {{input}} --dir {config['tmp_dir']} --chunk-total {config['chunks']}"
