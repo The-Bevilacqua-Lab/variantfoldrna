@@ -29,11 +29,11 @@ rule run_riprap:
     singularity:
         "docker://condaforge/mambaforge"
     conda:
-        f"{src_dir}/../variantfoldrna/envs/envs/riprap.yaml"
+        f"{src_dir}/../variantfoldrna/workflow/envs/riprap.yaml"
     log:
         f"{config['tmp_dir']}/logs/ribosnitch_prediction/chunk_{{i}}_riboSNitch_{{temp_deg}}.log",
     shell:
-        f"python3 {src_dir}/../variantfoldrna/envs/workflow/scripts/riprap_wrapper.py --i {{input}} --o {{output.ribo}} --flank {config['flank_len']} --temp {{params}}"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/riprap_wrapper.py --i {{input}} --o {{output.ribo}} --flank {config['flank_len']} --temp {{params}}"
 
 
 rule combine_ribosnitch_results:
@@ -62,6 +62,6 @@ rule run_riprap_csv:
     singularity:
         "docker://condaforge/mambaforge"
     conda:
-        f"{src_dir}/../variantfoldrna/envs/envs/riprap.yaml"
+        f"{src_dir}/../variantfoldrna/workflow/envs/riprap.yaml"
     shell:
-        f"python3 {src_dir}/../variantfoldrna/envs/workflow/scripts/csv_riprap.py --i {{input}} --o {{output.ribo}} --flank {config['flank_len']} --temp {{params}}"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/csv_riprap.py --i {{input}} --o {{output.ribo}} --flank {config['flank_len']} --temp {{params}}"

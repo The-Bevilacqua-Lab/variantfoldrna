@@ -23,10 +23,12 @@ rule add_possible_alts:
         vcf=f"{config['tmp_dir']}/vcf_chunks_all_alts/vcf_no_header_{{i}}_normalized_possible_alts.vcf",
     log:
         f"{config['tmp_dir']}/logs/add_possible_alts_{{i}}.log",
+    conda:
+        f"{src_dir}/../variantfoldrna/workflow/envs/process_seq.yaml"
     singularity:
-        "docker://kjkirven/process_seq"
+        "docker://condaforge/mambaforge"
     shell:
-        "python3 {src_dir}/../variantfoldrna/envs/workflow/scripts/generate_all_mutations.py --input {input} --output {output}"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/generate_all_mutations.py --input {input} --output {output}"
 
 
 rule create_vep_other_alts_dir:
@@ -74,7 +76,7 @@ rule extract_spliced_sequences_generated_alts:
     singularity:
         "docker://kjkirven/process_seq"
     shell:
-        f"python3 {src_dir}/../variantfoldrna/envs/workflow/scripts/get_spliced_read_data.py --vcf {{input.vcf}} --ref-seqs {{input.cdna}} --flank {{params.flank}} --gffread {{input.database}} --cds-pos {{input.cds_pos}} --o {{output.seqs}}"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/get_spliced_read_data.py --vcf {{input.vcf}} --ref-seqs {{input.cdna}} --flank {{params.flank}} --gffread {{input.database}} --cds-pos {{input.cds_pos}} --o {{output.seqs}}"
 
 
 rule combine_extracted_sequences_generated_alts:
@@ -105,7 +107,7 @@ rule remove_duplicates_generated_alts:
     singularity:
         "docker://kjkirven/process_seq"
     shell:
-        f"python3 {src_dir}/../variantfoldrna/envs/workflow/scripts/remove_duplicates.py -i {{input}} -o {{output}}"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/remove_duplicates.py -i {{input}} -o {{output}}"
 
 
 rule chunk_extracted_sequences_generated_alts:
@@ -122,7 +124,7 @@ rule chunk_extracted_sequences_generated_alts:
     singularity:
         "docker://kjkirven/process_seq"
     shell:
-        f"python3 {src_dir}/../variantfoldrna/envs/workflow/scripts/chunk_extracted_seqs.py --input {{input}} --dir {config['tmp_dir']}/temp --chunk-total {config['chunks']} --all_alts"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/chunk_extracted_seqs.py --input {{input}} --dir {config['tmp_dir']}/temp --chunk-total {config['chunks']} --all_alts"
 
 
 rule run_snpfold_generated_alts:
@@ -141,7 +143,7 @@ rule run_snpfold_generated_alts:
     log:
         f"{config['tmp_dir']}/logs/ribosnitch_prediction_/chunk_{{i}}_riboSNitch_{{temp_deg}}.log",
     shell:
-        f"python3 {src_dir}/../variantfoldrna/envs/workflow/scripts/snpfold_wrapper.py --i {{input[0]}} --o {{output.ribo}} --flank {config['flank_len']} --temp {{params}}"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/snpfold_wrapper.py --i {{input[0]}} --o {{output.ribo}} --flank {config['flank_len']} --temp {{params}}"
 
 
 rule combine_ribosnitch_results_generated_alts:

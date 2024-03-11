@@ -25,13 +25,13 @@ rule run_rnasnp:
         ribo=f"{config['tmp_dir']}/ribosnitch_chunks_{{temp_deg}}/chunk_{{i}}_riboSNitch_{{temp_deg}}.txt",
         error=f"{config['tmp_dir']}/ribosnitch_chunks_{{temp_deg}}/chunk_{{i}}_riboSNitch_{{temp_deg}}_error.txt",
     conda:
-        f"{src_dir}/../variantfoldrna/envs/envs/rnasnp.yaml"
+        f"{src_dir}/../variantfoldrna/workflow/envs/rnasnp.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     log:
         f"{config['tmp_dir']}/logs/ribosnitch_prediction/chunk_{{i}}_riboSNitch_{{temp_deg}}.log",
     shell:
-        f"python3 {src_dir}/../variantfoldrna/envs/workflow/scripts/rnasnp_wrapper.py --i {{input}} --o {{output.ribo}} --flank {config['flank_len']} --kind {config['ribosnitch_prediction_tool'].lower().split(':')[1]}"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/rnasnp_wrapper.py --i {{input}} --o {{output.ribo}} --flank {config['flank_len']} --kind {config['ribosnitch_prediction_tool'].lower().split(':')[1]}"
 
 
 rule combine_ribosnitch_results:
@@ -58,8 +58,8 @@ rule run_rnasnp_csv:
     output:
         ribo=f"{config['out_dir']}/ribosnitch_predictions_csv/combined_ribosnitch_prediction_{{temp_deg}}.txt",
     conda:
-        f"{src_dir}/../variantfoldrna/envs/envs/rnasnp.yaml"
+        f"{src_dir}/../variantfoldrna/workflow/envs/rnasnp.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:
-        f"python3 {src_dir}/../variantfoldrna/envs/workflow/scripts/csv_rnasnp.py --i {{input}} --o {{output.ribo}} --flank {config['flank_len']} --kind {config['ribosnitch_prediction_tool'].lower().split(':')[1]}"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/csv_rnasnp.py --i {{input}} --o {{output.ribo}} --flank {config['flank_len']} --kind {config['ribosnitch_prediction_tool'].lower().split(':')[1]}"

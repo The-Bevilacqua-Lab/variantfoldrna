@@ -39,7 +39,7 @@ rule get_canonical_transcripts_with_AGAT:
     singularity:
         "docker://condaforge/mambaforge"
     conda:
-        f"{src_dir}/../variantfoldrna/envs/envs/agat.yaml"
+        f"{src_dir}/../variantfoldrna/workflow/envs/agat.yaml"
     log:
         f"{config['tmp_dir']}/logs/get_canonical_transcripts_with_AGAT.log",
     shell:
@@ -53,7 +53,7 @@ rule get_table_from_gffread:
     output:
         f"{config['tmp_dir']}/gffread_table.txt",
     conda:
-        f"{src_dir}/../variantfoldrna/envs/envs/process_seq.yaml"
+        f"{src_dir}/../variantfoldrna/workflow/envs/process_seq.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:
@@ -67,11 +67,11 @@ rule create_json_from_gffread_table:
     output:
         f"{config['tmp_dir']}/gffread_table.json",
     conda:
-        f"{src_dir}/../variantfoldrna/envs/envs/process_seq.yaml"
+        f"{src_dir}/../variantfoldrna/workflow/envs/process_seq.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:
-        f"python3 {src_dir}/../variantfoldrna/envs/workflow/scripts/create_json_from_gffread_table.py --table {{input}} --o {{output}}"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/create_json_from_gffread_table.py --table {{input}} --o {{output}}"
 
 
 rule create_fadix_index:
@@ -81,7 +81,7 @@ rule create_fadix_index:
     output:
         cdna_index=f"{config['tmp_dir']}/cdna.fa.fai",
     conda:
-        f"{src_dir}/../variantfoldrna/envs/envs/process_seq.yaml"
+        f"{src_dir}/../variantfoldrna/workflow/envs/process_seq.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:
@@ -97,7 +97,7 @@ rule extract_cdna_from_gff_with_gffread:
     output:
         f"{config['tmp_dir']}/cdna.fa",
     conda:
-        f"{src_dir}/../variantfoldrna/envs/envs/process_seq.yaml"
+        f"{src_dir}/../variantfoldrna/workflow/envs/process_seq.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:
@@ -111,11 +111,11 @@ rule get_transcript_prefix:
     output:
         f"{config['tmp_dir']}/transcript_prefix.txt",
     conda:
-        f"{src_dir}/../variantfoldrna/envs/envs/process_seq.yaml"
+        f"{src_dir}/../variantfoldrna/workflow/envs/process_seq.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:
-        "python3 {src_dir}/../variantfoldrna/envs/workflow/scripts/get_fa_prefix.py {input} {output}"
+        "python3 {src_dir}/../variantfoldrna/workflow/scripts/get_fa_prefix.py {input} {output}"
 
 
 rule get_cds_start:
@@ -141,7 +141,7 @@ rule extract_spliced_sequences:
     output:
         seqs=f"{config['tmp_dir']}/extracted_sequences/extracted_seqs_{{i}}.txt",
     conda:
-        f"{src_dir}/../variantfoldrna/envs/envs/process_seq.yaml"
+        f"{src_dir}/../variantfoldrna/workflow/envs/process_seq.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:
@@ -165,8 +165,8 @@ rule remove_duplicates:
     output:
         f"{config['tmp_dir']}/extracted_flank_snp_no_duplicates.txt",
     conda:
-        f"{src_dir}/../variantfoldrna/envs/envs/process_seq.yaml"
+        f"{src_dir}/../variantfoldrna/workflow/envs/process_seq.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:
-        f"python3 {src_dir}/../variantfoldrna/envs/workflow/scripts/remove_duplicates.py -i {{input}} -o {{output}}"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/remove_duplicates.py -i {{input}} -o {{output}}"

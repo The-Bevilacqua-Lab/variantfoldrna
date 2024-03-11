@@ -27,13 +27,13 @@ rule run_remurna:
         ribo=f"{config['tmp_dir']}/ribosnitch_chunks_{{temp_deg}}/chunk_{{i}}_riboSNitch_{{temp_deg}}.txt",
         error=f"{config['tmp_dir']}/ribosnitch_chunks_{{temp_deg}}/chunk_{{i}}_riboSNitch_{{temp_deg}}_error.txt",
     conda:
-        f"{src_dir}/../variantfoldrna/envs/envs/process_seq.yaml"
+        f"{src_dir}/../variantfoldrna/workflow/envs/remurna.yaml"
     singularity:
-        f"{src_dir}/../variantfoldrna/envs/envs/remurna.yaml"
+        "docker://condaforge/mambaforge"
     log:
         f"{config['tmp_dir']}/logs/ribosnitch_prediction/chunk_{{i}}_riboSNitch_{{temp_deg}}.log",
     shell:
-        f"python3 {src_dir}/../variantfoldrna/envs/workflow/scripts/remurna_wrapper.py --i {{input}} --o {{output.ribo}} --temp {{params}} --flank {config['flank_len']}"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/remurna_wrapper.py --i {{input}} --o {{output.ribo}} --temp {{params}} --flank {config['flank_len']}"
 
 
 rule combine_ribosnitch_results:
@@ -60,8 +60,8 @@ rule run_remurna_csv:
     output:
         ribo=f"{config['out_dir']}/ribosnitch_predictions_csv/combined_ribosnitch_prediction_{{temp_deg}}.txt",
     conda:
-        f"{src_dir}/../variantfoldrna/envs/envs/process_seq.yaml"
+        f"{src_dir}/../variantfoldrna/workflow/envs/process_seq.yaml"
     singularity:
-        f"{src_dir}/../variantfoldrna/envs/envs/remurna.yaml"
+        "docker://condaforge/mambaforge"
     shell:
-        f"python3 {src_dir}/../variantfoldrna/envs/workflow/scripts/csv_remurna.py --i {{input}} --o {{output.ribo}} --temp {{params}} --flank {config['flank_len']}"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/csv_remurna.py --i {{input}} --o {{output.ribo}} --temp {{params}} --flank {config['flank_len']}"

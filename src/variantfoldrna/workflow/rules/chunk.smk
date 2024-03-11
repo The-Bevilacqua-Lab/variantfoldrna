@@ -27,13 +27,13 @@ rule chunk_vcf:
             i=range(1, int(config["chunks"]) + 1),
         ),
     conda:
-        f"{src_dir}/../variantfoldrna/envs/envs/process_seq.yaml"
+        f"{src_dir}/../variantfoldrna/workflow/envs/process_seq.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     log:
         f"{config['tmp_dir']}/logs/chunk_vcf.log",
     shell:
-        f"python3 {src_dir}/../variantfoldrna/envs/workflow/scripts/chunk_vcf.py --input {{input.vcf}} --dir {config['tmp_dir']}/temp --vcf-header {{input.header}} --chunk-total {config['chunks']} > {{log}}"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/chunk_vcf.py --input {{input.vcf}} --dir {config['tmp_dir']}/temp --vcf-header {{input.header}} --chunk-total {config['chunks']} > {{log}}"
 
 
 rule chunk_extracted_sequences:
@@ -46,8 +46,8 @@ rule chunk_extracted_sequences:
             i=range(1, config["chunks"] + 1),
         ),
     conda:
-        f"{src_dir}/../variantfoldrna/envs/envs/process_seq.yaml"
+        f"{src_dir}/../variantfoldrna/workflow/envs/process_seq.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:
-        f"python3 {src_dir}/../variantfoldrna/envs/workflow/scripts/chunk_extracted_seqs.py --input {{input}} --dir {config['tmp_dir']}/temp --chunk-total {config['chunks']}"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/chunk_extracted_seqs.py --input {{input}} --dir {config['tmp_dir']}/temp --chunk-total {config['chunks']}"
