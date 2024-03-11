@@ -11,22 +11,29 @@
 # Import the python modules:
 import os
 import subprocess
+import sys
 
 # Check to make sure that, if the user is running RNAsnp, they use 
 # a flanking lenth that is between 100 and 800 nt in intervals of 50
 if config['ribosnitch_prediction_tool'].lower() == 'rnasnp:p-value' or config['ribosnitch_prediction_tool'].lower() == 'rnasnp:dist':
     flanking = config['flank_len']
     if flanking < 100 or flanking > 800 or flanking % 50 != 0:
-        raise ValueError("The flanking length must be between 100 and 800 in intervals of 50.")
+        # Print in red that the flanking length is not within the acceptable range
+        print("\033[91mError: The flanking length must be between 100 and 800 nt in intervals of 50.\033[0m")
+        # Exit the program
+        sys.exit(1)
 
 
 # if the user does not specify the number of chunks, let's estimate it by the size of 
 # the input file
 if config['chunks'] == -1:
     # get the size of the input file
-    size = os.path.getsize(input_file)
+    size = os.path.getsize(config['vcf'])
     # estimate the number of chunks
     config['chunks'] = int(size / 10000000) + 1
+    
+    # Print in blue the number of chunks that will be used
+    print("\033[94mThe number of chunks to be used is based on the size of your VCF: " + str(config['chunks']) + "\033[0m")
 
 
 # -- Import common rules -- #
