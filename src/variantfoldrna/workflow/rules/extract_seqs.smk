@@ -87,7 +87,7 @@ rule create_json_from_gffread_table:
     singularity:
         "docker://condaforge/mambaforge"
     shell:
-        f"python3 {src_dir}/../variantfoldrna/workflow/envsworkflow/scripts/create_json_from_gffread_table.py --table {{input}} --o {{output}}"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/create_json_from_gffread_table.py --table {{input}} --o {{output}}"
 
 
 rule extract_sequences:
@@ -105,7 +105,7 @@ rule extract_sequences:
     singularity:
         "docker://condaforge/mambaforge"
     shell:
-        f"python3 {src_dir}/../variantfoldrna/workflow/envsworkflow/scripts/get_read_data.py --vcf {{input.vcf}} --gffread {{input.database}} --ref-genome {{params.ref_genome}} --flank {{params.flank}} --o {{output.seqs}}"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/get_read_data.py --vcf {{input.vcf}} --gffread {{input.database}} --ref-genome {{params.ref_genome}} --flank {{params.flank}} --o {{output.seqs}}"
 
 
 rule combine_extracted_sequences:
