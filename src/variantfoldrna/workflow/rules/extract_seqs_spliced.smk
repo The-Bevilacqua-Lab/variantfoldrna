@@ -145,7 +145,7 @@ rule extract_spliced_sequences:
     singularity:
         "docker://condaforge/mambaforge"
     shell:
-        f"workflow/bin/get_spliced_read_data -vcf {{input.vcf}} -ref-seqs {{input.cdna}} -flank {{params.flank}} -gffread {{input.database}} -cds-pos {{input.cds_pos}} --o {{output.seqs}} --transcript-prefix {{input.transcript_prefix}}"
+        f"{src_dir}/../variantfoldrna/workflow/bin/get_spliced_read_data -vcf {{input.vcf}} -ref-seqs {{input.cdna}} -flank {{params.flank}} -gffread {{input.database}} -cds-pos {{input.cds_pos}} --o {{output.seqs}} --transcript-prefix {{input.transcript_prefix}}"
 
 
 rule combine_extracted_sequences:
