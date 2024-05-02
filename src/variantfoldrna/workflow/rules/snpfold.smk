@@ -54,7 +54,7 @@ rule combine_ribosnitch_results:
     log:
         f"{config['out_dir']}/logs/combine_ribosnitch_results_{{temp_deg}}.log",
     shell:
-        "echo    'Chrom    Pos    Transcript_pos    Ref    Alt    Flank_left    Flank_right    Gene    Match    Type    Strand    Ref_dG    Alt_dG    Ref_ED    Alt_ED    Score' > {output} && cat {input} >> {output}"
+        "echo    'Chrom    Pos    Transcript_pos    Ref    Alt    Flank_left    Flank_right    Gene    Match    Type    Strand    Ref_dG    Alt_dG    Ref_ED    Alt_ED    Score' > {output} && cat {input} | grep -v 'NO' | grep '-' | grep -v '>' >> {output}"
 
 
 rule run_snpfold_csv:
@@ -95,4 +95,4 @@ rule run_snpfold_csv:
 #     output:
 #         f"{config['out_dir']}/ribosnitch_prediction/errors/combined_ribosnitch_prediction_error_{{temp_deg}}.txt"
 #     shell:
-#         "cat {input} > {output}"
+#         "cat {input} | grep -v 'NO' | grep '-' | grep -v '>' > {output}"
