@@ -51,13 +51,13 @@ cli:
     type: bool
     help: "Predict riboSNitches in spliced transcripts"
     short: sp
-    default: True
+    default: False
   
   canonical:
     type: bool
     help: "Predict riboSNitches in canonical transcripts"
     short: cs
-    default: True
+    default: False
   
   variant-annotation-type:
     type: str
