@@ -78,9 +78,13 @@ else:
 ###########################################################
 if "@" in str(config["temperature"]):
     start_stop = str(config["temperature"]).split("@")
-    temperature_range = range(
-        int(start_stop[0]), int(start_stop[1]) + 1, int(config["temp_step"])
-    )
+    temperature_range = [float(start_stop[0])]
+
+    steps = abs(round(float(start_stop[1]) - float(start_stop[0]) / float(config["temp_step"]))) + 1
+
+    for x in range(steps):
+        if (temperature_range[-1] + float(config["temp_step"])) <=  float(start_stop[1]):
+            temperature_range.append(round(temperature_range[-1]+ float(config["temp_step"]),4))
 else:
     temperature_range = [config["temperature"]]
 
