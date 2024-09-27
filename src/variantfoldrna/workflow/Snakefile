@@ -78,16 +78,19 @@ else:
 ###########################################################
 if "@" in str(config["temperature"]):
     start_stop = str(config["temperature"]).split("@")
+    if float(start_stop[1]) < float(start_stop[0]):
+        print("\033[91m\nError: The ending temperature is less than the starting temperature\n")
+        os._exit(1)
     temperature_range = [float(start_stop[0])]
 
-    steps = abs(round(float(start_stop[1]) - float(start_stop[0]) / float(config["temp_step"]))) + 1
+    steps = abs(round((float(start_stop[1]) - float(start_stop[0])) / float(config["temp_step"]))) + 1
 
     for x in range(steps):
-        if (temperature_range[-1] + float(config["temp_step"])) <=  float(start_stop[1]):
+        if round((temperature_range[-1] + float(config["temp_step"])),3) <=  round((temperature_range[-1] + float(config["temp_step"]))):
             temperature_range.append(round(temperature_range[-1]+ float(config["temp_step"]),4))
 else:
     temperature_range = [config["temperature"]]
-
+print("\033[94mWill predict riboSNitches at the following temperatures:", ",".join([str(x) for x in temperature_range])+ "\033[0m")
 #############################################
 # Create the final input list
 #############################################
@@ -103,29 +106,6 @@ else:
         final_input.append(
             f"{config['out_dir']}/ribosnitch_predictions/combined_ribosnitch_prediction_{temp}.txt"
         )
-
-        # If the user just wants the null predictions without the riboSNitch predictions for the natural variants
-        # elif config["null_only"] == True:
-        #     final_input.append(
-        #         f"{config['out_dir']}/{config['out_name']}/null_model/combined_ribosnitch_prediction_null_{temp}.txt"
-        #     )
-
-        # elif config['other_alts_only'] == True:
-        #     final_input.append(
-        #         f"{config['out_dir']}/{config['out_name']}/ribosnitch_predictions_other_alts/combined_ribosnitch_prediction_{temp}.txt"
-        #     )
-
-        # # If the user wants both the riboSNitch predictions and the null predictions
-        # else:
-        #     final_input.append(
-        #         f"{config['out_dir']}/{config['out_name']}/ribosnitch_predictions/combined_ribosnitch_prediction_{temp}.txt"
-        #     )
-        #     final_input.append(
-        #         f"{config['out_dir']}/{config['out_name']}/ribosnitch_predictions_null/combined_ribosnitch_prediction_{temp}.txt"
-            
-
-# else:
-#     final_input = [f"{config['out_dir']}/{config['out_name']}/temp/intergenic_flank_seq.txt"]
 
 
 #######################
