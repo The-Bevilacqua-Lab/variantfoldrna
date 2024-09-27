@@ -41,23 +41,27 @@ if config['csv'] == "none":
     include: "rules/chunk.smk"
     include: "rules/vep.smk"
     include: "rules/vcf_header.smk"
-
+    include: "rules/combine_predictions.smk"
 # Load the rules for the appropriate prediction tool
-if config["ribosnitch_prediction_tool"].lower() == "snpfold":
+if "snpfold" in config["ribosnitch_prediction_tool"].lower().split(","):
     include: "rules/snpfold.smk"
 
-elif config["ribosnitch_prediction_tool"].lower() == "riprap":
+if "riprap" in config["ribosnitch_prediction_tool"].lower().split(","):
     include: "rules/riprap.smk"
 
-elif config["ribosnitch_prediction_tool"].lower() == "rnasnp:p-value" or config["ribosnitch_prediction_tool"].lower() == "rnasnp:dist":
+if "rnasnp:p-value" in config["ribosnitch_prediction_tool"].lower().split(","):
     include: "rules/rnasnp.smk"
 
-elif config["ribosnitch_prediction_tool"].lower() == "remurna":
+if "rnasnp:dist" in config["ribosnitch_prediction_tool"].lower().split(","):
+    include: "rules/rnasnp.smk"
+
+if "remurna" in config["ribosnitch_prediction_tool"].lower().split(","):
     include: "rules/remurna.smk"
 
-else:
-    print("\033[91m\nError: The ribosnitch prediction tool is not recognized. Please choose from SNPfold, RipRap, remuRNA, rnasnp:p-value, and rna-snp:dist\n")
-    os._exit(1)
+for x in config["ribosnitch_prediction_tool"].lower().split(","):
+    if x not in ["snpfold","riprap","rnasnp:p-value","rnasnp:dist","remurna"]:
+        print(f"\033[91m\nError: The ribosnitch prediction tool {x} is not recognized. Please choose from SNPfold, RipRap, remuRNA, rnasnp:p-value, and rna-snp:dist\n")
+        os._exit(1)
 
     
 ########################################################
