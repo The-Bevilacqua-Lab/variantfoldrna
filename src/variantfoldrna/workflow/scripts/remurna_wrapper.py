@@ -9,13 +9,19 @@
 
 # -- Imports --#
 import argparse
-import numpy as np
 import subprocess
 import tempfile
 import os
 import string
 import random
+import sys
 
+# Get the path of the current conda environment
+conda_env_path = sys.prefix
+
+# Define the relative path to your target directory inside the conda environment
+target_directory = conda_env_path +  "/lib/data"
+os.chdir(target_directory)
 
 # -- Functions --#
 def make_temp_remurna_inputs(sequence, mutation):
@@ -35,7 +41,7 @@ def make_temp_remurna_inputs(sequence, mutation):
     return f"{fn.name}.fa"
 
 
-def run_remurna(sequence, mutation, temperature):
+def run_remurna(sequence, mutation, temperature, target_directory):
     """
     Run RNAsnp on the sequence
     """
@@ -46,13 +52,13 @@ def run_remurna(sequence, mutation, temperature):
     seq = make_temp_remurna_inputs(sequence, mutation)
 
     # Run RNAsnp
-    remurna = subprocess.run(
-        [
-            "remuRNA",
+
+    remurna = subprocess.run(["remuRNA",
             seq,
             f"--tmin={temperature}",
             f"--tmax={temperature}",
-        ],
+        ]
+        ,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )
@@ -111,7 +117,7 @@ if __name__ == "__main__":
             path = os.path.dirname(os.path.realpath(__file__))
 
             # Run RipRap:
-            score = run_remurna(seq, mutation, args.temp)
+            score = run_remurna(seq, mutation, args.temp, target_directory)
 
             # Write the output:
             if score == "NA":
