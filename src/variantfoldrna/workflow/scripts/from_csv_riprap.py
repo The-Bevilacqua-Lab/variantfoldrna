@@ -125,7 +125,7 @@ if __name__ == "__main__":
             flank = int(line[4])
             # Get the sequence and the mutation
             seq = line[3]
-            mutation = f"{line[1]}{flank + 1}{line[2]}"
+            mutation = f"{line[1]}{flank}{line[2]}"
 
             # Get the tool number:
             if args.tool == "RNAfold":

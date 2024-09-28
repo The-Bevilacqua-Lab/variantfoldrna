@@ -110,16 +110,16 @@ if __name__ == "__main__":
             flank = int(line[4])
             # Get the sequence and the mutation
             seq = line[3]
-            mutation = f"{line[1]}{flank + 1}{line[2]}"
+            mutation = f"{line[1]}{flank}{line[2]}"
 
             # Get the path:
             path = os.path.dirname(os.path.realpath(__file__))
 
             # Run RipRap:
-            score = run_rnasnp(seq, mutation, args.flank, args.kind)
+            score = run_rnasnp(seq.replace("T","U"), mutation, str(flank-1), args.kind)
 
             # Write the output:
-            if score == "NA":
+            if score == "NA" or "Reference allele" in score:
                 error.write("\t".join(line) + "\n")
             else:
                 out.write("\t".join(line).strip("\n") + "\t" + str(score) + "\n")

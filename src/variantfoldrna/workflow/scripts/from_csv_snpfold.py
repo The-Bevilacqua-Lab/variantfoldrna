@@ -84,7 +84,7 @@ if __name__ == "__main__":
 
                 # Get the sequence and the mutation
                 seq = line[3]
-                mutation = f"{line[1]}{flank + 1}{line[2]}"
+                mutation = f"{line[1]}{flank}{line[2]}"
 
                 # Run snpfold
                 results = run_snpfold(transcribe_rna(seq), path, args.temp, mutation)
