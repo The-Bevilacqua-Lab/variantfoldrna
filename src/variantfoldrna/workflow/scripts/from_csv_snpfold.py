@@ -61,8 +61,12 @@ if __name__ == "__main__":
     error = open(args.output[:-4] + "_error.txt", "w")
 
     ids, seqs = [], []
+    count = 0
     with open(args.in_file) as fn:
         for line in fn:
+            if count == 0:
+                outfile.write("\t".join(line.strip().split(",")) + "\tREF_dG\tREF_ED\tALT_dG\tALT_ED\tSNPfold_score\n")
+                count += 1
             # Skip the header
             if not line.startswith("#"):
                 line = line.split(",")
@@ -89,7 +93,7 @@ if __name__ == "__main__":
                 try:
                     previous = "\t".join(line).strip("\n")
                     results = '\t'.join(results.split(","))
-                    outfile.write(f"{previous}\t{results}\n")
+                    outfile.write(f"{previous}\t{results}")
                 except:
                     error.write("\t".join(line) + "\n")
 

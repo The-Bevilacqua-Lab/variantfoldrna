@@ -51,17 +51,3 @@ rule combine_ribosnitch_results:
         "echo    'Chrom	Pos	Transcript_pos	Ref	Alt	Flank_left	Flank_right	Gene	Match	Type	Strand	RipRap_score' > {output} && cat {input} >> {output}"
 
 
-rule run_riprap_csv:
-    # Perform the riboSNitch analysis with Riprap
-    input:
-        f"{config['csv']}",
-    params:
-        f"{{temp_deg}}",
-    output:
-        ribo=f"{config['tmp_dir']}/ribosnitch_predictions_csv/combined_ribosnitch_prediction_riprap_{{temp_deg}}.txt",
-    singularity:
-        "docker://condaforge/mambaforge"
-    conda:
-        f"{src_dir}/../variantfoldrna/workflow/envs/riprap.yaml"
-    shell:
-        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/from_csv_riprap.py --i {{input}} --o {{output.ribo}} --flank {config['flank_len']} --temp {{params}}"

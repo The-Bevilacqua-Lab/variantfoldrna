@@ -1,3 +1,6 @@
+script_path = os.path.realpath(__file__)
+src_dir = os.path.dirname(script_path)
+
 rule combine_ribosnitch_results_total:
     # Combine the results of riboSNitch prediction into one file
     input:

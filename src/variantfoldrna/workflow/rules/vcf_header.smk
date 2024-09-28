@@ -7,16 +7,14 @@
 # The Pennsylvania State University
 ################################################################################
 
+# Imports
 import os
 import sys
+import gzip
 
 # Get the path to the script
 script_path = os.path.realpath(__file__)
 src_dir = os.path.dirname(script_path)
-
-# imports
-import sys
-import gzip
 
 
 def prRed(skk):

@@ -83,36 +83,3 @@ rule combine_ribosnitch_results_rnasnp_dist:
         f"{config['tmp_dir']}/logs/combine_ribosnitch_results_rnasnp:dist_{{temp_deg}}.log",
     shell:
         "echo    'Chrom	Pos	Transcript_pos	Ref	Alt	Flank_left	Flank_right	Gene	Match	Type	Strand	RNAsnp_score' > {output} && cat {input} >> {output}"
-
-
-
-rule run_rnasnp_p_value_csv:
-    # Perform the riboSNitch analysis with Riprap
-    input:
-        f"{config['csv']}",
-    params:
-        f"{{temp_deg}}",
-    output:
-        ribo=f"{config['tmp_dir']}/ribosnitch_predictions_csv/combined_ribosnitch_prediction_rnasnp:p-value_{{temp_deg}}.txt",
-    conda:
-        f"{src_dir}/../variantfoldrna/workflow/envs/rnasnp.yaml"
-    singularity:
-        "docker://condaforge/mambaforge"
-    shell:
-        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/from_csv_rnasnp.py --i {{input}} --o {{output.ribo}} --flank {config['flank_len']} --kind {config['ribosnitch_prediction_tool'].lower().split(':')[1]}"
-
-
-rule run_rnasnp_dist_csv:
-    # Perform the riboSNitch analysis with Riprap
-    input:
-        f"{config['csv']}",
-    params:
-        f"{{temp_deg}}",
-    output:
-        ribo=f"{config['tmp_dir']}/ribosnitch_predictions_csv/combined_ribosnitch_prediction_rnasnp:dist_{{temp_deg}}.txt",
-    conda:
-        f"{src_dir}/../variantfoldrna/workflow/envs/rnasnp.yaml"
-    singularity:
-        "docker://condaforge/mambaforge"
-    shell:
-        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/from_csv_rnasnp.py --i {{input}} --o {{output.ribo}} --flank {config['flank_len']} --kind {config['ribosnitch_prediction_tool'].lower().split(':')[1]}"

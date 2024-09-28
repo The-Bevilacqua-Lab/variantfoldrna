@@ -16,11 +16,11 @@ import string
 import random
 import sys
 
-# Get the path of the current conda environment
-conda_env_path = sys.prefix
+output = subprocess.check_output("conda env list | grep '*'", shell=True, encoding='utf-8')
 
 # Define the relative path to your target directory inside the conda environment
-target_directory = conda_env_path +  "/lib/data"
+target_directory = output[25:].strip() +  "/lib/data"
+
 os.chdir(target_directory)
 
 # -- Functions --#

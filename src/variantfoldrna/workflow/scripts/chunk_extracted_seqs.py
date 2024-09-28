@@ -60,9 +60,7 @@ if __name__ == "__main__":
         )
 
     if args.all_alts:
-        filename = (
-            f"{args.dir}/extracted_sequences_all_alts/extracted_seqs_all_alts_unique_chunk_"
-        )
+        filename = f"{args.dir}/extracted_sequences_all_alts/extracted_seqs_all_alts_unique_chunk_"
     else:
         filename = f"{args.dir}/extracted_seqs_chunks/extracted_flank_snp_"
     # Split the extracted sequences into chunks

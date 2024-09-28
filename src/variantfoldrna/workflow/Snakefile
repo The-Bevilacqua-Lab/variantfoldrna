@@ -15,7 +15,7 @@ import sys
 
 # Check to make sure that, if the user is running RNAsnp, they use 
 # a flanking lenth that is between 100 and 800 nt in intervals of 50
-if config['ribosnitch_prediction_tool'].lower() == 'rnasnp:p-value' or config['ribosnitch_prediction_tool'].lower() == 'rnasnp:dist':
+if 'rnasnp:p-value' in config["ribosnitch_prediction_tool"].lower().split(",") or 'rnasnp:dist' in config["ribosnitch_prediction_tool"].lower().split(","):
     flanking = config['flank_len']
     if flanking < 100 or flanking > 800 or flanking % 50 != 0:
         # Print in red that the flanking length is not within the acceptable range
@@ -23,10 +23,10 @@ if config['ribosnitch_prediction_tool'].lower() == 'rnasnp:p-value' or config['r
         # Exit the program
         os._exit(1)
 
-
+# print(str(config['csv']))
 # if the user does not specify the number of chunks, let's estimate it by the size of 
 # the input file
-if config['chunks'] == -1:
+if config['chunks'] == -1 and str(config['csv']) == 'none':
     # get the size of the input file
     size = os.path.getsize(config['vcf'])
     # estimate the number of chunks
@@ -42,27 +42,51 @@ if config['csv'] == "none":
     include: "rules/vep.smk"
     include: "rules/vcf_header.smk"
     include: "rules/combine_predictions.smk"
-# Load the rules for the appropriate prediction tool
-if "snpfold" in config["ribosnitch_prediction_tool"].lower().split(","):
-    include: "rules/snpfold.smk"
 
-if "riprap" in config["ribosnitch_prediction_tool"].lower().split(","):
-    include: "rules/riprap.smk"
+    # Load the rules for the appropriate prediction tool
+    if "snpfold" in config["ribosnitch_prediction_tool"].lower().split(","):
+        include: "rules/snpfold.smk"
 
-if "rnasnp:p-value" in config["ribosnitch_prediction_tool"].lower().split(","):
-    include: "rules/rnasnp.smk"
+    if "riprap" in config["ribosnitch_prediction_tool"].lower().split(","):
+        include: "rules/riprap.smk"
 
-if "rnasnp:dist" in config["ribosnitch_prediction_tool"].lower().split(","):
-    include: "rules/rnasnp.smk"
+    if "rnasnp:p-value" in config["ribosnitch_prediction_tool"].lower().split(","):
+        include: "rules/rnasnp.smk"
 
-if "remurna" in config["ribosnitch_prediction_tool"].lower().split(","):
-    include: "rules/remurna.smk"
+    if "rnasnp:dist" in config["ribosnitch_prediction_tool"].lower().split(","):
+        include: "rules/rnasnp.smk"
 
-for x in config["ribosnitch_prediction_tool"].lower().split(","):
-    if x not in ["snpfold","riprap","rnasnp:p-value","rnasnp:dist","remurna"]:
-        print(f"\033[91m\nError: The ribosnitch prediction tool {x} is not recognized. Please choose from SNPfold, RipRap, remuRNA, rnasnp:p-value, and rna-snp:dist\n")
-        os._exit(1)
+    if "remurna" in config["ribosnitch_prediction_tool"].lower().split(","):
+        include: "rules/remurna.smk"
 
+    for x in config["ribosnitch_prediction_tool"].lower().split(","):
+        if x not in ["snpfold","riprap","rnasnp:p-value","rnasnp:dist","remurna"]:
+            print(f"\033[91m\nError: The ribosnitch prediction tool {x} is not recognized. Please choose from SNPfold, RipRap, remuRNA, rnasnp:p-value, and rna-snp:dist\n")
+            os._exit(1)
+
+else:
+    include: "rules/combine_predictions_csv.smk"
+
+        # Load the rules for the appropriate prediction tool
+    if "snpfold" in config["ribosnitch_prediction_tool"].lower().split(","):
+        include: "rules/csv_rules_snpfold.smk"
+
+    if "riprap" in config["ribosnitch_prediction_tool"].lower().split(","):
+        include: "rules/csv_rules_riprap.smk"
+
+    if "rnasnp:p-value" in config["ribosnitch_prediction_tool"].lower().split(","):
+        include: "rules/csv_rules_rnasnp.smk"
+
+    if "rnasnp:dist" in config["ribosnitch_prediction_tool"].lower().split(","):
+        include: "rules/csv_rules_rnasnp.smk"
+
+    if "remurna" in config["ribosnitch_prediction_tool"].lower().split(","):
+        include: "rules/csv_rules_remurna.smk"
+
+    for x in config["ribosnitch_prediction_tool"].lower().split(","):
+        if x not in ["snpfold","riprap","rnasnp:p-value","rnasnp:dist","remurna"]:
+            print(f"\033[91m\nError: The ribosnitch prediction tool {x} is not recognized. Please choose from SNPfold, RipRap, remuRNA, rnasnp:p-value, and rna-snp:dist\n")
+            os._exit(1)
     
 ########################################################
 # If the user would like the spliced cDNA, include the
@@ -70,7 +94,6 @@ for x in config["ribosnitch_prediction_tool"].lower().split(","):
 ########################################################
 if config["spliced"] == True:
     include: "rules/extract_seqs_spliced.smk"
-
 else:
     include: "rules/extract_seqs.smk"
 
@@ -87,6 +110,7 @@ if "@" in str(config["temperature"]):
         os._exit(1)
     temperature_range = [float(start_stop[0])]
 
+    # Calculate the number of total temperature steps there will be
     steps = abs(round((float(start_stop[1]) - float(start_stop[0])) / float(config["temp_step"]))) + 1
 
     for x in range(steps):
@@ -94,6 +118,10 @@ if "@" in str(config["temperature"]):
             temperature_range.append(round(temperature_range[-1]+ float(config["temp_step"]),4))
 else:
     temperature_range = [config["temperature"]]
+
+#################################################
+# Print an update as to what is to be predicted
+#################################################
 print("\033[94mWill predict riboSNitches at the following temperatures:", ",".join([str(x) for x in temperature_range])+ "\033[0m")
 
 
@@ -117,7 +145,6 @@ else:
 #######################
 #  --  Pipeline  --   #
 #######################
-
 rule all:
     input:
         final_input,

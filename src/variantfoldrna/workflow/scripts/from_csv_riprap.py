@@ -106,9 +106,9 @@ if __name__ == "__main__":
     # Open the output files and the error
     out = open(args.output, "w")
     error = open(args.output[:-4] + "_error.txt", "w")
-
+    out.write("\t".join(lines[0].strip().split(",")) + "\tRipRap_score\n")
     # Loop through the input file and perform the riboSNitch prediction:
-    for line in lines:
+    for line in lines[1:]:
         # Skip the header:
         if not line.startswith("#"):
             line = line.split(",")
