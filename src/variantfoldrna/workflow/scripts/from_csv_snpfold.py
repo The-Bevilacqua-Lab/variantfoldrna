@@ -58,7 +58,7 @@ if __name__ == "__main__":
 
     # Open the output files
     outfile = open(args.output, "w")
-    error = open(args.output.strip(".txt") + "_error.txt", "w")
+    error = open(args.output[:-4] + "_error.txt", "w")
 
     ids, seqs = [], []
     with open(args.in_file) as fn:
@@ -77,6 +77,7 @@ if __name__ == "__main__":
                 if line[2] == "T":
                     line[2] = "U"
                 flank = int(line[4])
+
                 # Get the sequence and the mutation
                 seq = line[3]
                 mutation = f"{line[1]}{flank + 1}{line[2]}"

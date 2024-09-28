@@ -58,10 +58,10 @@ rule run_remurna_csv:
     params:
         f"{{temp_deg}}",
     output:
-        ribo=f"{config['out_dir']}/ribosnitch_predictions_csv/combined_ribosnitch_prediction_{{temp_deg}}.txt",
+        ribo=f"{config['tmp_dir']}/ribosnitch_predictions_csv/combined_ribosnitch_prediction_remurna_{{temp_deg}}.txt",
     conda:
-        f"{src_dir}/../variantfoldrna/workflow/envs/process_seq.yaml"
+        f"{src_dir}/../variantfoldrna/workflow/envs/remurna.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:
-        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/csv_remurna.py --i {{input}} --o {{output.ribo}} --temp {{params}} --flank {config['flank_len']}"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/from_csv_remurna.py --i {{input}} --o {{output.ribo}} --temp {{params}} --flank {config['flank_len']}"

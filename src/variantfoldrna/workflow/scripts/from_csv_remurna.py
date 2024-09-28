@@ -9,12 +9,19 @@
 
 # -- Imports --#
 import argparse
-import numpy as np
 import subprocess
 import tempfile
 import os
 import string
 import random
+import sys
+
+output = subprocess.check_output("conda env list | grep '*'", shell=True, encoding='utf-8')
+
+# Define the relative path to your target directory inside the conda environment
+target_directory = output[25:].strip() +  "/lib/data"
+
+os.chdir(target_directory)
 
 
 # -- Functions --#
@@ -48,7 +55,7 @@ def run_remurna(sequence, mutation, temperature):
     # Run RNAsnp
     remurna = subprocess.run(
         [
-            "/data2/remuRNA/remuRNA",
+            "remuRNA",
             seq,
             f"--tmin={temperature}",
             f"--tmax={temperature}",

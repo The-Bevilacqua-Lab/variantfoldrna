@@ -56,7 +56,7 @@ rule run_snpfold_csv:
     params:
         f"{{temp_deg}}",
     output:
-        ribo=f"{config['out_dir']}/ribosnitch_predictions_csv/combined_ribosnitch_prediction_{{temp_deg}}.txt",
+        ribo=f"{config['tmp_dir']}/ribosnitch_predictions_csv/combined_ribosnitch_prediction_snpfold_{{temp_deg}}.txt",
     conda:
         f"{src_dir}/../variantfoldrna/workflow/envs/snpfold.yaml"
     singularity:
