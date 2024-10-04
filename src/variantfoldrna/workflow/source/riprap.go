@@ -4,7 +4,7 @@
 package main
 
 import (
-	// "flag"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"math"
@@ -15,92 +15,84 @@ import (
 	"math/rand"
 	"bufio"
 	"sort"
-	// "github.com/montanaflynn/stats"
 	"github.com/dgryski/go-onlinestats"
 	"time"
-	// "sync"
-	// "testing"
+
 )
 func main() {
-	// Example usage
-	// ppv1 := []float64{0.0, 0.0, 0.0, 1.0, 2.0, 3.0, 0.0, 0.0, 0.0, 1.0, 2.0, 3.0,0.0, 0.0, 0.0, 1.0, 2.0, 3.0, 0.0, 0.0, 0.0, 1.0, 2.0, 3.0, 0.0, 0.0, 0.0, 1.0, 2.0, 3.0, 0.0, 0.0, 0.0, 1.0, 2.0, 3.0,0.0, 0.0, 0.0, 1.0, 2.0, 3.0, 0.0, 0.0, 0.0, 1.0, 2.0, 3.0}
-	// ppv2 := []float64{0.0, 0.0, 0.0, 1.0, 2.0, 3.0, 0.0, 0.0, 0.0, 1.0, 2.0, 3.0, 1.1,1.2,1.3,1.5, 2.5, 3.5,0.0, 0.0, 0.0, 1.0, 2.0, 3.0, 0.0, 0.0, 0.0, 1.0, 2.0, 3.0, 0.0, 0.0, 0.0, 1.0, 2.0, 3.0, 1.1,1.2,1.3,1.5, 2.5, 3.5,0.0, 0.0, 0.0, 1.0, 2.0, 3.0}
+	// Read in the command line inputs 
+	seq := flag.String("seq", "", "Sequence")
+	mutation := flag.String("mut", "", "Mutation")
+	temp := flag.String("T", "", "Temperature")
+	minWin := flag.String("minW", "", "Minimum window")
+	flag.Parse()
+
+	minWindow, err := strconv.Atoi(*minWin)
+    if err != nil {
+        // ... handle error
+        panic(err)
+    }
+
+	// Check to make sure that we have a value for each of the inputs
+	if *seq == "" || *mutation == "" || *temp == "" {
+		flag.PrintDefaults()
+		os.Exit(1)
+	}
+
+	// Check to make sure there are no N's in the sequence 
+	if strings.Contains(*seq, "N") {
+		fmt.Println("N is in the sequence")
+		os.Exit(1)
+	}
+
+	// Get the reference allele 
+	ref := string((*mutation)[0])
+	println((*mutation)[1:len(*mutation)-1])
+	// Get the position of the mutation
+	pos, err := strconv.Atoi((*mutation)[1:len(*mutation)-1])
 	
-	bppMatrix, err := getBPPMatrix("AUCGCGAUUAUUGGAAUCGAUCGGGAUAUCGCGAUUAUUGGAAUCGAUCGGGAUAUCGCGAUUAUUGGAAUCGAUCGGGAUAUCGCGAUUAUUGGAAUCGAUCGGGAU", "37.0")
-	bppMatrixMut, err := getBPPMatrix("AUCGCGUUUAUUGGAAUCGAUCGGGAUAUCGCGAUUAUUGGAAUCGAUCGGGAUAUCGCGAUUAUUGGAAUCGAUCGGGAUAUCGCGAUUAUUGGAAUCGAUCGGGAU", "37.0")
+	// Check to see if there was an error when converting the mutation
+	// position to an integer
+	if err != nil {
+		fmt.Println("Error converting position to integer:", err)
+		os.Exit(1)
+	}
+
+	if string((*seq)[pos-1]) != ref {
+		fmt.Println("Reference allele does not match sequence at position", pos)
+		os.Exit(1)
+	}
+
+	if strings.Contains(*mutation, "N") {
+		fmt.Println("N is in the mutation")
+		os.Exit(1)
+	}
+	
+	// Get the BPPMs for the Ref and Alt alleles 
+	bppMatrix, nil := getBPPMatrix(*seq, *temp)
+	bppMatrixMut, nil := getBPPMatrix(getMutatedSequence(*seq, *mutation), *temp)
+
 	colSums := getSumMatrixCols(bppMatrix)
-	fmt.Println(colSums)
 	colSumsMut := getSumMatrixCols(bppMatrixMut)
+
 	
 	if err != nil {
 			fmt.Println("Error converting position to integer:")
 			os.Exit(1)
 		}
-	pos := 7
-	minW := 3
 
-	score, LBLast, RBLast, pValue := findRegion(colSums, colSumsMut, pos, minW)
-	fmt.Println("Score:", score, "LB:", pos - LBLast, "RB:", pos+RBLast, "pValue:", pValue)
+	score, _, _, _ := findRegion(colSums, colSumsMut, pos, minWindow)
+
+	// Check that the values are valid
+	if err != nil {
+		fmt.Println("Error calculating Pearson correlation coefficient:", err)
+		os.Exit(1)
+	}
+
+	fmt.Println(fmt.Sprintf("%f", score))
+
 }
-// func main() {
 
-// 	// Read in the command line inputs 
-// 	seq := flag.String("seq", "", "Sequence")
-// 	mutation := flag.String("mut", "", "Mutation")
-// 	temp := flag.String("T", "", "Temperature")
-// 	flag.Parse()
-
-// 	// Check to make sure that we have a value for each of the inputs
-// 	if *seq == "" || *mutation == "" || *temp == "" {
-// 		flag.PrintDefaults()
-// 		os.Exit(1)
-// 	}
-
-// 	// Check to make sure there are no N's in the sequence 
-// 	if strings.Contains(*seq, "N") {
-// 		fmt.Println("N is in the sequence")
-// 		os.Exit(1)
-// 	}
-
-// 	// Get the reference allele 
-// 	ref := string((*mutation)[0])
-
-// 	// Get the position of the mutation
-// 	pos, err := strconv.Atoi((*mutation)[1:len(*mutation)-1])
-
-// 	// Check to see if there was an error when converting the mutation
-// 	// position to an integer
-// 	if err != nil {
-// 		fmt.Println("Error converting position to integer:", err)
-// 		os.Exit(1)
-// 	}
-
-// 	if string((*seq)[pos-1]) != ref {
-// 		fmt.Println("Reference allele does not match sequence at position", pos)
-// 		os.Exit(1)
-// 	}
-
-// 	if strings.Contains(*mutation, "N") {
-// 		fmt.Println("N is in the mutation")
-// 		os.Exit(1)
-// 	}
-
-// 	// Get the base-pairing probability matrix, the 
-// 	// freeEnergy, and the ensembleDiversity for the REF and ALT alleles
-// 	bppMatrix, freeEnergy, ensembleDiversity, nil := getBPPMatrix(*seq, *temp)
-// 	bppMatrixMut, freeEnergyMut, ensembleDiversityMut, nil := getBPPMatrix(getMutatedSequence(*seq, *mutation), *temp)
-
-// 	colSums := getSumMatrixCols(bppMatrix)
-// 	colSumsMut := getSumMatrixCols(bppMatrixMut)
-
-// 	pearson, err := stats.Pearson(colSums, colSumsMut)
-// 	if err != nil {
-// 		fmt.Println("Error calculating Pearson correlation coefficient:", err)
-// 		os.Exit(1)
-// 	}
-
-// 	fmt.Println(fmt.Sprintf("%s,%s,%s,%s,%f", freeEnergy, ensembleDiversity, freeEnergyMut, ensembleDiversityMut, pearson))
-// }
 
 
 func getBPPMatrix(sequence string, temp string) ([][]float64, error) {
@@ -121,15 +113,8 @@ func getBPPMatrix(sequence string, temp string) ([][]float64, error) {
 		return nil, fmt.Errorf("error running RNAfold: %w", err)
 	}
 
-	// if err != nil {
-	// 	return nil, "", "", fmt.Errorf("error extracting ensemble info: %w", err)
-	// }
-
 	// Parse output to extract base pair probability matrix
 	bppMatrix  := parseOutput(".sq" + name + "_dp.ps", sequence)
-	// if err != nil {
-	// 	return nil, "", "", fmt.Errorf("error parsing output: %w", err)
-	// }
 
 	return bppMatrix, nil
 }
@@ -198,39 +183,34 @@ func getRandomName() string {
 }
 
 // findRegion finds the region with the largest score.
-func findRegion(ppv1, ppv2 []float64, pos, minW int) (float64, int, int, float64) {
+func findRegion(array1, array2 []float64, pos, minW int) (float64, int, int, float64) {
 	minHW := int(minW / 2)
-	rDis := int(len(ppv1) - pos)
-
+	rDis := int(len(array1) - pos)
 	lDis := pos - 1
 	score := 0.0
 	pValue := 1.0
 	LBLast := minHW
 	RBLast := minHW
-	
-	scoreArray := make([][]float64, len(ppv1)+1)
+
+	scoreArray := make([][]float64, len(array1)+1)
 	for i := range scoreArray {
-		scoreArray[i] = make([]float64, len(ppv1)+1)
+		scoreArray[i] = make([]float64, len(array1)+1)
 	}
-	
+
 	for LB := minHW; LB <= lDis; LB++ {
 		for RB := minHW; RB <= rDis; RB++ {
-					// Create a destination slice with the same length
-			subsetLeft := make([]float64, len(ppv1))
-			// Use copy to copy elements from original to dest
-			copy(subsetLeft, ppv1)
+			// Create copies of the original slices
+			subsetLeft := make([]float64, len(array1))
+			copy(subsetLeft, array1)
 
-			subsetRight := make([]float64, len(ppv2))
-			// Use copy to copy elements from original to dest
-			copy(subsetRight, ppv2)
+			subsetRight := make([]float64, len(array2))
+			copy(subsetRight, array2)
 
-			pValueNew := onlinestats.KS(subsetLeft[(pos-LB-1):(pos+RB)], subsetRight[(pos-LB-1):(pos+RB)])
-			drapNew := drap(subsetLeft,subsetRight, LB, RB, pos)
-			
-			scoreNew := drapNew* (-math.Log10(pValueNew))
-			
+			// Call the processing function with copies
+			scoreNew, pValueNew := processSubsets(subsetLeft, subsetRight, LB, RB, pos)
+
 			scoreArray[pos-LB-1][pos+RB] = scoreNew
-			
+
 			if scoreNew > score {
 				score = scoreNew
 				LBLast = LB
@@ -244,10 +224,18 @@ func findRegion(ppv1, ppv2 []float64, pos, minW int) (float64, int, int, float64
 	return score, LBLast, RBLast, pValue
 }
 
+// New function to process the subsets
+func processSubsets(left, right []float64, LB, RB, pos int) (float64, float64) {
+	drapNew := drap(left, right, LB, RB, pos)
+	pValueNew := onlinestats.KS(left[(pos-LB-1):(pos+RB)], right[(pos-LB-1):(pos+RB)])
+	scoreNew := drapNew * (-math.Log10(pValueNew))
+	return scoreNew, pValueNew
+}
+
 // drap calculates the median fold change.
-func drap(ppm1, ppm2 []float64, LB, RB, pos int) float64 {
-	ppm1Seg := ppm1[(pos-LB-1):(pos+RB)]
-	ppm2Seg := ppm2[(pos-LB-1):(pos+RB)]
+func drap(one, two []float64, LB, RB, pos int) float64 {
+	ppm1Seg := one[(pos-LB-1):(pos+RB)]
+	ppm2Seg := two[(pos-LB-1):(pos+RB)]
 	dis := getMedianFC(ppm1Seg, ppm2Seg)
 	return dis
 }
@@ -263,9 +251,6 @@ func getMedianFC(seg1, seg2 []float64) float64 {
 	// Calculate the median of both segments
 	median1 := median(seg1)
 	median2 := median(seg2)
-	// if median2 == 0 {
-	// 	return 0 // Prevent division by zero
-	// }
 
 	dis := math.Max(
         (median1 + 0.001) / (median2 + 0.001),
@@ -301,4 +286,11 @@ func getSumMatrixCols(matrix [][]float64) []float64 {
     }
 
     return colSums
+}
+
+func getMutatedSequence(sequence string, mutation string) string {
+	index, _ := strconv.Atoi(mutation[1 : len(mutation)-1])
+
+	mutatedSequence := sequence[:index-1] + string(mutation[len(mutation)-1]) + sequence[index:]
+	return mutatedSequence
 }

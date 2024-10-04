@@ -32,52 +32,17 @@ def make_temp_riprap_input(sequence, mutation):
     return fn.name, name
 
 
-def run_riprap(sequence, mutation, path, temp, minwindow, tool, win_type=0):
+def run_riprap(seq, path, temp, mutation, minW=3):
     """
     Run RipRap on the sequence.
     """
-    if "N" in sequence.upper():
-        return "Error"
-
-    # Make the input file:
-    fn, name = make_temp_riprap_input(sequence, mutation)
-    name = "".join(
-        random.choice(string.ascii_uppercase + string.digits) for _ in range(6)
-    )
-
-    # Run RipRap:
-    riprap = subprocess.run(
-        [
-            "python3",
-            "{0}/riprap.py".format(path),
-            "--i",
-            fn,
-            "--o",
-            name,
-            "--foldtype",
-            str(tool),
-            "-T",
-            str(temp),
-            "-w",
-            str(minwindow),
-            "-f",
-            str(win_type),
-        ],
+    results = subprocess.run(
+        [f"{path}/../bin/riprap", "-T", str(temp), "-seq", str(seq), "-mut", str(mutation), "-minW", str(minW)],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-    )
-
-    # Read the output:
-    with open("{0}_riprap_score.tab".format(name)) as f:
-        lines = f.readlines()
-
-    # Remove the temporary file:
-    os.remove("{0}_riprap_score.tab".format(name))
-
-    # Return the score:
+    )   
     try:
-        score = lines[1].split(",")[1]
-        return score
+        return results.stdout.decode("utf-8")
     except:
         return "Error"
 
@@ -93,10 +58,6 @@ if __name__ == "__main__":
     parser.add_argument(
         "--minwindow", dest="minwindow", help="Minimum Window", default=3
     )
-    parser.add_argument(
-        "--windowtype", dest="windowtype", help="Window Type", default=0
-    )
-    parser.add_argument("--tool", dest="tool", help="Tool", default="RNAfold")
     args = parser.parse_args()
 
     # Open the input file
@@ -127,22 +88,16 @@ if __name__ == "__main__":
             seq = str(line[5]) + str(line[3]) + str(line[6])
             mutation = f"{line[3]}{int(args.flank) + 1}{line[4]}"
 
-            # Get the tool number:
-            if args.tool == "RNAfold":
-                number = 1
-            if args.tool == "RNAstructure":
-                number = 2
-
             # Get the path:
             path = os.path.dirname(os.path.realpath(__file__))
 
             # Run RipRap:
             score = run_riprap(
-                seq, mutation, path, args.temp, args.minwindow, number, args.windowtype
+                seq, path, float(args.temp), mutation, args.minwindow
             )
 
             # Write the output:
             if score == "NA":
                 error.write("\t".join(line) + "\n")
             else:
-                out.write("\t".join(line).strip("\n") + "\t" + str(score) + "\n")
+                out.write("\t".join(line).strip("\n") + "\t" + str(score))
