@@ -16,10 +16,11 @@ import string
 import random
 import sys
 
-output = subprocess.check_output("conda env list | grep '*'", shell=True, encoding='utf-8')
+
+output = subprocess.check_output("echo $CONDA_DEFAULT_ENV", shell=True, encoding='utf-8')
 
 # Define the relative path to your target directory inside the conda environment
-target_directory = output[25:].strip() +  "/lib/data"
+target_directory = output.strip() +  "/lib/data"
 
 os.chdir(target_directory)
 
@@ -93,9 +94,9 @@ if __name__ == "__main__":
     # Open the output files and the error
     out = open(args.output, "w")
     error = open(args.output[:-4] + "_error.txt", "w")
-    out.write("\t".join(lines[0].strip().split(",")) + "\tRemuRNA_score\n")
+    # out.write("\t".join(lines[0].strip().split(",")) + "\tRemuRNA_score\n")
     # Loop through the input file and perform the riboSNitch prediction:
-    for line in lines[1:]:
+    for line in lines:
         # Skip the header:
         if not line.startswith("#"):
             line = line.split(",")

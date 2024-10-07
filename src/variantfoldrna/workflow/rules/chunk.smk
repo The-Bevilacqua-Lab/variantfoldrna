@@ -51,3 +51,20 @@ rule chunk_extracted_sequences:
         "docker://condaforge/mambaforge"
     shell:
         f"python3 {src_dir}/../variantfoldrna/workflow/scripts/chunk_extracted_seqs.py --input {{input}} --dir {config['tmp_dir']} --chunk-total {config['chunks']}"
+
+
+rule chunk_csv:
+    # Chunk the input CSV file
+    input:
+        f"{config['csv']}"
+    output:
+        expand(
+            f"{config['tmp_dir']}/csv_chunks/csv_chunk_{{i}}.csv",
+            i=range(1, int(config["chunks"]) + 1),
+        ),
+    conda:
+        f"{src_dir}/../variantfoldrna/workflow/envs/process_seq.yaml"
+    singularity:
+        "docker://condaforge/mambaforge"
+    shell:
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/chunk_csv.py --input {{input}} --dir {config['tmp_dir']} --chunk-total {config['chunks']}"
