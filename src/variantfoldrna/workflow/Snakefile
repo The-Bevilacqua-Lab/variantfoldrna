@@ -16,6 +16,14 @@ import sys
 # print(str(config['csv']))
 # if the user does not specify the number of chunks, let's estimate it by the size of 
 # the input file
+current_directory = os.getcwd()
+
+if config['out_dir'] == 'none':
+    config['out_dir'] = current_directory + "variantfoldrna_output"
+
+if config['tmp_dir'] == 'none':
+    config['tmp_dir'] = current_directory + "variantfoldrna_tmp"
+
 if config['chunks'] == -1 and str(config['csv']) == 'none':
     # get the size of the input file
     size = os.path.getsize(config['vcf'])
