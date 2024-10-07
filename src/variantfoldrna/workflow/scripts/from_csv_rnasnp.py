@@ -50,7 +50,7 @@ def run_rnasnp(sequence, mutation, flank, kind):
 
     # Run RNAsnp
     rnasnp = subprocess.run(
-        ["RNAsnp", "-f", seq, "-s", mut, "-w", flank],
+        ["RNAsnp", "-f", seq, "-s", mut, "-w", str(int(flank)*2)],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )
@@ -91,9 +91,8 @@ if __name__ == "__main__":
     out = open(args.output, "w")
     error = open(args.output[:-4] + "_error.txt", "w")
 
-    out.write("\t".join(lines[0].strip().split(",")) + "\tRNAsnp_score\n")
     # Loop through the input file and perform the riboSNitch prediction:
-    for line in lines[1:]:
+    for line in lines:
         # Skip the header:
         if not line.startswith("#"):
             line = line.split(",")
@@ -116,7 +115,7 @@ if __name__ == "__main__":
             path = os.path.dirname(os.path.realpath(__file__))
 
             # Run RipRap:
-            score = run_rnasnp(seq.replace("T","U"), mutation, str(flank-1), args.kind)
+            score = run_rnasnp(seq.replace("T","U"), mutation, args.flank, args.kind)
 
             # Write the output:
             if score == "NA" or "Reference allele" in score:

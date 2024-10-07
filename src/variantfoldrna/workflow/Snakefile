@@ -25,21 +25,33 @@ if config['chunks'] == -1 and str(config['csv']) == 'none':
     # Print in blue the number of chunks that will be used
     print("\033[94m\nThe number of chunks to be used is based on the size of your VCF: " + str(config['chunks']) + "\033[0m")
 
+elif config['chunks'] == -1 and str(config['vcf']) == 'none':
+    size = os.path.getsize(config['csv'])
+    # estimate the number of chunks
+    config['chunks'] = int(size / 10000000) + 1
+    
+    # Print in blue the number of chunks that will be used
+    print("\033[94m\nThe number of chunks to be used is based on the size of your CSV: " + str(config['chunks']) + "\033[0m")
 
 # -- Import common rules -- #
 if config['csv'] == "none":
-    include: "rules/chunk.smk"
     include: "rules/vep.smk"
     include: "rules/vcf_header.smk"
     include: "rules/combine_predictions.smk"
+    include: "rules/chunk.smk"
 
         # Check to make sure that, if the user is running RNAsnp, they use 
     # a flanking lenth that is between 100 and 800 nt in intervals of 50
     if 'rnasnp:p-value' in config["ribosnitch_prediction_tool"].lower().split(",") or 'rnasnp:dist' in config["ribosnitch_prediction_tool"].lower().split(","):
         flanking = config['flank_len']
-        if flanking < 100 or flanking > 800 or flanking % 50 != 0:
+        if flanking*2 < 100 or flanking*2 > 800 or flanking*2 % 50 != 0:
             # Print in red that the flanking length is not within the acceptable range
             print("\033[91m\nError: The flanking length for RNAsnp must be between 100 and 800 nt in intervals of 50.\033[0m")
+            # Exit the program
+            os._exit(1)
+        if "@" in str(config['temperature']) or float(config['temperature']) != 37.0:
+            # Print that RNAsnp only will predict riboSNitches at 37 degrees C. 
+            print("\033[91m\nError: RNAsnp only predicts riboSNitches at 37˚C\033[0m")
             # Exit the program
             os._exit(1)
             
@@ -66,6 +78,8 @@ if config['csv'] == "none":
 
 else:
     include: "rules/combine_predictions_csv.smk"
+    include: "rules/chunk.smk"
+
 
         # Load the rules for the appropriate prediction tool
     if "snpfold" in config["ribosnitch_prediction_tool"].lower().split(","):
@@ -76,9 +90,19 @@ else:
 
     if "rnasnp:p-value" in config["ribosnitch_prediction_tool"].lower().split(","):
         include: "rules/csv_rules_rnasnp.smk"
+        if "@" in str(config['temperature']) or float(config['temperature']) != 37.0:
+            # Print that RNAsnp only will predict riboSNitches at 37 degrees C. 
+            print("\033[91m\nError: RNAsnp only predicts riboSNitches at 37˚C\033[0m")
+            # Exit the program
+            os._exit(1)
 
     if "rnasnp:dist" in config["ribosnitch_prediction_tool"].lower().split(","):
         include: "rules/csv_rules_rnasnp.smk"
+        if "@" in str(config['temperature']) or float(config['temperature']) != 37.0:
+            # Print that RNAsnp only will predict riboSNitches at 37 degrees C. 
+            print("\033[91m\nError: RNAsnp only predicts riboSNitches at 37˚C\033[0m")
+            # Exit the program
+            os._exit(1)
 
     if "remurna" in config["ribosnitch_prediction_tool"].lower().split(","):
         include: "rules/csv_rules_remurna.smk"

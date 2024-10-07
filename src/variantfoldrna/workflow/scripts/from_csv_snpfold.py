@@ -64,9 +64,9 @@ if __name__ == "__main__":
     count = 0
     with open(args.in_file) as fn:
         for line in fn:
-            if count == 0:
-                outfile.write("\t".join(line.strip().split(",")) + "\tREF_dG\tREF_ED\tALT_dG\tALT_ED\tSNPfold_score\n")
-                count += 1
+            # if count == 0:
+            #     outfile.write("\t".join(line.strip().split(",")) + "\tREF_dG\tREF_ED\tALT_dG\tALT_ED\tSNPfold_score\n")
+            #     count += 1
             # Skip the header
             if not line.startswith("#"):
                 line = line.split(",")
