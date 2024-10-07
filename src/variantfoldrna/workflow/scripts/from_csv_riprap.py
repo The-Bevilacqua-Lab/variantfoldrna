@@ -17,7 +17,6 @@ import string
 import random
 
 
-# -- Functions --#
 def make_temp_riprap_input(sequence, mutation):
     """
     Create a temporary input file for RipRap.
@@ -32,52 +31,17 @@ def make_temp_riprap_input(sequence, mutation):
     return fn.name, name
 
 
-def run_riprap(sequence, mutation, path, temp, minwindow, tool, win_type=0):
+def run_riprap(seq, path, temp, mutation, minW=3):
     """
     Run RipRap on the sequence.
     """
-    if "N" in sequence.upper():
-        return "Error"
-
-    # Make the input file:
-    fn, name = make_temp_riprap_input(sequence, mutation)
-    name = "".join(
-        random.choice(string.ascii_uppercase + string.digits) for _ in range(6)
-    )
-
-    # Run RipRap:
-    riprap = subprocess.run(
-        [
-            "python3",
-            "{0}/riprap.py".format(path),
-            "--i",
-            fn,
-            "--o",
-            name,
-            "--foldtype",
-            str(tool),
-            "-T",
-            str(temp),
-            "-w",
-            str(minwindow),
-            "-f",
-            str(win_type),
-        ],
+    results = subprocess.run(
+        [f"{path}/../bin/riprap", "-T", str(temp), "-seq", str(seq), "-mut", str(mutation), "-minW", str(minW)],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-    )
-
-    # Read the output:
-    with open("{0}_riprap_score.tab".format(name)) as f:
-        lines = f.readlines()
-
-    # Remove the temporary file:
-    os.remove("{0}_riprap_score.tab".format(name))
-
-    # Return the score:
+    )   
     try:
-        score = lines[1].split(",")[1]
-        return score
+        return results.stdout.decode("utf-8")
     except:
         return "Error"
 
@@ -106,9 +70,9 @@ if __name__ == "__main__":
     # Open the output files and the error
     out = open(args.output, "w")
     error = open(args.output[:-4] + "_error.txt", "w")
-    out.write("\t".join(lines[0].strip().split(",")) + "\tRipRap_score\n")
+
     # Loop through the input file and perform the riboSNitch prediction:
-    for line in lines[1:]:
+    for line in lines:
         # Skip the header:
         if not line.startswith("#"):
             line = line.split(",")
@@ -127,22 +91,16 @@ if __name__ == "__main__":
             seq = line[3]
             mutation = f"{line[1]}{flank}{line[2]}"
 
-            # Get the tool number:
-            if args.tool == "RNAfold":
-                number = 1
-            if args.tool == "RNAstructure":
-                number = 2
-
             # Get the path:
             path = os.path.dirname(os.path.realpath(__file__))
 
             # Run RipRap:
             score = run_riprap(
-                seq, mutation, path, args.temp, args.minwindow, number, args.windowtype
+                seq, path, float(args.temp), mutation, args.minwindow
             )
 
             # Write the output:
             if score == "NA":
                 error.write("\t".join(line) + "\n")
             else:
-                out.write("\t".join(line).strip("\n") + "\t" + str(score) + "\n")
+                out.write("\t".join(line).strip("\n") + "\t" + str(score))
