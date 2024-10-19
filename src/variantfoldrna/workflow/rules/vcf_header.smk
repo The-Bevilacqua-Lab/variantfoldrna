@@ -39,6 +39,10 @@ rule get_vcf_header:
     shell:
         f"{cmd} < {config['vcf']} | grep '##' > {{params.output}} && gzip {{params.output}}"
 
+if str(config['chromosome']).lower() != 'none':
+    cmd1 = "| grep " + " | grep ".join([x for x in str(config['chromosome']).split(",")])
+else:
+    cmd1 = ""
 
 rule rid_header:
     # Get rid of the header from the VCF file so that it is
@@ -48,4 +52,4 @@ rule rid_header:
     params:
         output=f"{config['tmp_dir']}/vcf_no_header.vcf",
     shell:
-        f"{cmd} < {config['vcf']} | grep -v '##' > {{params.output}} && gzip {{params.output}}"
+        f"{cmd} < {config['vcf']} | grep -v '##' {cmd1} > {{params.output}} && gzip {{params.output}}"
