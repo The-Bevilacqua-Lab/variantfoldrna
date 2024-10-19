@@ -4,14 +4,14 @@ cli:
   tmp-dir:
     type: path
     help: "Path to the temporary directory"
-    required: True
     short: wd
+    default: none
 
   out-dir:
     type: path
     help: "Path to the output directory"
-    required: True
     short: o
+    default: none
 
   chunks:
     type: int
@@ -76,18 +76,18 @@ cli:
     help: "Temperature step for RNA folding (in Celsius)"
     short: ts
     default: 5
+
+  chromosome:
+    type: string
+    help: "Chromosome or chromosomes of interest, separated by commas (should match IDs from the VCF)"
+    short: chrom
+    defult: none
   
   ribosnitch-prediction-tool:
     type: str
     help: "Tool to use for predicting riboSNitches (SNPfold, RipRap, RNAsnp, or remuRNA)"
     short: r
     default: SNPfold
-  
-  rna-folding-tool:
-    type: str
-    help: "Tool to use for predicting the RNA structural ensembles (Only for RipRap - RNAfold or RNAstructure)"
-    short: s
-    default: RNAfold
   
   riprap-min-window:
     type: int
