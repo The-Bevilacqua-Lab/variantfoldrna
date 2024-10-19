@@ -9,6 +9,7 @@
 # -- Imports -- #
 import argparse
 import os
+import sys
 
 #######################
 #  --  Functions --   #
@@ -49,7 +50,15 @@ if __name__ == "__main__":
         os.system(f"mkdir -p {args.dir}/csv_chunks/")
 
     filename = f"{args.dir}/csv_chunks/csv_chunk_"
-    # Split the extracted sequences into chunks
+
+    # Count the number of lines in the file and make sure it is not more than the number of chunks
+    with open(args.input, "r") as f:
+        total_lines = sum(1 for line in f)
+    if total_lines < int(args.chunk):
+        print("The number of chunks must be less than the number of lines in the file.")
+        sys.exit(1)
+
+    # Split the CSV file into chunks
     for i, chunk in enumerate(split_file_by_line(args.input, args.chunk)):
         with open(filename + f"{i+1}.csv", "w") as f:
             f.writelines(chunk)
