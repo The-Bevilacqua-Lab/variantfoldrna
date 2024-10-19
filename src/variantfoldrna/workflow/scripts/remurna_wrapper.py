@@ -16,10 +16,10 @@ import string
 import random
 import sys
 
-output = subprocess.check_output("conda env list | grep '*'", shell=True, encoding='utf-8')
+output = subprocess.check_output("echo $CONDA_DEFAULT_ENV", shell=True, encoding='utf-8')
 
 # Define the relative path to your target directory inside the conda environment
-target_directory = output[25:].strip() +  "/lib/data"
+target_directory = output.strip() +  "/lib/data"
 
 os.chdir(target_directory)
 
