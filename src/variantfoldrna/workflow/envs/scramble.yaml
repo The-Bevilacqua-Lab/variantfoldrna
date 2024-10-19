@@ -1,8 +1,0 @@
-channels:
-  - conda-forge
-  - bioconda
-dependencies:
-  - meme=5.5.2
-  - python=3.9
-  - pip=22.3
-    - biopython==1.83
