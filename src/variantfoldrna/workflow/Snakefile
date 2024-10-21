@@ -19,10 +19,10 @@ import sys
 current_directory = os.getcwd()
 
 if config['out_dir'] == 'none':
-    config['out_dir'] = current_directory + "variantfoldrna_output"
+    config['out_dir'] = current_directory + "/variantfoldrna_output"
 
 if config['tmp_dir'] == 'none':
-    config['tmp_dir'] = current_directory + "variantfoldrna_tmp"
+    config['tmp_dir'] = current_directory + "/variantfoldrna_tmp"
 
 if config['chunks'] == -1 and str(config['csv']) == 'none':
     # get the size of the input file
