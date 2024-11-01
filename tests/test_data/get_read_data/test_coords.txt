@@ -1,9 +1,0 @@
-CHROM	POS	REF	ALT	ANN[*].EFFECT	ANN[*].FEATUREID
-Chr1	500	G	A	intron	transcript1
-Chr1	600	C	A	exon	transcript1
-Chr1	700	A	T	exon	transcript1
-Chr1	800	G	A	exon	transcript1
-Chr1	1200	C	A	exon	transcript2
-Chr1	1345	C	T	exon	transcript3
-Chr1	1220	A	G	exon	transcript4
-Chr1	1220	T	G	exon	transcript4
