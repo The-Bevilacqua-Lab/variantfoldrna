@@ -50,7 +50,7 @@ def run_rnasnp(sequence, mutation, flank, kind):
 
     # Run RNAsnp
     rnasnp = subprocess.run(
-        ["RNAsnp", "-f", seq, "-s", mut, "-w", flank],
+        ["RNAsnp", "-f", seq, "-s", mut, "-w", str(int(flank)*2)],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )

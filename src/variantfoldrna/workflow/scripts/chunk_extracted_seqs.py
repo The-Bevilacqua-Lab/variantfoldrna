@@ -41,9 +41,6 @@ if __name__ == "__main__":
         "--all-alts", dest="all_alts", default=False, action="store_true"
     )
     parser.add_argument(
-        "--null", dest="null", help="null file", default=False, action="store_true"
-    )
-    parser.add_argument(
         "--chunk-total", dest="chunk", help="The number of files to chop the input into"
     )
     args = parser.parse_args()
@@ -51,13 +48,6 @@ if __name__ == "__main__":
     # Make a directory to store the VCF chunks
     if not os.path.exists(f"{args.dir}/extracted_seqs_chunks/"):
         os.system(f"mkdir -p {args.dir}/extracted_seqs_chunks/")
-    if not os.path.exists(f"{args.dir}/extracted_sequences_null/"):
-        os.system(f"mkdir -p {args.dir}/extracted_sequences_null/")
-
-    if args.null:
-        filename = (
-            f"{args.dir}/extracted_sequences_null/extracted_seqs_null_unique_chunk_"
-        )
 
     if args.all_alts:
         filename = f"{args.dir}/extracted_sequences_all_alts/extracted_seqs_all_alts_unique_chunk_"

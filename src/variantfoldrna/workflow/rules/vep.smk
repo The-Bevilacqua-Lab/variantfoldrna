@@ -79,11 +79,10 @@ rule normalize:
 
 
 if config["variant_annotation_type"] != "All":
-    grep_command = (
-        f" grep -v '##' | grep -v 'stream_gene_variant' | grep -v 'intergenic' | grep -v 'coding_sequence_variant' | grep {config['variant_annotation_type']} ",
-    )
+    grep_command = f" grep -v '#' | grep -v 'stream_gene_variant' | grep -v 'intergenic' | grep -v 'coding_sequence_variant' | grep {config['variant_annotation_type']} "
+
 else:
-    grep_command = f" grep -v '##' | grep -v 'stream_gene_variant' | grep -v 'intergenic' | grep -v 'coding_sequence_variant' "
+    grep_command = f" grep -v '#' | grep -v 'stream_gene_variant' | grep -v 'intergenic' | grep -v 'coding_sequence_variant' "
 
 
 rule vep:
@@ -105,4 +104,10 @@ rule vep:
     log:
         f"{config['tmp_dir']}/logs/vep/vcf_no_header_{{i}}_annotated_one_per_line.log",
     shell:
-        f'vep -i {{input.vcf}} --{kind} {{input.annotation}} --fasta {{input.fasta}} -o {{params.output}} --force_overwrite --tab --fields "Location,REF_ALLELE,Allele,Consequence,Feature,cDNA_position,HGVSc,STRAND,CANONICAL" --hgvs --show_ref_allele --canonical 2> {{log}}   && cat {{params.output}} | {{params.grep_command}}  > {{output}}'
+        f'''
+        vep -i {{input.vcf}} --{kind} {{input.annotation}} --fasta {{input.fasta}} -o {{params.output}} \
+        --force_overwrite --tab --fields "Location,REF_ALLELE,Allele,Consequence,Feature,cDNA_position,HGVSc,STRAND,CANONICAL" \
+        --hgvs --show_ref_allele --canonical 2> {{log}} && \
+        cat {{params.output}} | {{params.grep_command}} > {{output}} && \
+        sed -i '1s/^/#Location\\tREF_ALLELE\\tAllele\\tConsequence\\tFeature\\tcDNA_position\\tHGVSc\\tSTRAND\\tCANONICAL\\n/' {{output}}
+        '''

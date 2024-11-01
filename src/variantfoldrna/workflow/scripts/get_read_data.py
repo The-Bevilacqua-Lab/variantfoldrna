@@ -13,10 +13,8 @@
 import argparse
 import json
 import pandas as pd
-import json
 import sys
 import pyfaidx
-import json
 
 
 # ----- Functions ------#

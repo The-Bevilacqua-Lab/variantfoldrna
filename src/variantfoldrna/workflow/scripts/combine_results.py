@@ -1,11 +1,24 @@
+###############################################################
+# Combine the multiple files for riboSNitch prediction
+###############################################################
+
+# Imports 
 import sys
 import argparse
 
 def count_lines(file_path):
+    """
+    count the number of lines in a file
+    """
     with open(file_path, 'r') as file:
         return sum(1 for _ in file)
 
 def combine_files(file_list, output_file, line_count):
+    """
+    Combine the specified files by taking the first column 
+    from the first file and the last column from the remaining files.
+    """
+
     # Open all input files
     files = [open(file, 'r') for file in file_list]
     

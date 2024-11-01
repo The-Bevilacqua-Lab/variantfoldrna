@@ -1,4 +1,8 @@
-# Extract the prefix from the fasta file of extracted sequences
+###############################################################################
+# Extract the prefix from the fasta file of extracted sequences. This is 
+# important since the prefixes seem to vary wildly between differnet 
+# organisms and RNA types
+###############################################################################
 
 # Imports 
 from Bio import SeqIO
