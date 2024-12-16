@@ -14,7 +14,6 @@ import sys
 script_path = os.path.realpath(__file__)
 src_dir = os.path.dirname(script_path)
 
-
 rule run_rnasnp_p_value:
     # Perform the riboSNitch analysis with Riprap
     input:
@@ -31,7 +30,7 @@ rule run_rnasnp_p_value:
     log:
         f"{config['tmp_dir']}/logs/ribosnitch_prediction/chunk_{{i}}_riboSNitch_rnasnp:p-value_{{temp_deg}}.log",
     shell:
-        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/rnasnp_wrapper.py --i {{input}} --o {{output.ribo}} --flank {config['flank_len']} --kind {config['ribosnitch_prediction_tool'].lower().split(':')[1]}"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/rnasnp_wrapper.py --i {{input}} --o {{output.ribo}} --flank {config['flank_len']} --kind p-value"
 
 
 rule run_rnasnp_dist:
@@ -50,7 +49,7 @@ rule run_rnasnp_dist:
     log:
         f"{config['tmp_dir']}/logs/ribosnitch_prediction/chunk_{{i}}_riboSNitch_rnasnp:dist_{{temp_deg}}.log",
     shell:
-        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/rnasnp_wrapper.py --i {{input}} --o {{output.ribo}} --flank {config['flank_len']} --kind {config['ribosnitch_prediction_tool'].lower().split(':')[1]}"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/rnasnp_wrapper.py --i {{input}} --o {{output.ribo}} --flank {config['flank_len']} --kind dist"
 
 
 

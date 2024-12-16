@@ -9,7 +9,6 @@
 
 # -- Imports --#
 import argparse
-import numpy as np
 import subprocess
 import tempfile
 import os

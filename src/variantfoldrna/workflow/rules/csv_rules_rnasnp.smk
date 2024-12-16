@@ -29,7 +29,7 @@ rule run_rnasnp_p_value_csv:
     singularity:
         "docker://condaforge/mambaforge"
     shell:
-        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/from_csv_rnasnp.py --i {{input}} --o {{output.ribo}} --flank {config['flank_len']} --kind {config['ribosnitch_prediction_tool'].lower().split(':')[1]}"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/from_csv_rnasnp.py --i {{input}} --o {{output.ribo}} --flank {config['flank_len']} --kind p-value"
 
 
 rule combine_ribosnitch_results_rnasnp_p_value:
@@ -61,7 +61,7 @@ rule run_rnasnp_dist_csv:
     singularity:
         "docker://condaforge/mambaforge"
     shell:
-        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/from_csv_rnasnp.py --i {{input}} --o {{output.ribo}} --flank {config['flank_len']} --kind {config['ribosnitch_prediction_tool'].lower().split(':')[1]}"
+        f"python3 {src_dir}/../variantfoldrna/workflow/scripts/from_csv_rnasnp.py --i {{input}} --o {{output.ribo}} --flank {config['flank_len']} --kind dist"
 
 
 rule combine_ribosnitch_results_rnasnp_dist:
