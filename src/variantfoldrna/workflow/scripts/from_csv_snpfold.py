@@ -33,7 +33,6 @@ def run_snpfold(seq, path, temp, mutation):
     """
     Run SNPfold on the sequence.
     """
-    print(" ".join([f"{path}/../bin/snpfold", "-T", temp, "-seq", seq, "-mut", mutation]))
     results = subprocess.run(
         [f"{path}/../bin/snpfold", "-T", temp, "-seq", seq, "-mut", mutation],
         stdout=subprocess.PIPE,
