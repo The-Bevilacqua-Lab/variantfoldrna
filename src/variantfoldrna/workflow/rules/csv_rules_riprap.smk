@@ -44,5 +44,5 @@ rule combine_ribosnitch_results_riprap:
     log:
         f"{config['tmp_dir']}/logs/combine_ribosnitch_results_riprap_{{temp_deg}}.log",
     shell:
-        "echo    'ID	Ref	Alt	Seq	Flank	riprap_score' > {output} && cat {input} >> {output}"
+        "echo    'ID	Ref	Alt	Seq	Flank	riprap_score	riprap_interval' > {output} && cat {input} >> {output}"
     

@@ -66,7 +66,7 @@ rule combine_ribosnitch_results_rnasnp_p_value:
     log:
         f"{config['tmp_dir']}/logs/combine_ribosnitch_results_rnasnp:p-value_{{temp_deg}}.log",
     shell:
-        "echo    'Chrom	Pos	Transcript_pos	Ref	Alt	Flank_left	Flank_right	Gene	Match	Type	Strand	RNAsnp_score' > {output} && cat {input} >> {output}"
+        "echo    'Chrom	Pos	Transcript_pos	Ref	Alt	Flank_left	Flank_right	Gene	Match	Type	Strand	RNAsnp_p-value	RNAsnp_p-value_interval' > {output} && cat {input} >> {output}"
 
 
 rule combine_ribosnitch_results_rnasnp_dist:
@@ -81,4 +81,4 @@ rule combine_ribosnitch_results_rnasnp_dist:
     log:
         f"{config['tmp_dir']}/logs/combine_ribosnitch_results_rnasnp:dist_{{temp_deg}}.log",
     shell:
-        "echo    'Chrom	Pos	Transcript_pos	Ref	Alt	Flank_left	Flank_right	Gene	Match	Type	Strand	RNAsnp_score' > {output} && cat {input} >> {output}"
+        "echo    'Chrom	Pos	Transcript_pos	Ref	Alt	Flank_left	Flank_right	Gene	Match	Type	Strand	RNAsnp_dist	RNAsnp_dist_interval' > {output} && cat {input} >> {output}"

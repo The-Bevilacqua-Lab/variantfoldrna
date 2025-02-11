@@ -93,6 +93,7 @@ if __name__ == "__main__":
             # Get the path:
             path = os.path.dirname(os.path.realpath(__file__))
 
+
             # Run RipRap:
             score = run_riprap(
                 seq, path, float(args.temp), mutation, args.minwindow
@@ -102,4 +103,4 @@ if __name__ == "__main__":
             if score == "NA":
                 error.write("\t".join(line) + "\n")
             else:
-                out.write("\t".join(line).strip("\n") + "\t" + str(score))
+                out.write("\t".join(line).strip("\n") + "\t" + str(score.split(",")[0]) +  "\t" + str(score.split(",")[1]))

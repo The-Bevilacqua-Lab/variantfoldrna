@@ -63,14 +63,15 @@ def run_rnasnp(sequence, mutation, flank, kind):
     try:
         dist = rnasnp.stdout.decode("utf-8").split("\n")[1].split("\t")[5]
         p_value = rnasnp.stdout.decode("utf-8").split("\n")[1].split("\t")[6]
+        interval = rnasnp.stdout.decode("utf-8").split("\n")[1].split("\t")[4]
 
     except:
         return "Error"
 
     if kind == "dist":
-        return dist
+        return dist, interval
     else:
-        return p_value
+        return p_value, interval
 
 
 # -- Main --#
@@ -114,11 +115,11 @@ if __name__ == "__main__":
             # Get the path:
             path = os.path.dirname(os.path.realpath(__file__))
 
-            # Run RipRap:
-            score = run_rnasnp(seq.replace("T","U"), mutation, args.flank, args.kind)
+            # Run RNAsnp
+            score, interval = run_rnasnp(seq.replace("T","U"), mutation, args.flank, args.kind)
 
             # Write the output:
             if score == "NA" or "Reference allele" in score:
                 error.write("\t".join(line) + "\n")
             else:
-                out.write("\t".join(line).strip("\n") + "\t" + str(score) + "\n")
+                out.write("\t".join(line).strip("\n") + "\t" + str(score) + "\t" + str(interval) + "\n")

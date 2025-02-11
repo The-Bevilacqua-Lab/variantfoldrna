@@ -48,6 +48,6 @@ rule combine_ribosnitch_results:
     log:
         f"{config['tmp_dir']}/logs/combine_ribosnitch_results_riprap_{{temp_deg}}.log",
     shell:
-        "echo    'Chrom	Pos	Transcript_pos	Ref	Alt	Flank_left	Flank_right	Gene	Match	Type	Strand	RipRap_score' > {output} && cat {input} >> {output}"
+        "echo    'Chrom	Pos	Transcript_pos	Ref	Alt	Flank_left	Flank_right	Gene	Match	Type	Strand	RipRap_score	Riprap_interval' > {output} && cat {input} >> {output}"
 
 

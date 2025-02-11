@@ -44,7 +44,7 @@ rule combine_ribosnitch_results_rnasnp_p_value:
     log:
         f"{config['tmp_dir']}/logs/combine_ribosnitch_results_rnasnp:p-value_{{temp_deg}}.log",
     shell:
-        "echo    'ID	Ref	Alt	Seq	Flank	rnasnp:p-value_score' > {output} && cat {input} >> {output}"
+        "echo    'ID	Ref	Alt	Seq	Flank	rnasnp:p-value	rnasnp:p-value_interval' > {output} && cat {input} >> {output}"
     
 
 
@@ -76,4 +76,4 @@ rule combine_ribosnitch_results_rnasnp_dist:
     log:
         f"{config['tmp_dir']}/logs/combine_ribosnitch_results_rnasnp:dist_{{temp_deg}}.log",
     shell:
-        "echo    'ID	Ref	Alt	Seq	Flank	rnasnp:dist_score' > {output} && cat {input} >> {output}"
+        "echo    'ID	Ref	Alt	Seq	Flank	rnasnp:dist	rnasnp:dist_interval' > {output} && cat {input} >> {output}"

@@ -100,4 +100,4 @@ if __name__ == "__main__":
             if score == "NA":
                 error.write("\t".join(line) + "\n")
             else:
-                out.write("\t".join(line).strip("\n") + "\t" + str(score))
+                out.write("\t".join(line).strip("\n") + "\t" + str(score.split(",")[0]) +  "\t" + str(score.split(",")[1]))
