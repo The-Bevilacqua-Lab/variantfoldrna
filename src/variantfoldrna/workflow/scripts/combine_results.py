@@ -38,15 +38,14 @@ def combine_files(file_list, output_file, line_count):
             # Extract the last column from each of the remaining files
             last_columns = []
 
-            for x in range(len(num_end)):
-                if x == 0:
-                    continue 
-                if len(files[x].readline().strip().split('\t')) < 2:
+            for x in range(1, len(num_end)):
+                line = files[x].readline().strip().split('\t')
+                if len(line) < 2:
                     continue
                 if num_end[x] == 2:
-                    last_columns.append(files[x].readline().strip().split('\t')[-2])
-                last_columns.append(files[x].readline().strip().split('\t')[-1])
-                
+                    last_columns.append(line[-2])
+                last_columns.append(line[-1])
+
             # Write the last columns to the output file
             out.write(first_file_lines.strip() + "\t" + '\t'.join(last_columns) + '\n')
 
