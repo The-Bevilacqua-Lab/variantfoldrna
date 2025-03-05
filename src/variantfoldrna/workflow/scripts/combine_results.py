@@ -21,6 +21,13 @@ def combine_files(file_list, output_file, line_count):
 
     # Open all input files
     files = [open(file, 'r') for file in file_list]
+
+    num_end = []
+    for file in file_list:
+        if "rnasnp" or "riprap" in file:
+            num_end.append(2)
+        else:
+            num_end.append(1)
     
     # Open the output file
     with open(output_file, 'w') as out:
@@ -29,13 +36,23 @@ def combine_files(file_list, output_file, line_count):
             first_file_lines = files[0].readline()
 
             # Extract the last column from each of the remaining files
-            last_columns = [file.readline().strip().split('\t')[-1] for file in files[1:]]
+            last_columns = []
+
+            for x in range(len(num_end)):
+                if x == 0:
+                    continue 
+                if len(files[x].readline().strip().split('\t')) < 2:
+                    continue
+                if num_end[x] == 2:
+                    last_columns.append(files[x].readline().strip().split('\t')[-2])
+                last_columns.append(files[x].readline().strip().split('\t')[-1])
+                
             # Write the last columns to the output file
             out.write(first_file_lines.strip() + "\t" + '\t'.join(last_columns) + '\n')
 
     # Close all input files
     for file in files:
-        file.close()
+        file.close() 
 
 if __name__ == "__main__":
     # Set up argument parsing
