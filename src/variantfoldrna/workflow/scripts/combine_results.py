@@ -24,11 +24,11 @@ def combine_files(file_list, output_file, line_count):
 
     num_end = []
     for file in file_list:
-        if "rnasnp" or "riprap" in file:
+        if "rnasnp" in file  or "riprap" in file:
             num_end.append(2)
         else:
             num_end.append(1)
-    
+    print(num_end)
     # Open the output file
     with open(output_file, 'w') as out:
         for i in range(line_count):
