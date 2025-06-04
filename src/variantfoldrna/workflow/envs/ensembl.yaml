@@ -3,3 +3,4 @@ channels:
   - bioconda
 dependencies:
   - ensembl-vep=112.0
+  - perl-list-moreutils

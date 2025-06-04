@@ -108,6 +108,14 @@ rule vep:
         vep -i {{input.vcf}} --{kind} {{input.annotation}} --fasta {{input.fasta}} -o {{params.output}} \
         --force_overwrite --tab --fields "Location,REF_ALLELE,Allele,Consequence,Feature,cDNA_position,HGVSc,STRAND,CANONICAL" \
         --hgvs --show_ref_allele --canonical 2> {{log}} && \
-        cat {{params.output}} | {{params.grep_command}} > {{output}} && \
-        sed -i '1s/^/#Location\\tREF_ALLELE\\tAllele\\tConsequence\\tFeature\\tcDNA_position\\tHGVSc\\tSTRAND\\tCANONICAL\\n/' {{output}}
+        (cat {{params.output}} | {{params.grep_command}} || true) > {{output}} && \
+        if [ ! -s {{output}} ]; then \
+            echo -e "#Location\\tREF_ALLELE\\tAllele\\tConsequence\\tFeature\\tcDNA_position\\tHGVSc\\tSTRAND\\tCANONICAL" > {{output}}; \
+        else \
+            if [ "$(uname)" = "Darwin" ]; then \
+                sed -i '' '1s/^/#Location\\tREF_ALLELE\\tAllele\\tConsequence\\tFeature\\tcDNA_position\\tHGVSc\\tSTRAND\\tCANONICAL\\n/' {{output}}; \
+            else \
+                sed -i '1s/^/#Location\\tREF_ALLELE\\tAllele\\tConsequence\\tFeature\\tcDNA_position\\tHGVSc\\tSTRAND\\tCANONICAL\\n/' {{output}}; \
+            fi; \
+        fi
         '''
