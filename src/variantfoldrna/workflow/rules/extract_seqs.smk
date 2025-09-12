@@ -101,7 +101,7 @@ rule extract_sequences:
     output:
         seqs=f"{config['tmp_dir']}/extracted_sequences/extracted_seqs_{{i}}.txt",
     conda:
-        f"{src_dir}/../variantfoldrna/workflow/envs/process_seq.yaml"
+        f"{src_dir}/../variantfoldrna/workflow/envs/get_unspliced_read_data.yaml"
     singularity:
         "docker://condaforge/mambaforge"
     shell:
