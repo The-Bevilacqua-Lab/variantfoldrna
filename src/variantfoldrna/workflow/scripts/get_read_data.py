@@ -74,9 +74,10 @@ if __name__ == "__main__":
     # Read in the file with the SNPEff predictions
     predictions = pd.read_csv(args.vcf, sep="\t", header=0)
     predictions = predictions.dropna()
+    predictions = predictions.rename(columns={"#Location": "Location"})
 
-    # Get the feature ID
-    feature = "Feature"
+    # Open the reference genome once; re-opening it per-row was the main hot spot
+    ref_fasta = pyfaidx.Fasta(args.ref)
 
     # Opening JSON file
     f = open(args.gffread)
@@ -85,56 +86,39 @@ if __name__ == "__main__":
     # a dictionary
     transcript_data = json.load(f)
 
-    for i in range(len(predictions)):
+    for row in predictions.itertuples(index=False):
         # Check to make sure it is not an INDEL
         if (
-            len(predictions.iloc[i]["REF_ALLELE"]) > 1
-            or len(predictions.iloc[i]["Allele"]) > 1
-            or predictions.iloc[i]["Allele"] == "-"
-            or predictions.iloc[i]["REF_ALLELE"] == "-"
+            len(row.REF_ALLELE) > 1
+            or len(row.Allele) > 1
+            or row.Allele == "-"
+            or row.REF_ALLELE == "-"
         ):
             continue
 
         # Get the start and stop positions of the transcript
-        start = transcript_data[predictions.iloc[i][feature]][1]
-        end = transcript_data[predictions.iloc[i][feature]][2]
+        start = transcript_data[row.Feature][1]
+        end = transcript_data[row.Feature][2]
 
-        chrom = predictions.iloc[i]["#Location"].split(":")[0]
-        position = int(predictions.iloc[i]["#Location"].split(":")[1])
+        chrom = row.Location.split(":")[0]
+        position = int(row.Location.split(":")[1])
 
         # Check to make sure it is not within a certain distance from the 5' and 3' ends of the transcript
         if five_prime_test(position, start, args.flank) and three_prime_test(
             position, end, args.flank
         ):
 
-            if len(predictions.iloc[i]["REF_ALLELE"]) > 1:
-                if not five_prime_test(
-                    (position + len(predictions.iloc[i]["REF_ALLELE"])),
-                    start,
-                    args.flank,
-                ) and three_prime_test(
-                    position + len(predictions.iloc[i]["REF_ALLELE"]),
-                    end,
-                    args.flank,
-                ):
-                    continue
+            sequence = ref_fasta[chrom][start - 1 : end].seq
+            strand = int(float(row.STRAND))
 
-            sequence = pyfaidx.Fasta(args.ref)[chrom][start - 1 : end].seq
+            if strand not in (-1, 1):
+                print(type(row.STRAND))
 
-            # Complement the reference and alternative alleles if the transcript is on the negative strand
-            if str(predictions.iloc[i]["STRAND"]) == "-1":
-                sequence = compelement_dna(sequence)
-                reference = compelement_dna(predictions.iloc[i]["REF_ALLELE"])
-                alternative = compelement_dna(predictions.iloc[i]["Allele"])
+            reference = row.REF_ALLELE
+            alternative = row.Allele
 
-            elif str(predictions.iloc[i]["STRAND"]) == "1":
-                reference = predictions.iloc[i]["REF_ALLELE"]
-                alternative = predictions.iloc[i]["Allele"]
-
-            # Get the nucleotides at the location of the variant
-            else:
-                print(type(predictions.iloc[i]["STRAND"]))
-
+            # Slice the SNP and flanks out of the untouched forward-strand sequence
+            # first, since (position - start) is a forward-strand offset
             snp_seq = sequence[
                 (position - start) : ((position - start) + (len(reference)))
             ]
@@ -150,6 +134,17 @@ if __name__ == "__main__":
                 + int(args.flank)
             ]
 
+            # Only now reverse-complement for minus-strand transcripts, swapping
+            # left/right so they stay 5'/3' relative to the transcript
+            if strand == -1:
+                reference = compelement_dna(reference)
+                alternative = compelement_dna(alternative)
+                snp_seq = compelement_dna(snp_seq)
+                flank_left, flank_right = (
+                    compelement_dna(flank_right),
+                    compelement_dna(flank_left),
+                )
+
             # Check to see if the sequence in the reference genome matches the reference allele or the alternative allele
             # If it matches the reference, then we do not change anything. If it matches the alternative, then we reverse
             # the reference and alternative alleles
@@ -160,7 +155,7 @@ if __name__ == "__main__":
                 alt = reference
                 flank = flank_left + ref + flank_right
                 fn.write(
-                    f'{chrom}\t{position}\t{position}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\tMATCHED_ALT\t{predictions.iloc[i]["Consequence"]}\t{predictions.iloc[i]["STRAND"]}\n'
+                    f"{chrom}\t{position}\t{position}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{row.Feature}\tMATCHED_ALT\t{row.Consequence}\t{row.STRAND}\n"
                 )
 
             # Check to see if the SNP matches the reference allele
@@ -169,7 +164,7 @@ if __name__ == "__main__":
                 alt = alternative
                 flank = flank_left + ref + flank_right
                 fn.write(
-                    f'{chrom}\t{position}\t{position}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\tMATCHED_REF\t{predictions.iloc[i]["Consequence"]}\t{predictions.iloc[i]["STRAND"]}\n'
+                    f"{chrom}\t{position}\t{position}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{row.Feature}\tMATCHED_REF\t{row.Consequence}\t{row.STRAND}\n"
                 )
 
             # If the SNP does not match the reference or alternative allele, then we skip it
@@ -177,7 +172,8 @@ if __name__ == "__main__":
                 ref = alternative
                 alt = reference
                 no_match.write(
-                    f"{chrom}\t{position}\t{position}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{predictions.iloc[i][feature]}\n"
+                    f"{chrom}\t{position}\t{position}\t{ref}\t{alt}\t{flank_left}\t{flank_right}\t{row.Feature}\n"
                 )
 
     fn.close()
+    no_match.close()
