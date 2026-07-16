@@ -27,7 +27,7 @@ def compelement_dna(dna):
     - (str): Complement of the DNA sequence
     """
     complement = {"A": "T", "C": "G", "G": "C", "T": "A", "N": "N"}
-    return "".join([complement[base.upper()] for base in dna])
+    return "".join([complement[base.upper()] for base in dna])[::-1]
 
 
 def five_prime_test(position, start, flank):
